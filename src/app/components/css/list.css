@@ -1,0 +1,47 @@
+.visit{
+    width: 18%;
+    padding: 2rem;
+    background-image: linear-gradient(#36D4A1,#13A0AA) ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.section_one{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+}
+
+.project{
+    width: 20%;
+    background-color: white;
+    height: fit-content;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+.cont_one{
+    overflow-wrap: break-word;
+    margin-inline: 0.5rem;
+    text-align: left;
+}
+  
+
+@media(max-width:580px){
+    html{
+        font-size: 12px;
+    }
+    .section_one{
+        flex-direction: column;
+    }
+
+    .project{
+        margin-inline: auto;
+        width: 65%;
+    }
+     
+}

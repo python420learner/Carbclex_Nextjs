@@ -1,0 +1,46 @@
+.footer{
+    padding-top: 2rem;
+}
+
+.footer-head{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+    width: 80%;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.footer-head h3{
+    color: whitesmoke;
+    font-weight: lighter;
+    margin-bottom: 1rem;
+}
+
+.footer-head ul li{
+    list-style: none;
+    font-weight: lighter;
+    font-size: small;
+    color: whitesmoke;
+    margin-bottom: 4px;
+}
+
+.footer-head div{
+    width: 25%;
+}
+
+@media(max-width:580px){
+    html{
+        font-size: 12px;
+    }
+
+    .footer-head{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-head div{
+        width: 98%;
+        margin-bottom: 2rem;
+    }
+}

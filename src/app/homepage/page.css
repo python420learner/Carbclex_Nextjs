@@ -1,0 +1,358 @@
+.home-page {
+    background-image: url('../../../public/Assets/pexels-david-alberto-carmona-coto-1151418\ \(1\)\ 2.png'); 
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 1rem;
+    /* height: 90vh; */
+  }
+  
+  .nav_bar{
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+  
+  .nav_background{
+    background-color: rgba(0, 0, 0, 0.507);
+  
+  }
+  
+  .hero{
+    display: flex;
+    padding-top: 70vh;
+    justify-content: space-between;
+  }
+  
+  .hero_heading{
+    display: block;
+    font-size:3.2rem;
+    font-weight: lighter;
+  }
+  
+  .hero form{
+    margin-left: 2rem;
+  }
+  
+  .first_page{
+    width: 35%;
+    margin-inline: auto;
+    text-align: center;
+    margin-top: 4rem;
+    font-weight: lighter;
+  }
+  
+  .tab-list{
+    display: flex;
+    margin-inline: auto;
+    justify-content: space-between;
+    list-style: none;
+    font-weight: lighter;
+    padding-left: 0;
+    margin-top: 4rem;
+    width: fit-content;
+    max-width: 100vw;
+  }
+  
+  .tab-list li{
+    cursor: pointer;
+    margin-left: 0;
+    font-size: large;
+    font-weight: 400;
+    padding: 1rem 3rem;
+    color: green;
+    letter-spacing: 1px;
+    border-bottom: 3px solid green;
+  }
+  
+  .tab-item.active-tab{
+    border-bottom: 3px solid #7DE391;
+    color: #13A0AA;
+    border-left: 0;
+  }
+  
+  .sec_nav_data{
+    display: flex;
+    justify-content: space-around;
+    margin-inline: auto;
+    margin-top: 2rem;
+    width: 50%;
+  }
+  
+  .polygon{
+    width: 10rem;
+    height: 10rem;
+  }
+  
+  .inner_polygon{
+    content: '';
+    position: absolute;
+    width: 11rem;
+    height: 11rem;
+    clip-path: polygon( 88.939% 89.098%,88.939% 89.098%,82.27% 92.885%,74.289% 95.237%,65.369% 96.227%,55.885% 95.931%,46.208% 94.421%,36.715% 91.772%,27.777% 88.058%,19.768% 83.353%,13.063% 77.73%,8.035% 71.265%,8.035% 71.265%,4.685% 64.467%,2.704% 57.814%,1.998% 51.327%,2.473% 45.029%,4.038% 38.942%,6.598% 33.088%,10.059% 27.49%,14.33% 22.17%,19.316% 17.149%,24.924% 12.452%,24.924% 12.452%,30.844% 8.282%,36.794% 4.889%,42.721% 2.365%,48.572% 0.8%,54.293% 0.283%,59.832% 0.906%,65.136% 2.758%,70.152% 5.93%,74.826% 10.512%,79.106% 16.594%,79.106% 16.594%,83.204% 23.775%,87.216% 31.469%,90.915% 39.489%,94.073% 47.649%,96.464% 55.763%,97.859% 63.643%,98.031% 71.103%,96.753% 77.957%,93.798% 84.017%,88.939% 89.098% );
+    background-color: #EEEACD;
+    transform: rotate(177deg);
+  }
+  
+  .green{
+    background-color:#065F24;
+  }
+  
+  .circle{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100px;
+    background-color: #065F24;
+  }
+  
+  .services-cards{
+    display:flex;
+    text-align:center;
+    justify-content:center;
+    flex-wrap: wrap;
+    gap:1.6rem;
+  }
+  
+  .services{
+    background-image: linear-gradient(#FFFFFF,#eeeacda9);
+    border: 0.1px solid #F7F7F7;
+    border-bottom-left-radius: 40rem;
+    border-bottom-right-radius: 40rem;
+    margin-bottom: 10rem;
+  }
+  
+  .card{
+    margin-bottom: 4rem;
+    height: 30vh;
+    width: 21%;
+    min-height: 320px;
+    min-width: 180px;
+    border-radius: 20px;
+  }
+  
+  .card-header{
+    height: 62.5%;
+    padding-top:2rem ;
+    background-color: #065F24;
+    color: whitesmoke;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    text-align: left;
+  }
+  
+  .one{
+    background-image: linear-gradient(to right, #34592A, rgba(0, 0, 0, 0)),url('../../../public/Assets/service4.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .two{
+    background-image: linear-gradient(to right, #34592A, rgba(0, 0, 0, 0)),url('../../../public/Assets/service3.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .three{
+    background-image: linear-gradient(to right, #34592A, rgba(0, 0, 0, 0)),url('../../../public/Assets/service1.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .card-body{
+    height: 37.5%;
+    padding-bottom: .5rem;
+    border-bottom-right-radius: 20px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    border-bottom-left-radius: 20px;
+  }
+  
+  
+  .for_image{
+    width: 100%;
+    height: 50%;
+    background-color: #065F24;
+    border: 0.1px solid #065F24 ;
+  
+  }
+  
+  .offset{
+    width: 60%;
+    margin-inline: auto;
+    text-align: center;
+  }
+  
+  .polygon img{
+    height: 100%;
+    width: 100%;
+    clip-path: polygon( 88.939% 89.098%,88.939% 89.098%,82.27% 92.885%,74.289% 95.237%,65.369% 96.227%,55.885% 95.931%,46.208% 94.421%,36.715% 91.772%,27.777% 88.058%,19.768% 83.353%,13.063% 77.73%,8.035% 71.265%,8.035% 71.265%,4.685% 64.467%,2.704% 57.814%,1.998% 51.327%,2.473% 45.029%,4.038% 38.942%,6.598% 33.088%,10.059% 27.49%,14.33% 22.17%,19.316% 17.149%,24.924% 12.452%,24.924% 12.452%,30.844% 8.282%,36.794% 4.889%,42.721% 2.365%,48.572% 0.8%,54.293% 0.283%,59.832% 0.906%,65.136% 2.758%,70.152% 5.93%,74.826% 10.512%,79.106% 16.594%,79.106% 16.594%,83.204% 23.775%,87.216% 31.469%,90.915% 39.489%,94.073% 47.649%,96.464% 55.763%,97.859% 63.643%,98.031% 71.103%,96.753% 77.957%,93.798% 84.017%,88.939% 89.098% );
+  }
+  
+  .offset_firstchild{
+    width: 70%;
+    margin-inline: auto;
+    margin-bottom: 4rem;
+  }
+  
+  .group1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  
+  }
+  
+  .group1 p{
+    margin-bottom: 2rem;
+    width: 40%;
+  }
+  
+  .product_head{
+    width: 40%;
+    margin-inline: auto;
+    text-align: center;
+  }
+  
+  .product_cards{
+    display: flex;
+    width: 90%;
+    gap: 1rem;
+    margin-inline: auto;
+    justify-content: space-around;
+  }
+  
+  .reverse{
+    flex-direction: row-reverse;
+  }
+  
+  .section-4{
+    text-align: center;
+    width: 30vw;
+    margin-inline: auto;
+    margin-bottom: 7rem;
+  }
+  
+  .section-4 h2{
+    margin-bottom: 1rem;
+  }
+  
+  .desktop-button{
+    display: block;
+  }
+  
+  .mobile-button{
+    display: none;
+  }
+
+  .first-offset{
+    border: 1px solid black;
+    padding: 2rem;
+  }
+  
+  /* RESPONSIVE DESIGNING*/
+  
+  @media(max-width:580px){
+  
+    .first_page{
+      width: 90%;
+    }
+  
+    .hero{
+      padding-top: 58vh;
+    }
+  
+    .hero form{
+      margin-left: 0.3rem;
+    }
+  
+    .tab-list li{
+      padding: 0.5rem 1rem;
+      font-size: x-small;
+    }
+  
+    .sec_nav_data{
+      width: 90%;
+    }
+  
+    .services-cards{
+      flex-wrap: wrap;
+      align-items: center;
+    }
+  
+    .card{
+      min-height: 290px;
+      width: 21%;
+      height: 29vh;
+    }
+  
+    .card-body{
+      font-size: small;
+    }
+  
+    .home-page{
+      width: 100vw;
+    }
+  
+    .hero_heading{
+      font-size: 2.8rem;
+    }
+  
+    .offset{
+      width: 70%;
+    }
+  
+    .offset_firstchild{
+      width: 100%;
+    }
+  
+    .group1{
+      flex-direction: column-reverse;
+      margin-inline: auto;
+      width: 90%;
+    }
+  
+    .group1 p{
+      margin-top: 1rem;
+      width: 100%;
+    }
+  
+    .product_head{
+      width: 100%;
+    }
+  
+    .product_cards{
+      flex-direction: column;
+      margin-inline: auto;
+    }
+  
+    .card-ele{
+      margin-inline: auto;
+      width: 65%;
+      background-color: transparent;
+      
+    }
+  
+    .for_image{
+      height: 40%;
+    }
+  
+    .visit{
+      margin-inline: auto;
+      width: 65%;
+      height: 50vh;
+    }
+  
+    .section-4{
+      width: 70vw;
+    }
+  
+    .desktop-button{
+      display: none
+    }
+    
+    .mobile-button{
+      display: block;
+    }
+  
+  }

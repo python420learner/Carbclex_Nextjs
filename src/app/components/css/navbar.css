@@ -1,0 +1,75 @@
+
+.navbar-1{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-element{
+    display: flex;
+    gap: 1.3rem;
+    list-style: none;
+    margin-top: 1.3rem;
+    padding: 1rem;
+    border-radius: 10rem;
+    margin-right: 2rem;
+}
+
+.signup_btn{
+    text-decoration: none;
+    color: white;
+    background-image:linear-gradient(to right, #36D4A1,#13A0AA) ;
+    padding: .7rem 1.4rem;
+    border-radius: 10rem;
+}
+
+.nav-link{
+    color: white;
+    text-decoration: none;
+}
+
+.nav-link:hover{
+    color: white;
+}
+
+.hamburger{
+    display: none;
+}
+
+.transparent{
+    background-color: transparent;
+}
+
+.back_colored{
+    background-color: rgba(0, 0, 0, 0.366);
+}
+
+
+@media(max-width:860px){
+    .navbar-element{
+        display: none;
+    }
+
+    .hamburger{
+        display: block;
+        margin-right: 2rem;
+    }
+
+    .hamburger:hover{
+        cursor: pointer;
+    }
+    .toggleTopNav{
+        background-color: rgba(0, 0, 0, 0.366);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.3rem;
+        list-style: none;
+        margin-top: 1.3rem;
+        padding: 1rem;
+        position: absolute;
+        left: 0;
+        bottom: 6;
+        width: 100%;
+    }
+}

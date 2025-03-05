@@ -1,24 +1,193 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*{
+  padding: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Reset margins */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+figure,
+picture {
+    margin: 0; 
+}
+
+body::-webkit-scrollbar{
+  display: none;
+}
+
+
+p{
+  font-weight: lighter;
+}
+
+.card-ele{
+  height: 55vh;
+  width: 20vw;
+}
+
+.cont{
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.t-shadow{
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); 
+
+}
+
+.lspace{
+  letter-spacing: 2px;
+}
+
+.font{
+  font-family: "Rubik", sans-serif;
+}
+
+.bold{
+  font-weight: 30rem;
+}
+
+.t-white{
+  color: #FFFFFF;
+}
+
+.sell{
+  color: #FFFFFF;
+  padding:10px 20px ;
+  border: 1px solid #FFFFFF;
+}
+
+.buy{
+  margin-left: 5rem;
+  background-image: linear-gradient(#37ae579e 70%,#1a92d766);
+  color: #FFFFFF;
+  padding:10px 20px ;
+  border: none;
+}
+
+.b{
+  border:none;
+  background-color: white;
+  border-top-left-radius: 50px; /* Adjust the radius to create a semicircle at the left edge */
+  border-bottom-left-radius: 50px; /* Adjust the radius to create a semicircle at the left edge */
+  border-top-right-radius: 50px; /* Adjust the radius to create a semicircle at the right edge */
+  border-bottom-right-radius: 50px;
+}
+
+.page-2{
+  background-image: url('../../public/Assets/Subtract.png');
+  background-size: cover;
+  background-position: center;
+  height: 80vh; 
+  justify-content: space-between;
+}
+
+
+.page-3{
+  height: 80vh;
+  width: 100%;
+  padding: 0;
+}
+
+.group12{
+  z-index: -1;
+  position: absolute;
+
+}
+
+.page-4{
+  margin-top: 12%;
+  z-index: 0;
+  background-image: url('../../public/Assets/artificial\ Neurons\ 1.png');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+
+}
+.box{
+  border-top-left-radius: 5px; /* Adjust the radius to create a semicircle at the left edge */
+  border-bottom-left-radius: 5px; /* Adjust the radius to create a semicircle at the left edge */
+  border-top-right-radius: 5px; /* Adjust the radius to create a semicircle at the right edge */
+  border-bottom-right-radius: 5px;
+}
+
+.learn{
+  border: 4px solid white;
+  color: whitesmoke;
+}
+
+.tet{
+  color: #2F4834;
+  font-weight: 200px;
+
+}
+
+.visit{
+  color:white;
+  width: 20rem;
+  background-image: linear-gradient(#00e0FF,#00fAB1);
+} 
+
+.gradient-text {
+  background: linear-gradient(to right, #36D4A1, #13A0AA); /* Define your gradient */
+  -webkit-background-clip: text; /* Clip the background to the text */
+  -webkit-text-fill-color: transparent; /* Make the text color transparent */
+}
+
+.gradient-background{
+  background-color: #faf6df4b;
+  border-radius: 60% 30% 30% 20%;  
+}
+
+
+.page-5 form h1{
+  color: #2F4834;
+  font-weight: 900;
+  font-size: x-large;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.page-5 form h3{
+  color: #808080;
+  font-size: large;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.learnOne{
+  color: #4F8326;
+  border: 4px solid #4F8326;
+  padding-left: auto;
+}
+
+.rect{
+  width: 8rem;
+  height: 8rem;
+  background-image: linear-gradient(#b9f2b0 50%,#4F8326 50%);
+  border-radius: 1rem;
+  margin-bottom: -8rem;
+}
+
+.page-6 .box{
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+@media(max-width:580px){
+  html{
+    font-size: 14px;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
