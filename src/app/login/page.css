@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.logincontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
+.logincontainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: linear-gradient(to right,rgba(0, 0, 0, 0.811),rgba(0, 0, 0, 0.556)),url(../../../public/Assets/login.jpg);
+  background-size: cover;
+  z-index: 0;
+}
+
+.small-container {
+  display: flex;
+  width: 80vw;
+  height: 70vh;
+  background-color: #3a8883; /* Optional for visualization */
+  box-sizing: border-box; /* Ensures padding is within the width */
+  z-index: 2;
+}
+
+.left {
+  background-image: url("../../../public/Assets/login.jpg");
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  color: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 60%; /* Adjusted to fit better with flexbox */
+  padding: 4rem;
+  
+}
+.left > span {
+  font-size: 35px;
+}
+
+.left > p {
+  margin: 20px;
+}
+
+.right {
+  background-image: linear-gradient(to right, #36D4A1,#13A0AA);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  width: 40%; /* Adjusted to fit better with flexbox */
+}
+.right > .heading {
+  color: whitesmoke;
+  margin-bottom: 30px;
+}
+.right .inputsField {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.right label{
+  color: white;
+  font-weight: bold;
+}
+.right .inputField {
+  width: 24vw; /* Adjust width as needed */
+  padding: 0.7rem 1rem;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 40px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box; /* Ensures padding is included in width */
+}
+.right .btn {
+  padding: 8px 20px;
+  width: 100%;
+  font-size: 16px;
+  margin: 5px;
+  background-color: #033614; /* Matches the `.small-container` background */
+  color: white;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: larger;
+  border: none;
+}
+#googleBtn:hover {
+  background-color: rgb(102, 155, 102);
+}
+#facebookBtn:hover {
+  background-color: rgb(51, 47, 103);
+  color: white;
+}
+#githubBtn:hover {
+  background-color: rgb(22, 22, 22);
+  color: white;
+}
+
+.right .btn:hover {
+  background-color: #2d6f6b; /* Slightly darker shade for hover effect */
+  color: white;
+}
+
+.btn-m{
+  padding: .6rem 3rem;
+  font-size: 14px;
+  background-color: #033614; /* Matches the `.small-container` background */
+  color: white;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+input{
+  border: none;
+}
+
+.others{
+  width: 90%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+}
+
+.line-login{
+  background-color: white;
+  height: 2px;
+  width: 40%;
+}
+
+.or{
+  height: 100%;
+}

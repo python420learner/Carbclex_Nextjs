@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .Container {
+    display: flex;
+    height: 70vh;
+    width: 80vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-inline: auto;
+    background-size: cover;
+    box-sizing: border-box;
+    margin-top: 10%;
+  }
+  
+  .Container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(to right,rgba(0, 0, 0, 0.611),rgba(0, 0, 0, 0.577)),url("../../../public/Assets/signup.jpg");
+      background-size: cover;
+      z-index: -1;
+    }
+  
+  .right_container {
+    color: white;
+    background-image: linear-gradient(to right, #36D4A1,#13A0AA);
+    height: 100%;
+    box-sizing: border-box; /* Ensures padding is within the width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60vw; /* Adjusted to fit better with flexbox */
+    z-index: 2;
+  }
+  
+  .heading{
+      color: rgb(245, 245, 245);
+      margin-bottom: 20px;
+  }
+  form{
+    padding-inline: 4rem;
+      
+  }
+  .link{
+      color: rgb(14, 14, 47);
+      text-decoration: underline;
+  }
+  
+  .important{
+      margin: 0;
+      color: red;
+  }
+  .inputTag {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    background-color:rgb(163, 163, 163);
+    border-radius: 20px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box; /* Ensures padding is included in width */
+  }
+  
+  .btnTag {
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 16px;
+    color: white;
+    background-color:#3B2063; /* Matches the `.small-container` background */
+    border-radius: 40px;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: larger;
+    border: none;
+  }
+  
+  .btnTag:hover {
+    background-color: #477571; /* Slightly darker shade for hover effect */
+    color: white;
+  }
+.sign_input{
+    margin-left: 4px;
+    border-radius: 4rem;
+    padding-inline: 1rem;
+    width: 25%;
+    line-height: 2rem;
+  }
+
+  .inputs div{
+    margin-bottom: 1rem;
+  }
+
+  .gender{
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+    cursor: pointer;
+    align-items: center;
+  }
+
+.left_container{
+  background-image:url("../../../public/Assets/signup.jpg") ;
+  background-size: cover;
+}

@@ -49,21 +49,8 @@ const ProductList = ({demo = false}) => {
     <>
       <div className='section_one'>
         {displayProjects.map(project => (
-          <div key={project.projectid} className='project'>
-            <div style={{backgroundColor:'#065424',width:'100%',height:'50%'}}>
-              <Image src={projectImage} style={{height:'50%',width:'100%'}} alt='project_image'/>
-            </div>
-            <div className='cont_one'>
-              <h5 style={{color:'#182330',marginTop:'2rem',fontWeight:'bold', marginTop:'1rem'}}>{project.countryId.country}</h5>
-              <h3 style={{color:'#065F24',fontSize:'1.7rem', marginTop:'1rem'}}>{project.projectName}</h3>
-              <h4 style={{color:'#000000' ,fontWeight:'lighter',fontSize:'18px', marginTop:'1rem'}}>{project.projectDescription}</h4>
-              <p style={{marginTop:'1rem'}}>$10 per Tonne</p>
-              <div style={{display:'flex',justifyContent:'space-between'}}>
-                <FontAwesomeIcon icon={faCartShopping} color='#065F24' size='2x'/>
-                <Link href={`/project/${project.projectid}`} state={project}><button style={{width:'7rem',color:'#065424',cursor:'pointer',backgroundColor:'white',border:'2px solid #065424'}}>SEE MORE</button></Link>
-              </div>
-            </div>
-          </div>
+
+        <ProductCard key={project.projectid} project={project} />
         ))}
         {demo && (<div className='visit'>
             <h2 style={{color:'white',fontWeight:'bold',fontSize:'1.7rem',textAlign:'left'}}>Discover the rigorous methodologies behind our forest projects validations</h2>

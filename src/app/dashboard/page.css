@@ -1,0 +1,45 @@
+
+.navigation{
+    position: fixed;
+    width:15vw;
+    height:100vh;
+    border-right: 1px solid white;
+    background-color:#18311D;
+    padding:4rem 2rem;
+    padding-left:1rem;
+  }
+  
+  .dashboard .navigation ul li{
+    margin-bottom: 25px;
+    font-weight: lighter;
+    font-size: large;
+    cursor: pointer;
+  }
+  
+  .footer{
+    color: white;
+    letter-spacing: 3px;
+    padding: 6rem 6rem;
+    align-items: start;
+  }
+  
+  .footer h3{
+    font-weight: light;
+    font-size: large;
+  
+  }
+  
+  .footer ul{
+    list-style: none;
+    color: white;
+    font-weight: lighter;
+    font-size: small;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .footer ul li{
+    text-indent: 0;
+    cursor: pointer;
+    margin-bottom: 4px;
+  }

@@ -5,7 +5,10 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ProductCard = ({ project }) => (
+const ProductCard = ({ project }) => {
+  const encodedProject = encodeURIComponent(JSON.stringify(project)); // Convert to JSON string
+  // console.log("this is json project",project.projectName)
+  return(
     <div key={project.projectid} style={{ backgroundColor: 'white', width: '28%', height: 'fit-content', marginBottom: '2rem', paddingBottom: '2rem' }}>
       <div style={{ backgroundColor: '#065424', width: '100%', height: '50%' }}>
         <Image src={project.image || projectImage} style={{height:'50%',width:'100%'}} alt='project_image' />
@@ -17,7 +20,7 @@ const ProductCard = ({ project }) => (
         <p style={{marginTop:'1rem'}}>$10 per Tonne</p>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <FontAwesomeIcon icon={faCartShopping} color='#065F24' size='2x' />
-          <Link href={`/project/${project.projectid}`} state={project}>
+          <Link href={`/projectDetails?data=${encodedProject}`} state={project}>
             <button style={{ width: '7rem', color: '#065424', cursor: 'pointer', backgroundColor: 'white', border: '2px solid #065424' }}>
               SEE MORE
             </button>
@@ -25,6 +28,7 @@ const ProductCard = ({ project }) => (
         </div>
       </div>
     </div>
-);
+  )
+};
   
 export default ProductCard
