@@ -146,7 +146,7 @@ const Dashboard = () => {
                                         display: true,
                                         text: "Bar Chart",
                                     },
-                                },
+                                }, 
                             }}
                         />
                     </div>
