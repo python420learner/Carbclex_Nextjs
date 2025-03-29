@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import category from '../../../public/Assets/project_category.png'
 import CTA from '../components/cta';
 import ProductList from '../components/productlist'

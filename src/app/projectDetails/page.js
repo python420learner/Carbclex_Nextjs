@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React,{useRef,useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
