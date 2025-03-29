@@ -79,7 +79,7 @@ const HomePage = () => {
             <div>
                 <div className='first_page'>
                     <h1 style={{ fontWeight: 'lighter', marginBottom: '1rem', color: 'darkgreen' }}>Empower Your Business to Achieve Net Zero Emissions Today.</h1>
-                    <p style={{ fontSize: '1rem', fontWeight: 'lighter' }} >We're the industry's go-to for environmental solutions, connecting buyers and sellers of carbon credits with reliability and expertise. Join us in making a real impact on our planet.</p>
+                    <p style={{ fontSize: '1rem', fontWeight: 'lighter' }} >We&apos;re the industry&apos;s go-to for environmental solutions, connecting buyers and sellers of carbon credits with reliability and expertise. Join us in making a real impact on our planet.</p>
                 </div>
                 <div>
                     <ul className='tab-list'>
