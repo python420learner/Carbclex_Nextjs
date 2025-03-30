@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { Bar,Doughnut,Line } from 'react-chartjs-2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell,faUser,faBagShopping } from '@fortawesome/free-solid-svg-icons'

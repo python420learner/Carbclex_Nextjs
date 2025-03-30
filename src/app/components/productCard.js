@@ -2,6 +2,7 @@ import React from 'react';
 import projectImage from '../../../public/Assets/project_img.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -20,11 +21,13 @@ const ProductCard = ({ project }) => {
         <p style={{marginTop:'1rem'}}>$10 per Tonne</p>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <FontAwesomeIcon icon={faCartShopping} color='#065F24' size='2x' />
-          <Link href={`/projectDetails?data=${encodedProject}`} state={project}>
-            <button style={{ width: '7rem', color: '#065424', cursor: 'pointer', backgroundColor: 'white', border: '2px solid #065424' }}>
-              SEE MORE
-            </button>
-          </Link>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Link href={`/projectDetails?data=${encodedProject}`} state={project}>
+              <button style={{ width: '7rem', color: '#065424', cursor: 'pointer', backgroundColor: 'white', border: '2px solid #065424' }}>
+                SEE MORE
+              </button>
+            </Link>
+          </Suspense>
         </div>
       </div>
     </div>

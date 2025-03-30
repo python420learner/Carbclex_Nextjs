@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { React, useState } from "react";
 import "./page.css"
 import Link from "next/link";

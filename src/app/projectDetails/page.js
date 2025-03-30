@@ -11,11 +11,17 @@ import './page.css'
 const Details = () => {
 
     const [activeTab, setActiveTab] = React.useState("overview");
+    const [params, setSearchParams] = React.useState(null)
 
-    const searchParams = useSearchParams();
-    const projectData = searchParams.get("data");
-    const project = projectData ? JSON.parse(decodeURIComponent(projectData)) : {};
+    useEffect(() => {
+        // Parse the query string using URLSearchParams
+        const params = new URLSearchParams(window.location.search);
+        setSearchParams(params);
+      }, []);
 
+
+    // const searchParams = useSearchParams();
+    // const projectData = searchParams.get("data");
 
     const sectionRefs = {
         overview: useRef(null),
@@ -52,6 +58,12 @@ const Details = () => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
       }, []);
+
+      if (!params) {
+        return <div>Loading project details...</div>;
+      }
+      const project = projectData ? JSON.parse(decodeURIComponent(projectData)) : {};
+      const projectData = params.get("data");
 
   return (
     <>
@@ -155,7 +167,6 @@ const Details = () => {
             </div>
             <Footer/>
         </div> 
-    
     </>
   )
 }

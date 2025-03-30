@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { React, useState } from "react";
 import "./page.css"
 import { useRouter } from "next/navigation";
@@ -143,7 +143,7 @@ const Login = () => {
                       Forgot password </button>
                     
                   </div>
-                  <div style={{color:'#B6C9C8',fontWeight:'bold',margin:'2px'}}> Don't have an account? <Link href="/signup" style={{color:'white',fontWeight:'light'}}>SignUp</Link> </div>
+                  <div style={{color:'#B6C9C8',fontWeight:'bold',margin:'2px'}}> Don&apos;t have an account? <Link href="/signup" style={{color:'white',fontWeight:'light'}}>SignUp</Link> </div>
                   <div className="others">
                     <div className="line-login"></div>
                     <div  className="or">
