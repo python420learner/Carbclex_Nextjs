@@ -101,10 +101,10 @@ const HomePage = () => {
                 </div>
             </div>
             <div className="services">
-                <h2 className='gradient-text' style={{ margin: '15rem 5rem', marginBottom: '8rem', fontSize: '2.4rem', letterSpacing: '2px' }}>Calculate Carbon<br /> Impact: <span style={{ fontWeight: 'lighter' }}>Start your Journey</span></h2>
+                <h1 className='gradient-text' style={{ margin: '15rem 5rem',fontWeight:'600',marginBottom: '8rem',fontSize:'xx-large', letterSpacing: '2px' }}>Calculate Carbon<br /> Impact:</h1>
                 <div className="container" style={{ margin: '6rem auto', display: 'flex', flexDirection: 'column' }}>
                     <div className="services-title">
-                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', color: '#18311D', letterSpacing: '1px', borderBottom: '2px solid #13A0AA', width: 'fit-content', marginBottom: '3rem' }}>Our Services</h2>
+                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', color: '#18311D', letterSpacing: '1px', borderBottom: '2px solid #13A0AA', width: 'fit-content', marginBottom: '3rem', marginLeft:'10rem'}}>Our Services</h2>
                     </div>
                     <div className="services-cards" style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', gap: '2rem' }} >
                         <div className="card">
@@ -163,7 +163,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="approach" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '7rem', gap: '4rem', paddingBottom: '3rem' }}>
-                    <h2 className='gradient-text'>Our Approach</h2>
+                    <h2 className='gradient-text' style={{fontWeight:'lighter'}}>Our Approach</h2>
                     <Image src={approachImg} alt="Description of SVG" style={{ width: '83%', height: '40%' }} />
                     <button className="b" style={{ width: '10rem', paddingBlock: '0.7rem', color: 'white', backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)' }}>Get Started</button>
                 </div>
@@ -187,11 +187,11 @@ const HomePage = () => {
                     <CTA />
                 </div>
                 <div className='section-4'>
-                    <h2 className='gradient-text'>Our Objective</h2>
+                    <h2 className='gradient-text' style={{fontWeight:'lighter'}}>Our Objective</h2>
                     <p>We believe in building trust through transparency. Our processes are open, traceable, and designed to provide you with clear insights into your environmental impact. We believe in building trust through transparency. environmental impact.</p>
                 </div>
                 <div className='section-4'>
-                    <h2 className='gradient-text'>Our Mission</h2>
+                    <h2 className='gradient-text' style={{fontWeight:'lighter'}}>Our Mission</h2>
                     <p>We believe in building trust through transparency. Our processes are open, traceable, and designed to provide you with clear insights into your environmental impact. We believe in building trust through transparency. environmental impact.</p>
                 </div>
                 <div>
