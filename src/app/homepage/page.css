@@ -140,6 +140,13 @@
     border-top-right-radius: 20px;
     text-align: left;
   }
+
+  .card-header h3{
+    font-weight: lighter;
+    font-size: x-large;
+    margin-left: 7px;
+    margin-top: 11%;
+  }
   
   .one{
     background-image: linear-gradient(to right, #34592A, rgba(0, 0, 0, 0)),url('../../../public/Assets/service4.webp');
@@ -246,7 +253,6 @@
   }
 
   .first-offset{
-    border: 1px solid black;
     padding: 2rem;
   }
   
