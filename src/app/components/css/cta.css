@@ -1,100 +1,116 @@
 
 .cta{
-    border-bottom: 2.5rem solid darkgreen;
-    border-top-left-radius: 3rem;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.844), rgba(0, 0, 0, 0)),url('../../../../public/Assets/cta.jpg');
-    background-size: cover;
-    border-bottom-right-radius: 3rem;
-    padding:6rem 1rem;
-    display:flex;
-    justify-content:space-around;
-    margin:10rem 1rem;
-    color: white;
-  }
-  
-  .steps-container {
+  border-bottom: 2.5rem solid darkgreen;
+  border-top-left-radius: 3rem;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.844), rgba(0, 0, 0, 0)),url('../../../../public/Assets/cta.jpg');
+  background-size: cover;
+  border-bottom-right-radius: 3rem;
+  padding:6rem 1rem;
+  display:flex;
+  justify-content:space-around;
+  margin:10rem 1rem;
+  color: white;
+}
+
+.info{
+  width: 40%;
+  margin-left: 2.3rem;
+}
+
+.cta_hero{
+  width: 70%;
+}
+
+.register{
+  width: 60%;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.progress_body {
+  display: flex;
+  margin-top: 2rem;
+  align-items: center;
+}
+.progress-container {
+    width: 80%;
     display: flex;
-    margin-top: 3rem;
-    position: relative;
     align-items: center;
-  }
-  
-  .info{
-    width: 40%;
-    margin-left: 2.3rem;
-  }
-  
-  .cta_hero{
-    width: 70%;
-  }
-  
-  .register{
-    width: 60%;
-    text-align: center;
-    margin-top: 5rem;
-  }
-  
-  .step {
-    
+    justify-content: space-between;
     position: relative;
+}
+.progress-bar {
+    position: absolute;
+    top: 12.5%;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: white;
+    transform: translateY(-50%);
     z-index: 0;
+}
+.step {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-  
-  .circle_cta {
+    color: white;
+    font-family: Arial, sans-serif;
+    position: relative;
+    width: 25%;
+    max-width: 120px;
+}
+.circle_cta {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
-    background-color: #fff;
-    z-index: 2;
-    border: 2px solid #ccc;
-  }
-  
-  .text {
-    font-size: 14px;
-    margin-top: 5px;
-    width: 82%;
-  }
-  
-  .line {
-    position: absolute;
-    top: 14%; /* Aligns the line vertically with the circles */
-    left: 60px; /* Starts at the edge of the first circle */
-    right: 50px; /* Ends at the edge of the last circle */
-    height: 2px;
     background-color: white;
-    z-index: 1; /* Ensures it stays below the circles */
-    /* width: calc(100% - 230px); Accounts for the margins of the first and last circles */
-    width: 75%;
+    border-radius: 50%;
+    border: 4px solid white;
+    z-index: 1;
+}
+.text {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+@media(max-width:580px){
+  .cta{
+    flex-direction: column;
   }
-  
-  @media(max-width:580px){
-    .cta{
-      flex-direction: column;
-    }
-  
-    .text{
-      width: 100%;
-    }
-  
-    .info{
-      text-align: center;
-      width: 90%;
-      margin-inline: auto;
-    }
-  
-    .cta_hero{
-      text-align: center;
-      margin-inline: auto;
-    }
-  
-    .register{
-      width: 90%;
-      margin-inline: auto;
-    }
-  
+
+  .text{
+    width: 100%;
   }
-  
+
+  .progress_body{
+    justify-content: center;
+  }
+
+  .progress-bar{
+    top: 15.7%;
+  }
+  .progress-container{
+    width: 100%;
+  }
+
+  .info{
+    text-align: center;
+    width: 90%;
+    margin-inline: auto;
+  }
+
+  .cta_hero{
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .register{
+    width: 90%;
+    margin-inline: auto;
+  }
+
+  .text{
+    font-size: 10px;
+  }
+
+}
