@@ -101,10 +101,10 @@ const HomePage = () => {
                 </div>
             </div>
             <div className="services">
-                <h1 className='gradient-text' style={{ margin: '15rem 5rem',fontWeight:'600',marginBottom: '8rem',fontSize:'xx-large', letterSpacing: '2px' }}>Calculate Carbon<br /> Impact:</h1>
+                <h1 className='gradient-text' style={{ margin: '15rem 5rem',fontWeight:'600',marginBottom: '8rem',fontSize:'xxx-large', letterSpacing: '2px' }}>Calculate Carbon<br /> Impact:</h1>
                 <div className="container" style={{ margin: '6rem auto', display: 'flex', flexDirection: 'column' }}>
                     <div className="services-title">
-                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', color: '#18311D', letterSpacing: '1px', borderBottom: '2px solid #13A0AA', width: 'fit-content', marginBottom: '3rem', marginLeft:'10rem'}}>Our Services</h2>
+                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', color: '#18311D', fontSize:'xx-large',letterSpacing: '1px', borderBottom: '2px solid #13A0AA', width: 'fit-content', marginBottom: '3rem', marginLeft:'10rem'}}>Our Services</h2>
                     </div>
                     <div className="services-cards" style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', gap: '2rem' }} >
                         <div className="card">
@@ -137,7 +137,7 @@ const HomePage = () => {
             <div className='gradient-background'>
                 <div className='offset'>
                     <div className='offset_firstchild'>
-                        <h2 className='gradient-text' style={{ color: '#18311D', fontWeight: 'lighter', marginBottom: '2rem' }}>Why offset with us?</h2>
+                        <h2 className='gradient-text' style={{ color: '#18311D', fontWeight: 'lighter',fontSize:'xx-large', marginBottom: '2rem' }}>Why offset with us?</h2>
                         <p style={{ fontWeight: 'lighter' }}>With CarbClex, businesses can trust in our commitment to transparency, accuracy, and the genuine impact of our environmental projects.</p>
                     </div>
                     <div className='group1 first-offset'>
@@ -163,7 +163,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="approach" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '7rem', gap: '4rem', paddingBottom: '3rem' }}>
-                    <h2 className='gradient-text' style={{fontWeight:'lighter'}}>Our Approach</h2>
+                    <h2 className='gradient-text' style={{fontWeight:'lighter',fontSize:'xx-large'}}>Our Approach</h2>
                     <Image src={approachImg} alt="Description of SVG" style={{ width: '83%', height: '40%' }} />
                     <button className="b" style={{ width: '10rem', paddingBlock: '0.7rem', color: 'white', backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)' }}>Get Started</button>
                 </div>
@@ -171,7 +171,7 @@ const HomePage = () => {
             <div style={{ backgroundImage: 'linear-gradient(white,#ebe8d855)', marginBottom: '20rem' }}>
                 <div className='products' style={{ marginTop: '10rem' }}>
                     <div className='product_head'>
-                        <h2 className='gradient-text' style={{ fontWeight: 'lighter' }}>Our Projects</h2>
+                        <h2 className='gradient-text' style={{ fontWeight: 'lighter',fontSize:'xx-large' }}>Our Projects</h2>
                         <p>With CarbClex, businesses can trust in our commitment to transparency, accuracy, and the genuine impact of our environmental projects.</p>
                     </div>
                     <div style={{ height: '60%', paddingBlock: '5rem', textAlign: 'center' }}>
@@ -187,11 +187,11 @@ const HomePage = () => {
                     <CTA />
                 </div>
                 <div className='section-4'>
-                    <h2 className='gradient-text' style={{fontWeight:'lighter'}}>Our Objective</h2>
+                    <h2 className='gradient-text' style={{fontWeight:'lighter',fontSize:'xx-large'}}>Our Objective</h2>
                     <p>We believe in building trust through transparency. Our processes are open, traceable, and designed to provide you with clear insights into your environmental impact. We believe in building trust through transparency. environmental impact.</p>
                 </div>
                 <div className='section-4'>
-                    <h2 className='gradient-text' style={{fontWeight:'lighter'}}>Our Mission</h2>
+                    <h2 className='gradient-text' style={{fontWeight:'lighter',fontSize:'xx-large'}}>Our Mission</h2>
                     <p>We believe in building trust through transparency. Our processes are open, traceable, and designed to provide you with clear insights into your environmental impact. We believe in building trust through transparency. environmental impact.</p>
                 </div>
                 <div>

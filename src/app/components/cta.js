@@ -10,25 +10,27 @@ const CTA = () => {
                     <h2 style={{fontWeight:'bold',letterSpacing:'2px',marginBottom:'.8rem'}}>ARE YOU A 
                     PROJECT DEVELOPER?</h2>
                     <p style={{marginBottom:'2rem'}}>We unite carbon offset suppliers and global buyers, creating a seamless connection that bridges the gap between environmental projects and businesses striving for sustainability.</p>
-                    <p>Bring your carbon offset project to life on our secure marketplace with our streamlined 4-step process.</p>
+                    <p style={{marginTop:'4rem'}}>Bring your carbon offset project to life on our secure marketplace with our streamlined 4-step process.</p>
                 </div>
-                <div className="steps-container">
-                    <div className="step">
-                        <div className="circle_cta"></div>
-                        <div className="text">Create An Account</div>
-                    </div>
-                    <div className="line"></div>
-                    <div className="step">
-                        <div className="circle_cta"></div>
-                        <div className="text">Submit Project Details</div>
-                    </div>
-                    <div className="step">
-                        <div className="circle_cta"></div>
-                        <div className="text">Verification & Validation</div>
-                    </div>
-                    <div className="step">
-                        <div className="circle_cta"></div>
-                        <div className="text">Go live on Marketplace</div>
+                <div className='progress_body'>
+                    <div className="progress-container">
+                        <div className="progress-bar"></div>
+                        <div className="step">
+                            <div className="circle_cta"></div>
+                            <div className="text">Create An Account</div>
+                        </div>
+                        <div className="step">
+                            <div className="circle_cta"></div>
+                            <div className="text">Submit Project Details</div>
+                        </div>
+                        <div className="step">
+                            <div className="circle_cta"></div>
+                            <div className="text">Verification & Validation</div>
+                        </div>
+                        <div className="step">
+                            <div className="circle_cta"></div>
+                            <div className="text">Go live on Marketplace</div>
+                        </div>
                     </div>
                 </div>
             </div>
