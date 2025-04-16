@@ -1,0 +1,26 @@
+package com.carbclex.CarbClex.service;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.carbclex.CarbClex.model.Project;
+import com.carbclex.CarbClex.repository.ProjectRepository;
+
+@Service
+public class ProjectServiceImplement implements ProjectService{
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Override
+    public Project saveProject(Project project){
+        return projectRepository.save(project);
+    }
+
+    @Override
+    public List<Project> getAllProjects(){
+        return projectRepository.findAll();
+    }
+
+}
