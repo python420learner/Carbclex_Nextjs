@@ -1,5 +1,5 @@
 'use client'
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./page.css"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -15,6 +15,7 @@ import {
 } from "firebase/auth";
 import { app } from '../firebase';
 import { faFacebook, faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
+import Navbar from "../components/Navbar";
 
 
 const Login = () => {
@@ -25,6 +26,26 @@ const Login = () => {
   const [resetEmail, setResetEmail] = useState(""); // For forgot password
   const [showResetPassword, setShowResetPassword] = useState(false); // Toggle forgot password UI
   const [formState, setFormState] = useState('login');
+  const [hasScrolled_market, setHasScrolled_market] = useState(false);
+  
+  useEffect(() => {
+      const handleScroll = () => {
+        // Check if user has scrolled vertically
+        if (window.scrollY > 0) {
+          setHasScrolled_market(true);
+        } else {
+          setHasScrolled_market(false);
+        }
+      };
+    
+      // Add the event listener inside the effect
+      window.addEventListener('scroll', handleScroll);
+    
+      // Cleanup the event listener when the component unmounts
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
 
   const handleForgotPasswordClick = () => {
     setFormState('forgotPassword'); // Switch to "forgot password" mode
@@ -106,9 +127,11 @@ const Login = () => {
 
   return (
     <>
+      <div style={{marginTop:'1.3rem'}}  id='navbar' >
+        <Navbar />
+      </div>
       <div
-        className="logincontainer"
-      >
+        className="logincontainer" >
         <div className="small-container">
           <div className="left">
             <div style={{width:'70%'}}>

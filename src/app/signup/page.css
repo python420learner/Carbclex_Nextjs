@@ -12,7 +12,7 @@
     margin-inline: auto;
     background-size: cover;
     box-sizing: border-box;
-    margin-top: 10%;
+    margin-top: 4rem;
   }
   
   .Container::before {

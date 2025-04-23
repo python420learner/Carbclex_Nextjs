@@ -10,13 +10,13 @@ import { faGasPump, faLocationDot, faLock, faUsersLine, faArrowLeft } from '@for
 import petrol from '../../../public/Assets/petrol.png'
 import Image from 'next/image';
 import cng from '../../../public/Assets/cng.png'
-import { act, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './page.css'
 import Navbar from '../components/Navbar';
 
-const page = () => {
+const CalculatorPage = () => {
 
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [hasScrolled_market, setHasScrolled_market] = useState(false);
   
@@ -224,4 +224,4 @@ const page = () => {
   )
 }
 
-export default page
+export default CalculatorPage;
