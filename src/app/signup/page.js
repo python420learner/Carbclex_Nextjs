@@ -1,10 +1,11 @@
 'use client'
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./page.css"
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGenderless,faPerson,faPersonDress,faCheck, faC } from "@fortawesome/free-solid-svg-icons";
 import { app } from '../firebase';
+import Navbar from "../components/Navbar";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
 const SignUp = () => {
@@ -12,6 +13,26 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formState,setFormState] = useState('signup')
+  // const [hasScrolled_market, setHasScrolled_market] = useState(false);
+    
+  // useEffect(() => {
+  //     const handleScroll = () => {
+  //       // Check if user has scrolled vertically
+  //       if (window.scrollY > 0) {
+  //         setHasScrolled_market(true);
+  //       } else {
+  //         setHasScrolled_market(false);
+  //       }
+  //     };
+    
+  //     // Add the event listener inside the effect
+  //     window.addEventListener('scroll', handleScroll);
+    
+  //     // Cleanup the event listener when the component unmounts
+  //     return () => {
+  //       window.removeEventListener('scroll', handleScroll);
+  //     };
+  //   }, []);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -36,6 +57,9 @@ const SignUp = () => {
 
   return (
     <>
+      <div style={{marginTop:'1.3rem'}}  id='navbar' >
+        <Navbar/>
+      </div>
       <div className="Container">
         <div className="left_container" style={{width:'40vw',height:'100%',display:'flex',flexDirection:'column',justifyContent:'flex-end'}}>
           <div style={{color:'white',padding:'2rem'}}>

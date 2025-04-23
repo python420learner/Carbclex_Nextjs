@@ -7,6 +7,8 @@ import revenueData from "../revenueData.json"
 import sourceData from "../sourceData.json"
 import monthlyData from "../monthly.json"
 import "./page.css"
+import Navbar from '../components/Navbar'
+import { useEffect, useState } from 'react'
 
 import {
     Chart as ChartJS,
@@ -29,6 +31,26 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement
 
 
 const Dashboard = () => {
+    const [hasScrolled_market, setHasScrolled_market] = useState(false);
+    
+    useEffect(() => {
+        const handleScroll = () => {
+            // Check if user has scrolled vertically
+            if (window.scrollY > 0) {
+            setHasScrolled_market(true);
+            } else {
+            setHasScrolled_market(false);
+            }
+        };
+        
+        // Add the event listener inside the effect
+        window.addEventListener('scroll', handleScroll);
+        
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+        }, []);
   return (
     <>
         <div className='dashboard' style={{display:'flex',marginBottom:'50rem'}}>
@@ -44,6 +66,9 @@ const Dashboard = () => {
                 </ul>
             </div>
             <div style={{marginLeft: '220px'}}>
+                <div className={`nav_bar ${hasScrolled_market ? 'nav_background' : ''}`} id='navbar' >
+                        <Navbar />
+                </div>
                 <div className='icons' style={{marginLeft:'auto',width:'fit-content',marginBlock:'2rem'}}>
                     <FontAwesomeIcon icon={faBagShopping} style={{marginRight:'2rem'}}  color='black' size='2x'/>
                     <FontAwesomeIcon icon={faBell}  style={{marginRight:'2rem'}} color='black' size='2x'/>

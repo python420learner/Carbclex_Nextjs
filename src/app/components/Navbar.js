@@ -33,6 +33,7 @@ const Navbar = () => {
         };
     }, []);
 
+
     const [isToggled, setIsToggled] = useState(false);
 
     // Event handler to toggle the state
