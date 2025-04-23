@@ -1,5 +1,8 @@
 .footer{
-    padding-top: 2rem;
+    color: white;
+    letter-spacing: 3px;
+    padding: 6rem 6rem;
+    align-items: start;
 }
 
 .footer-head{
@@ -15,13 +18,22 @@
     color: whitesmoke;
     font-weight: lighter;
     margin-bottom: 1rem;
+    font-size: large;
+
 }
 
-.footer-head ul li{
+.footer ul{
     list-style: none;
+    color: white;
     font-weight: lighter;
     font-size: small;
-    color: whitesmoke;
+    margin: 0;
+    padding: 0;
+}
+
+.footer ul li{
+    text-indent: 0;
+    cursor: pointer;
     margin-bottom: 4px;
 }
 

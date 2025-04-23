@@ -2,17 +2,41 @@
 import category from '../../../public/Assets/project_category.png'
 import CTA from '../components/cta';
 import ProductList from '../components/productlist'
+import { useState, useEffect } from 'react';
 import RouteTracker from '../components/RouteTracker';
 import './page.css'
+import Navbar from '../components/Navbar';
+import Footer from '../components/footer';
 import Image from "next/image";
 
-
-
 const MarketPlace = () => {
+    const [hasScrolled_market, setHasScrolled_market] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+          // Check if user has scrolled vertically
+          if (window.scrollY > 0) {
+            setHasScrolled_market(true);
+          } else {
+            setHasScrolled_market(false);
+          }
+        };
+      
+        // Add the event listener inside the effect
+        window.addEventListener('scroll', handleScroll);
+      
+        // Cleanup the event listener when the component unmounts
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
     return (
         <>
             {/* <RouteTracker/> */}
             <div className='market' style={{backgroundColor:'#F4FFF6',marginBottom:'10rem'}}>   
+                <div className={`nav_bar ${hasScrolled_market ? 'nav_background' : ''}`} id='navbar' >
+                        <Navbar />
+                </div>
                 <div className='intro'>
                     <p style={{color:'#18311D',fontWeight:'bold'}}>Shape Greener Future:</p>
                     <h1 className='t-white lspace' style={{color:'#18311D'}}>Trade Verified <br/> Carbon Credits</h1>
@@ -30,6 +54,7 @@ const MarketPlace = () => {
                 </div>
             </div>
             <CTA/>
+            <Footer/>
         </>
     )
 }
