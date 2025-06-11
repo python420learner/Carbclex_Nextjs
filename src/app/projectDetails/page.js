@@ -62,8 +62,8 @@ const Details = () => {
       if (!params) {
         return <div>Loading project details...</div>;
       }
-      const project = projectData ? JSON.parse(decodeURIComponent(projectData)) : {};
       const projectData = params.get("data");
+      const project = projectData ? JSON.parse(decodeURIComponent(projectData)) : {};
 
   return (
     <>

@@ -13,7 +13,7 @@ public class CountryCodeMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer countryId;
 
-    @Column(nullable = false, unique = true, length = 5)
+    @Column(nullable = false, unique = true, length = 30)
     private String code; // e.g., +91 for India
 
     @Column(nullable = false, length = 100)
