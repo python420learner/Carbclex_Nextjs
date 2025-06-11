@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import MarkdownHTML from '../../components/MarkdownHTML';
 import Link from 'next/link';
-import axios from 'axios';
 import Image from 'next/image';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/footer';
@@ -47,6 +46,10 @@ export default function Page({ params }) {
         fetchPosts();
         fetchMedia();
     }, []);
+    
+
+    const blocks = response?response['data'][0]['blocks']:[]
+    console.log(blocks)
 
     return (
         <div className="min-h-screen bg-gray-100 py-10">

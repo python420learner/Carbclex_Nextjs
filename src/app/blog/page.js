@@ -7,6 +7,7 @@ import Link from 'next/link'
 import blogImage from '../../../public/Assets/blog_hero.png'
 import Footer from '../components/footer'
 
+
 const Blog = () => {
   const [posts, setPosts] = useState([])
   const [media, setMedia] = useState([]);
@@ -21,13 +22,14 @@ const Blog = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch("http://localhost:1337/api/articles?populate=*")
+      const data = await fetch("http://localhost:1337/api/blogs?populate=*")
       const response = await data.json()
       setPosts(response.data)
     }
     fetchData()
     fetchMedia()
   }, [])
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -44,13 +46,13 @@ const Blog = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ width: '80%', marginInline: 'auto' }}>
         {posts.length > 0 ? (
           posts.map((post) => (
-            <Link href={`/blogpost/${post.slug}`} key={post.id}>
+            <Link href={`/blog/${post.category.slug}/${post.slug}`} key={post.id}>
               <div className="max-w-xs mx-auto bg-transparent" >
                 {/* Image */}
                 <div className=" relative w-full h-64 rounded-t-lg">
                   <Image 
                       key={post.id} 
-                      src={`http://localhost:1337${post.cover.url}`} 
+                      src={`http://localhost:1337${post['displayImage'][0]['url']}`} 
                       alt={post.author.name} 
                       fill
                       className="w-64 h-auto"
