@@ -25,7 +25,7 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    // @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
 //    public ResponseEntity<Map<String, String>> add(@RequestBody Project project) {
 //     System.out.println("Project Received");
 //     projectService.saveProject(project);
