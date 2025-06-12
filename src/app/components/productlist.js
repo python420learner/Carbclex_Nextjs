@@ -14,7 +14,7 @@ const ProductList = ({demo = false}) => {
 
   useEffect((e) => {
     // Make GET request to fetch products when component mounts
-    fetch('http://localhost:8080/carbclex/getAll')
+    fetch('/api/carbclex/getAll')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
