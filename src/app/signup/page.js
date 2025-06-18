@@ -44,7 +44,7 @@ const SignUp = () => {
 
         // Send verification email
         await sendEmailVerification(user,{
-          url:'http://localhost:3000/login'
+          url:'https://carbclex.com/login'
         })
 
         alert("Verification email sent! Please check your inbox.");

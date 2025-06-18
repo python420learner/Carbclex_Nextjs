@@ -97,10 +97,10 @@ const Dashboard = () => {
                         <Navbar />
                     </div>
                     <div className='icons' style={{ marginLeft: 'auto', width: 'fit-content', marginBlock: '2rem' }}>
-                        <FontAwesomeIcon icon={faBagShopping} style={{ marginRight: '2rem' }} color='black' size='2x' />
-                        <FontAwesomeIcon icon={faBell} style={{ marginRight: '2rem' }} color='black' size='2x' />
+                        <FontAwesomeIcon className='icon' icon={faBagShopping} style={{ marginRight: '2rem' }} color='black' size='2x' />
+                        <FontAwesomeIcon className='icon' icon={faBell} style={{ marginRight: '2rem' }} color='black' size='2x' />
                         <Link href="/signup"><FontAwesomeIcon icon={faUser} style={{ marginRight: '2rem' }} color='black' size='2x' /></Link>
-                        <FontAwesomeIcon onClick={handleLogout} icon={faRightFromBracket} style={{ marginRight: '2rem' }} color='black' size='2x' />
+                        <FontAwesomeIcon  className='icon' onClick={handleLogout} icon={faRightFromBracket} style={{ marginRight: '2rem' }} color='black' size='2x' />
 
 
                     </div>
