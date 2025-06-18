@@ -41,6 +41,7 @@ const Dashboard = () => {
         })
             .then((res) => {
                 if (!res.ok) {
+                    alert('Login Required!!')
                     router.push('/login');
                 }
             })
@@ -56,6 +57,7 @@ const Dashboard = () => {
         });
 
         // Redirect to login page
+        alert("Logout Successful")
         router.push("/login")
     };
 

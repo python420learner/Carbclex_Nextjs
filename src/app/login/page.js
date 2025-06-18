@@ -111,14 +111,27 @@ const Login = () => {
       alert(error.message);
     }
   };
-  ''
 
   const loginWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result);
-        router.push("/dashboard");
+        const idToken = await result.user.getIdToken();
+
+        // Send this token to your Spring Boot backend
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+            "Content-Type": "application/json"
+          }
+        });
+        if (res.ok) {
+          // Login and session successful
+          router.push("/dashboard");
+          // window.location.href = "/dashboard";
+        }
       })
       .catch((err) => {
         console.log(err);

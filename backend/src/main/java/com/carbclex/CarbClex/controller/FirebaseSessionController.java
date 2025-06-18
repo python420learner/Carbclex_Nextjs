@@ -31,6 +31,10 @@ public class FirebaseSessionController {
 
             String email = decodedToken.getEmail();
             String uid = decodedToken.getUid();
+            // String provider = decodedToken.getFirebase().getSignInProvider(); // "google.com", "password", etc.
+            String provider = (String) decodedToken.getClaims().get("firebase").toString();
+
+
 
             // Check if session already exists for this user
             HttpSession existingSession = request.getSession(false);
@@ -42,6 +46,8 @@ public class FirebaseSessionController {
             HttpSession session = request.getSession(true);
             session.setAttribute("uid", uid);
             session.setAttribute("email", email);
+            session.setAttribute("provider", provider);
+
 
             return ResponseEntity.ok("Session created for " + email);
 
