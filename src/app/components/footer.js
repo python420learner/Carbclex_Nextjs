@@ -44,7 +44,7 @@ const Footer = () => {
           <h3>FOR SUPPLIER</h3>
           <ul>
               <li>PROJECT REGISTRATION</li>
-              <li>SUPPLIER&apos; GUIDE</li>
+              <li>SUPPLIER&apos;S GUIDE</li>
           </ul>
         </div>
       </div>

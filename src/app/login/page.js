@@ -27,25 +27,39 @@ const Login = () => {
   const [showResetPassword, setShowResetPassword] = useState(false); // Toggle forgot password UI
   const [formState, setFormState] = useState('login');
   const [hasScrolled_market, setHasScrolled_market] = useState(false);
-  
+
   useEffect(() => {
-      const handleScroll = () => {
-        // Check if user has scrolled vertically
-        if (window.scrollY > 0) {
-          setHasScrolled_market(true);
-        } else {
-          setHasScrolled_market(false);
+    fetch(`/api/auth/check-session`, {
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.ok) {
+          window.location.href = "/dashboard";
         }
-      };
-    
-      // Add the event listener inside the effect
-      window.addEventListener('scroll', handleScroll);
-    
-      // Cleanup the event listener when the component unmounts
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
+      })
+      .catch((err) => {
+        console.error("Session check failed", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if user has scrolled vertically
+      if (window.scrollY > 0) {
+        setHasScrolled_market(true);
+      } else {
+        setHasScrolled_market(false);
+      }
+    };
+
+    // Add the event listener inside the effect
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleForgotPasswordClick = () => {
     setFormState('forgotPassword'); // Switch to "forgot password" mode
@@ -68,22 +82,36 @@ const Login = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-        if (user.emailVerified) {
-            console.log("User is verified");
-            const lastPage = localStorage.getItem("lastVisitedPage") || "/";
-            router.push(lastPage);
-        } else {
-            alert("Please verify your email before logging in.");
+      if (user && user.emailVerified) {
+        console.log("User is verified");
+        const idToken = await user.getIdToken();
+
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${idToken}`
+          },
+          credentials: "include", // VERY IMPORTANT for session cookie
+        }).then(res => res.text())
+          .then(data => console.log(data))
+          .catch(err => console.error(err));
+
+        if (user && user.emailVerified) {
+          // ✅ Redirect only if login and session are successful
+          router.push("/dashboard");
         }
+      } else {
+        alert("Please verify your email before logging in.");
+      }
     } catch (error) {
-        console.error("Error logging in:", error);
-        alert(error.message);
+      console.error("Error logging in:", error);
+      alert(error.message);
     }
-};
-
+  };
+  ''
 
   const loginWithGoogle = () => {
     const provider = new GoogleAuthProvider();
@@ -127,15 +155,15 @@ const Login = () => {
 
   return (
     <>
-      <div style={{marginTop:'1.3rem'}}  id='navbar' >
+      <div style={{ marginTop: '1.3rem' }} id='navbar' >
         <Navbar />
       </div>
       <div
         className="logincontainer" >
         <div className="small-container">
           <div className="left">
-            <div style={{width:'70%'}}>
-              <h1 style={{fontWeight:'800'}}>Welcome Back !</h1>
+            <div style={{ width: '70%' }}>
+              <h1 style={{ fontWeight: '800' }}>Welcome Back !</h1>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam,
                 sed. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet
@@ -148,55 +176,55 @@ const Login = () => {
             {formState === 'login' && (
               <form onSubmit={submitHandler}>
                 <div className="inputsField">
-                  <label htmlFor="email">e-mail <span style={{color:'red'}}>*</span></label>
+                  <label htmlFor="email">e-mail <span style={{ color: 'red' }}>*</span></label>
                   <input onChange={(e) => setEmail(e.target.value)} className="inputField" type="email" name="email" placeholder="john@example.email" required
                   />
-                  <label htmlFor="password">Password <span style={{color:'red'}}>*</span></label>
+                  <label htmlFor="password">Password <span style={{ color: 'red' }}>*</span></label>
                   <input onChange={(e) => setPassword(e.target.value)} className="inputField" type="password" name="password" placeholder="password*"
-                  required/>
+                    required />
                 </div>
-                
+
 
                 <button className="btn" type="submit">
                   LogIn{" "}
                 </button>
-                <div className="forgotPassword" style={{display:'flex',flexDirection:'column',alignItems:'center',marginBlock:'4px',gap:'5px'}}>
+                <div className="forgotPassword" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBlock: '4px', gap: '5px' }}>
                   <div>
-                    <button type="button" style={{backgroundColor:'transparent',border:'none',color:'white'}} onClick={handleForgotPasswordClick}>
+                    <button type="button" style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleForgotPasswordClick}>
                       Forgot password </button>
-                    
+
                   </div>
-                  <div style={{color:'#B6C9C8',fontWeight:'bold',margin:'2px'}}> Don&apos;t have an account? <Link href="/signup" style={{color:'white',fontWeight:'light'}}>SignUp</Link> </div>
+                  <div style={{ color: '#B6C9C8', fontWeight: 'bold', margin: '2px' }}> Don&apos;t have an account? <Link href="/signup" style={{ color: 'white', fontWeight: 'light' }}>SignUp</Link> </div>
                   <div className="others">
                     <div className="line-login"></div>
-                    <div  className="or">
-                      <p style={{color:'white',fontSize:'x-large'}}>OR</p>
+                    <div className="or">
+                      <p style={{ color: 'white', fontSize: 'x-large' }}>OR</p>
                     </div>
                     <div className="line-login"></div>
                   </div>
-                  <p style={{color:'#B6C9C8',fontWeight:'bold'}}>Continue with</p>
-                  <div style={{display:'flex',flexWrap:'wrap',gap:'4px'}}>
+                  <p style={{ color: '#B6C9C8', fontWeight: 'bold' }}>Continue with</p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                     <button onClick={loginWithGoogle} id="googleBtn" className="btn-m" type="button"
-                      >
-                        <FontAwesomeIcon icon={faGoogle} color='white' size='1x' style={{marginRight:'8px'}}/>Google{" "}
-                      </button>
-                      <button onClick={loginWithFacebook} id="facebookBtn" className="btn-m" type="button"
-                      >
-                        <FontAwesomeIcon icon={faFacebook} color='white' size='1x' style={{marginRight:'8px'}}/> Facebook{" "}
-                      </button>
+                    >
+                      <FontAwesomeIcon icon={faGoogle} color='white' size='1x' style={{ marginRight: '8px' }} />Google{" "}
+                    </button>
+                    <button onClick={loginWithFacebook} id="facebookBtn" className="btn-m" type="button"
+                    >
+                      <FontAwesomeIcon icon={faFacebook} color='white' size='1x' style={{ marginRight: '8px' }} /> Facebook{" "}
+                    </button>
                   </div>
                 </div>
-                <p style={{fontSize:'small',textAlign:'center',color:'white'}}>By registering you agree with our <span style={{color:'#033614'}}> Terms and Conditions</span></p>
+                <p style={{ fontSize: 'small', textAlign: 'center', color: 'white' }}>By registering you agree with our <span style={{ color: '#033614' }}> Terms and Conditions</span></p>
               </form>
             )}
             {formState === 'forgotPassword' && (
 
-                // Forgot Password Form
+              // Forgot Password Form
 
-              <div style={{display:'flex',flexDirection:'column',justifyContent:'center',width:'80%',marginTop:'40%'}}>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '80%', marginTop: '40%' }}>
                 <div>
-                  <p>Registered e-mail <span style={{color:'red'}}>*</span></p>
-                  <input type="text" placeholder="john@gmail.com" style={{ display: 'block',width:'100%',padding:'0.4rem 1rem',borderRadius:'40px'}} required />
+                  <p>Registered e-mail <span style={{ color: 'red' }}>*</span></p>
+                  <input type="text" placeholder="john@gmail.com" style={{ display: 'block', width: '100%', padding: '0.4rem 1rem', borderRadius: '40px' }} required />
 
                 </div>
                 <button className="btn" onClick={handlePasswordResetSubmit}>
@@ -211,27 +239,27 @@ const Login = () => {
               </div>
             )}
             {formState === 'resetPassword' && (
-            <div style={{display:'flex',flexDirection:'column',justifyContent:'center',width:'80%',marginTop:'40%',gap:'1rem'}}>
-              <div>
-                <label>Enter New Password <span style={{color:'red'}}>*</span></label>
-                <input type="password" placeholder="New Password" style={{width:'100%',padding:'0.4rem 1rem',borderRadius:'40px'}} aria-required/>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '80%', marginTop: '40%', gap: '1rem' }}>
+                <div>
+                  <label>Enter New Password <span style={{ color: 'red' }}>*</span></label>
+                  <input type="password" placeholder="New Password" style={{ width: '100%', padding: '0.4rem 1rem', borderRadius: '40px' }} aria-required />
 
-              </div>
-              <div>
-                <label>Confirm New Password <span style={{color:'red'}}>*</span></label>
-                <input type="password" placeholder="Confirm Password" style={{width:'100%',padding:'0.4rem 1rem',borderRadius:'40px'}} required />
+                </div>
+                <div>
+                  <label>Confirm New Password <span style={{ color: 'red' }}>*</span></label>
+                  <input type="password" placeholder="Confirm Password" style={{ width: '100%', padding: '0.4rem 1rem', borderRadius: '40px' }} required />
 
+                </div>
+                <button className="btn" onClick={handlePasswordChange} style={{ fontSize: 'medium', fontWeight: 'bold' }}>
+                  Set New Password
+                </button>
               </div>
-              <button className="btn" onClick={handlePasswordChange} style={{fontSize:'medium',fontWeight:'bold'}}>
-                Set New Password
-              </button>
-            </div>
             )}
-            {formState === 'final' &&(
-              <div style={{display:'flex',flexDirection:'column',width:'80%',marginTop:'40%',gap:'0.5rem',marginBottom:'0',textAlign:'center',color:'white'}}>
+            {formState === 'final' && (
+              <div style={{ display: 'flex', flexDirection: 'column', width: '80%', marginTop: '40%', gap: '0.5rem', marginBottom: '0', textAlign: 'center', color: 'white' }}>
                 <p>Dear User,</p>
-                <h2 style={{fontWeight:'bolder'}}>Your Password has been Reset.</h2>
-                <FontAwesomeIcon icon={faCheck} color='white' size='6x'/>
+                <h2 style={{ fontWeight: 'bolder' }}>Your Password has been Reset.</h2>
+                <FontAwesomeIcon icon={faCheck} color='white' size='6x' />
                 <button
                   style={{ margin: '10px', background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}
                   onClick={handleBackToLogin}

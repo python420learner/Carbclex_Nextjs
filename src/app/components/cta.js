@@ -1,5 +1,6 @@
 import React from 'react'
 import "./css/cta.css"
+import Link from 'next/link'
 
 const CTA = () => {
   return (
@@ -37,7 +38,7 @@ const CTA = () => {
             <div className='register'>
                 <h3 style={{fontWeight:'500',fontSize:'2.3rem'}}>Monetize Your Eco-Friendly Efforts: </h3>
                 <h3 style={{fontWeight:'lighter',marginBottom:'4rem',letterSpacing:'1px'}}>Sell Carbon Credits with ease</h3>
-                <button style={{border:'2px solid white',color:'white',borderRadius:'15px',padding:'0.7rem 3rem',backgroundColor:'transparent',fontSize:'1.2rem'}}>REGISTER PROJECT</button>
+                <Link href='./seller'><button style={{border:'2px solid white',color:'white',borderRadius:'15px',padding:'0.7rem 3rem',backgroundColor:'transparent',fontSize:'1.2rem',cursor:'pointer'}}>REGISTER PROJECT</button></Link>
             </div>
         </div>
     </>
