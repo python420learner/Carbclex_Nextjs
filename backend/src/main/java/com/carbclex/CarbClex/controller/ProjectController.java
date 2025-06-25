@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.carbclex.CarbClex.model.Project;
+import com.carbclex.CarbClex.repository.ProjectRepository;
 import com.carbclex.CarbClex.service.ProjectService;
 
 @RestController
@@ -22,17 +23,18 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    // @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
-//    public ResponseEntity<Map<String, String>> add(@RequestBody Project project) {
-//     System.out.println("Project Received");
-//     projectService.saveProject(project);
+    @Autowired
+    private ProjectRepository projectRepository;
+    
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    @GetMapping("/next-id")
+    public ResponseEntity<Integer> getNextProjectId() {
+        Integer maxId = projectRepository.findMaxProjectId();
+        return ResponseEntity.ok(maxId != null ? maxId + 1 : 1);
+    }
 
-//     Map<String, String> response = new HashMap<>();
-//     response.put("message", "New Project is added");
 
-//     return ResponseEntity.ok(response);
-// }
-
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @PostMapping("/add")    
     public ResponseEntity<Void> add(@RequestBody Project project) {
         System.out.println("Project Received");

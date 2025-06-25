@@ -26,6 +26,12 @@ export default function CreateProject() {
         projectvideosURL: ''
     });
 
+    const getNextProjectId = async () => {
+        const res = await fetch('http://localhost:8080/carbclex/next-id');
+        if (!res.ok) throw new Error('Failed to get next project ID');
+        return await res.json();
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -37,10 +43,12 @@ export default function CreateProject() {
     const handleSubmit = async (e) => {
 
         e.preventDefault(); // prevent default form reload
+        const nextId = await getNextProjectId()
+        console.log(formData.projectType)
 
         // Convert your formData fields to match backend data types
         const payload = {
-            projectid: Number(formData.projectid),
+            projectid: Number(nextId),
             projectName: formData.projectName,
             projectType: formData.projectType,
             countryId: { countryId: Number(formData.countryId) },
@@ -61,7 +69,7 @@ export default function CreateProject() {
         };
 
         try {
-            const response = await fetch('/api/add', {
+            const response = await fetch('http://localhost:8080/carbclex/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -80,8 +88,8 @@ export default function CreateProject() {
 
     return (
         <div>
-            <Navbar/>
-            <form onSubmit={handleSubmit} style={{marginBlock:'2rem',marginInline:'auto', width:'60vw'}} className="mx-auto p-6 bg-white shadow-md rounded">
+            <Navbar />
+            <form onSubmit={handleSubmit} style={{ marginBlock: '2rem', marginInline: 'auto', width: '60vw' }} className="mx-auto p-6 bg-white shadow-md rounded">
                 <h2 className="text-2xl mb-4 font-bold">Create Project</h2>
 
                 <label>Project Name</label>
@@ -264,7 +272,7 @@ export default function CreateProject() {
                     Submit
                 </button>
             </form>
-            <Footer/>
+            <Footer />
         </div>
     );
 }
