@@ -24,6 +24,8 @@ import {
 import Footer from '../components/footer';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { getAuth, signOut } from 'firebase/auth'
+import { app } from '../firebase'
 // import Cart from './cart'
 
 // Register the necessary components
@@ -33,6 +35,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement
 const Dashboard = () => {
     const [hasScrolled_market, setHasScrolled_market] = useState(false);
     const router = useRouter();
+    const auth = getAuth(app);
 
 
     useEffect(() => {
@@ -56,7 +59,17 @@ const Dashboard = () => {
             credentials: "include",
         });
 
+        signOut(auth)
+            .then(() => {
+                console.log("User signed out successfully.");
+            })
+            .catch((error) => {
+                console.error("Sign-out error:", error);
+            });
+
         // Redirect to login page
+        // localStorage.setItem('cart_merged', 'false'); // ✅ Set flag
+
         alert("Logout Successful")
         router.push("/login")
     };
@@ -102,7 +115,7 @@ const Dashboard = () => {
                         <FontAwesomeIcon className='icon' icon={faBagShopping} style={{ marginRight: '2rem' }} color='black' size='2x' />
                         <FontAwesomeIcon className='icon' icon={faBell} style={{ marginRight: '2rem' }} color='black' size='2x' />
                         <Link href="/signup"><FontAwesomeIcon icon={faUser} style={{ marginRight: '2rem' }} color='black' size='2x' /></Link>
-                        <FontAwesomeIcon  className='icon' onClick={handleLogout} icon={faRightFromBracket} style={{ marginRight: '2rem' }} color='black' size='2x' />
+                        <FontAwesomeIcon className='icon' onClick={handleLogout} icon={faRightFromBracket} style={{ marginRight: '2rem' }} color='black' size='2x' />
 
 
                     </div>

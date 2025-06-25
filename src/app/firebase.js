@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth,onAuthStateChanged } from "firebase/auth";
 // import { getFirestore } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 
@@ -18,3 +18,15 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getFirestore(app);
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve(user); // user.uid and user.email available
+      } else {
+        resolve(null);
+      }
+    });
+  });
+};
