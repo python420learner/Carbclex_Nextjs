@@ -2,7 +2,7 @@
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell, faUser, faBagShopping } from '@fortawesome/free-solid-svg-icons'
-import { faDashboard, faWallet, faFile, faSliders, faCreditCard, faDollarSign, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faDashboard, faWallet, faFile, faSliders, faCreditCard, faDollarSign, faRightFromBracket, faDiagramProject } from '@fortawesome/free-solid-svg-icons'
 import revenueData from "../revenueData.json"
 import sourceData from "../sourceData.json"
 import monthlyData from "../monthly.json"
@@ -105,6 +105,7 @@ const Dashboard = () => {
                         <li><FontAwesomeIcon icon={faWallet} style={{ marginRight: '8px' }} size='1x' />Wallets</li>
                         <li><FontAwesomeIcon icon={faDollarSign} style={{ marginRight: '8px' }} size='1x' />Transactions</li>
                         <li><FontAwesomeIcon icon={faCreditCard} style={{ marginRight: '8px' }} size='1x' />Saved Cards</li>
+                        <Link href="/seller"><li><FontAwesomeIcon icon={faDiagramProject} style={{ marginRight: '8px' }} size='1x' />Add Project</li></Link>
                     </ul>
                 </div>
                 <div style={{ marginLeft: '220px' }}>

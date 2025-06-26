@@ -1,10 +1,29 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./page.css"
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
+import { useRouter } from 'next/navigation';
 
 export default function CreateProject() {
+
+    const router = useRouter()
+
+    useEffect(() => {
+        fetch(`/api/auth/check-session`, {
+            credentials: 'include',
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    alert('Login Required!!')
+                    router.push('/login');
+                }
+            })
+            .catch(() => {
+                router.push('/login');
+            });
+    }, []);
+
     const [formData, setFormData] = useState({
         projectid: '',
         projectName: '',
@@ -27,7 +46,7 @@ export default function CreateProject() {
     });
 
     const getNextProjectId = async () => {
-        const res = await fetch('http://localhost:8080/carbclex/next-id');
+        const res = await fetch('/api/next-id');
         if (!res.ok) throw new Error('Failed to get next project ID');
         return await res.json();
     };
@@ -69,7 +88,7 @@ export default function CreateProject() {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/carbclex/add', {
+            const response = await fetch('/api/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

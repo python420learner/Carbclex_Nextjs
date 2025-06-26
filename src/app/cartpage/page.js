@@ -6,6 +6,7 @@ import { getGuestCart } from '../components/cartUtility';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
 
+
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
 
@@ -137,6 +138,7 @@ const CartPage = () => {
             <div className="mt-6 text-right text-xl font-semibold">
               Total: ₹{cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)}
             </div>
+            <div className="mt-6 text-right text-xl font-semibold" style={{width:'fit-content',borderRadius:'4rem',padding:'1rem 2rem', backgroundColor:'Green',color:'white'}}> <button>Checkout</button></div>
           </div>
         )}
       </div>
