@@ -3,7 +3,7 @@ import { React, useState, useEffect } from "react";
 import "./page.css"
 import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGenderless,faPerson,faPersonDress,faCheck, faC } from "@fortawesome/free-solid-svg-icons";
+import { faGenderless, faPerson, faPersonDress, faCheck, faC } from "@fortawesome/free-solid-svg-icons";
 import { app } from '../firebase';
 import Navbar from "../components/Navbar";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
@@ -12,9 +12,9 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formState,setFormState] = useState('signup')
+  const [formState, setFormState] = useState('signup')
   // const [hasScrolled_market, setHasScrolled_market] = useState(false);
-    
+
   // useEffect(() => {
   //     const handleScroll = () => {
   //       // Check if user has scrolled vertically
@@ -24,10 +24,10 @@ const SignUp = () => {
   //         setHasScrolled_market(false);
   //       }
   //     };
-    
+
   //     // Add the event listener inside the effect
   //     window.addEventListener('scroll', handleScroll);
-    
+
   //     // Cleanup the event listener when the component unmounts
   //     return () => {
   //       window.removeEventListener('scroll', handleScroll);
@@ -38,32 +38,54 @@ const SignUp = () => {
     event.preventDefault();
     const auth = getAuth(app);
     try {
-        // Register the user
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+      // Register the user
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-        // Send verification email
-        await sendEmailVerification(user,{
-          // url:'https://carbclex.com/login'
-          url:'http://localhost:3000/login'
-        })
+      await updateProfile(user, {
+        displayName: name,
+      });
 
-        alert("Verification email sent! Please check your inbox.");
+      // Send verification email
+      await sendEmailVerification(user, {
+        // url:'https://carbclex.com/login'
+        url: 'http://localhost:3000/login'
+      })
+
+      // if (user.emailVerified) {
+      //   const idToken = await user.getIdToken();
+
+      //   // ✅ Send user data to Spring Boot backend
+      //   await fetch("/api/user/register", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${idToken}`,
+      //     },
+      //     body: JSON.stringify({
+      //       name: name,         // 👈 Assuming you collected `name` in the form
+      //       email: user.email,
+      //       uid: user.uid
+      //     })
+      //   });
+      // }
+
+      alert("Verification email sent! Please check your inbox.");
     } catch (error) {
-        console.error("Error registering user:", error);
-        alert(error.message);
+      console.error("Error registering user:", error);
+      alert(error.message);
     }
     // setFormState('verification')
-};
+  };
 
   return (
     <>
-      <div style={{marginTop:'1.3rem'}}  id='navbar' >
-        <Navbar/>
+      <div style={{ marginTop: '1.3rem' }} id='navbar' >
+        <Navbar />
       </div>
       <div className="Container">
-        <div className="left_container" style={{width:'40vw',height:'100%',display:'flex',flexDirection:'column',justifyContent:'flex-end'}}>
-          <div style={{color:'white',padding:'2rem'}}>
+        <div className="left_container" style={{ width: '40vw', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+          <div style={{ color: 'white', padding: '2rem' }}>
             <h1>Join the Adventure !</h1>
             <p>Lorem ipsum dolor sit amet, con magnam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas perspiciatis magni molestiae ex</p>
           </div>
@@ -76,70 +98,70 @@ const SignUp = () => {
                   <label htmlFor="name">
                     <span className="important">*</span>Name
                   </label>
-                  <br/>
-                  <input className="sign_input" type="text" placeholder="First name*" onChange={(e) => setName(e.target.value)} required />
-                  <input className="sign_input" type="text" placeholder="Middle name" />
-                  <input className="sign_input" type="text" placeholder="Last name" />
+                  <br />
+                  <input className="sign_input" type="text" placeholder="Full name*" onChange={(e) => setName(e.target.value)} required />
+                  {/* <input className="sign_input" type="text" placeholder="Middle name" />
+                  <input className="sign_input" type="text" placeholder="Last name" /> */}
                 </div>
-                <div style={{display:'flex',justifyContent:'space-between'}}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <div >
                     <label htmlFor="country">
                       <span className="important">*</span>Country
                     </label>
-                    <br/>
-                    <select style={{width:'100%',padding:'1rem 3rem',borderRadius:'30rem'}}>
+                    <br />
+                    <select style={{ width: '100%', padding: '1rem 3rem', borderRadius: '30rem' }}>
                       <option value="India" key="ind">India</option>
                       <option value="India" key="usa">USA</option>
                       <option value="India" key="aus">Australia</option>
                     </select>
                   </div>
                   <div className="gender">
-                    <li><FontAwesomeIcon icon={faPerson}  style={{marginRight:'8px'}} size='2x'/></li>
-                    <li><FontAwesomeIcon icon={faPersonDress}  style={{marginRight:'8px'}} size='2x'/></li>
-                    <li><FontAwesomeIcon icon={faGenderless}  style={{marginRight:'8px'}} size='2x'/> Others</li>
+                    <li><FontAwesomeIcon icon={faPerson} style={{ marginRight: '8px' }} size='2x' /></li>
+                    <li><FontAwesomeIcon icon={faPersonDress} style={{ marginRight: '8px' }} size='2x' /></li>
+                    <li><FontAwesomeIcon icon={faGenderless} style={{ marginRight: '8px' }} size='2x' /> Others</li>
                     <div>
 
 
                     </div>
                   </div>
                 </div>
-                <div style={{display:'flex',justifyContent:'space-between'}}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <div>
                     <label htmlFor="phone">
                       <span className="important">*</span>Phone no.
                     </label>
-                    <br/>
-                    <input className="sign_input" style={{width:'100%'}} type="tel" placeholder="11-2222-3333" required />
+                    <br />
+                    <input className="sign_input" style={{ width: '100%' }} type="tel" placeholder="11-2222-3333" required />
 
                   </div>
                   <div>
                     <label htmlFor="email">
                       <span className="important">*</span>e-mail
                     </label>
-                    <br/>
-                    <input className="sign_input" style={{width:'100%'}} onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="john@example.email" required/>
+                    <br />
+                    <input className="sign_input" style={{ width: '100%' }} onChange={(e) => setEmail(e.target.value)} type="email" name="email" placeholder="john@example.email" required />
 
                   </div>
                 </div>
                 <div>
-                    <label htmlFor="password">
-                      <span className="important">*</span>Set New Password
-                    </label>
-                    <br/>
-                    <input className="sign_input" style={{width:'100%'}} onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder="password*"/>
+                  <label htmlFor="password">
+                    <span className="important">*</span>Set New Password
+                  </label>
+                  <br />
+                  <input className="sign_input" style={{ width: '100%' }} onChange={(e) => setPassword(e.target.value)} type="password" name="password" placeholder="password*" />
                 </div>
-                <p style={{fontSize:'15px',marginLeft:'2rem'}}><span style={{marginRight:'1rem'}}><input type="checkbox"/></span>i agree to <b>Terms and Conditions</b></p>
-                <button className="btnTag" style={{marginBottom:'10px'}}>Sign up</button>
+                <p style={{ fontSize: '15px', marginLeft: '2rem' }}><span style={{ marginRight: '1rem' }}><input type="checkbox" /></span>i agree to <b>Terms and Conditions</b></p>
+                <button className="btnTag" style={{ marginBottom: '10px' }}>Sign up</button>
                 <Link href="/login" ><button className="btnTag">Login</button></Link>
               </div>
             </form>
           )}
           {formState === 'verification' && (
-            <div style={{display:'flex',flexDirection:'column',width:'80%',marginTop:'40%',gap:'0.5rem',marginBottom:'0',textAlign:'center',color:'white'}}>
-              <h2>Dear {name} <br/>Thanks for joining</h2>
-              <FontAwesomeIcon icon={faCheck} color='white' size='8x'/>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '80%', marginTop: '40%', gap: '0.5rem', marginBottom: '0', textAlign: 'center', color: 'white' }}>
+              <h2>Dear {name} <br />Thanks for joining</h2>
+              <FontAwesomeIcon icon={faCheck} color='white' size='8x' />
               <h2>Verification link is send to your email.</h2>
-              <p style={{marginTop:'1.5rem'}}>E-mail not received? <u>Click here to resend</u></p>
+              <p style={{ marginTop: '1.5rem' }}>E-mail not received? <u>Click here to resend</u></p>
             </div>
           )}
         </div>

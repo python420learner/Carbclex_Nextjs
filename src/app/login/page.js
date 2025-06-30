@@ -80,37 +80,113 @@ const Login = () => {
   };
 
   const submitHandler = async (event) => {
-    event.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+  event.preventDefault();
+  
+  try {
+    // 1. Authenticate with Firebase
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-      if (user && user.emailVerified) {
-        console.log("User is verified");
-        const idToken = await user.getIdToken();
-
-        const res = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${idToken}`
-          },
-          credentials: "include", // VERY IMPORTANT for session cookie
-        }).then(res => res.text())
-          .then(data => console.log(data))
-          .catch(err => console.error(err));
-
-        if (user && user.emailVerified) {
-          // ✅ Redirect only if login and session are successful
-          router.push("/dashboard");
-        }
-      } else {
-        alert("Please verify your email before logging in.");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
-      alert(error.message);
+    if (!user.emailVerified) {
+      alert("Please verify your email before logging in.");
+      return;
     }
-  };
+
+    // 2. Get the Firebase ID token once
+    const idToken = await user.getIdToken();
+    
+    // 3. Prepare user data
+    const userPayload = {
+      name: user.displayName,
+      email: user.email,
+      uid: user.uid
+    };
+
+    // 4. Register/Update user in Spring Boot (if needed)
+    const registerResponse = await fetch("/api/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${idToken}`
+      },
+      body: JSON.stringify(userPayload)
+    });
+
+    if (!registerResponse.ok) {
+      const errorData = await registerResponse.json();
+      throw new Error(errorData.message || "User registration failed");
+    }
+
+    // 5. Create Spring session
+    const loginResponse = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      },
+      credentials: "include"
+    });
+
+    if (!loginResponse.ok) {
+      throw new Error("Session creation failed");
+    }
+
+    // 6. Only redirect if everything succeeded
+    router.push("/dashboard");
+
+  } catch (error) {
+    console.error("Login error:", error);
+    alert(error.message || "Login failed. Please try again.");
+  }
+};
+
+  // const submitHandler = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  //     const user = userCredential.user;
+
+  //     if (user && user.emailVerified) {
+  //       console.log("User is verified");
+  //       const idToken = await user.getIdToken();
+
+  //       const name = user.displayName;  // ✅ Get the name saved at signup
+  //       const email = user.email;
+  //       const uid = user.uid;
+
+  //       const userPayload = { name, email, uid };
+
+  //       // Send this to your Spring Boot backend
+  //       await fetch("/api/user/register", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${await user.getIdToken()}`,
+  //         },
+  //         body: JSON.stringify(userPayload),
+  //       });
+
+  //       const res = await fetch("/api/auth/login", {
+  //         method: "POST",
+  //         headers: {
+  //           "Authorization": `Bearer ${idToken}`
+  //         },
+  //         credentials: "include", // VERY IMPORTANT for session cookie
+  //       }).then(res => res.text())
+  //         .then(data => console.log(data))
+  //         .catch(err => console.error(err));
+
+  //       if (user && user.emailVerified) {
+  //         // ✅ Redirect only if login and session are successful
+  //         router.push("/dashboard");
+  //       }
+  //     } else {
+  //       alert("Please verify your email before logging in.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error logging in:", error);
+  //     alert(error.message);
+  //   }
+  // };
 
   const loginWithGoogle = () => {
     const provider = new GoogleAuthProvider();

@@ -8,6 +8,7 @@ import './page.css'
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
 import Image from "next/image";
+import heroImage from "../../../public/Assets/marketplace.png"
 
 const MarketPlace = () => {
     const [hasScrolled_market, setHasScrolled_market] = useState(false);
@@ -31,9 +32,10 @@ const MarketPlace = () => {
         };
       }, []);
     return (
-        <>
+        <div >
             {/* <RouteTracker/> */}
-            <div className='market' style={{backgroundColor:'#F4FFF6',marginBottom:'10rem'}}>   
+            <div className='market' style={{marginBottom:'10rem'}}>   
+              <div className='marketplace' style={{height:'90vh'}} >
                 <div className={`nav_bar ${hasScrolled_market ? 'nav_background' : ''}`} id='navbar' >
                         <Navbar />
                 </div>
@@ -41,6 +43,8 @@ const MarketPlace = () => {
                     <p style={{color:'#18311D',fontWeight:'bold'}}>Shape Greener Future:</p>
                     <h1 className='t-white lspace' style={{color:'#18311D'}}>Trade Verified <br/> Carbon Credits</h1>
                 </div>
+
+              </div>
                 <div className='categories' style={{margin:'4rem 1rem',width:'80vw',marginInline:'auto'}}>
                     <h3 style={{marginBottom:'2rem'}} >Browse By category</h3>
                     <div style={{width:'80%',marginInline:'auto'}}>
@@ -48,14 +52,14 @@ const MarketPlace = () => {
 
                     </div>
                 </div>
-                <div style={{margin:'8rem 2rem',width:'80vw',marginInline:'auto' }}>
+                <div className='mx-auto' style={{marginBlock:'8rem',width:'80vw' }}>
                     <h3 className='lspace' style={{color:'#2F4834',fontSize:'large' }}>ALL CATEGORIES</h3>
                     <ProductList/>
                 </div>
             </div>
             <CTA/>
             <Footer/>
-        </>
+        </div>
     )
 }
 

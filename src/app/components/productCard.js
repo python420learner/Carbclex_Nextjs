@@ -10,11 +10,10 @@ const ProductCard = ({ project }) => {
   const encodedProject = encodeURIComponent(JSON.stringify(project)); // Convert to JSON string
   // console.log("this is json project",project.projectName)
   return(
-    <div key={project.projectid} style={{ backgroundColor: 'white', width: '28%', height: 'fit-content', marginBottom: '2rem', paddingBottom: '2rem' }}>
-      <div style={{ backgroundColor: '#065424', width: '100%', height: '50%' }}>
-        <Image src={project.image || projectImage} style={{height:'50%',width:'100%'}} alt='project_image' />
+    <div key={project.projectid} style={{ backgroundColor: 'white', width: '18%', height: 'fit-content', marginBottom: '2rem', paddingBottom: '2rem' }}>
+      <div style={{ backgroundColor: '#065424', width: '250px', height: '180px', content:'' }}>
       </div>
-      <div className='cont_one' style={{ marginInline: '0.5rem' }}>
+      <div className='cont_one font-rubik' style={{ marginInline: '0.5rem' }}>
         <h5 style={{ color: '#182330', marginTop: '2rem', fontWeight: 'bold' }}>{project.countryId.country}</h5>
         <h3 style={{ color: '#065F24',fontSize:'1.7rem', marginTop:'1rem' }}>{project.projectName}</h3>
         <h4 style={{ color: '#000000', fontWeight: 'lighter', fontSize: '18px', marginTop:'1rem' }}>{project.projectDescription}</h4>

@@ -6,7 +6,12 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx}', // for Next.js 13+
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Rubik', 'sans-serif'], // Makes Rubik the default sans font
+        rubik: ['Rubik', 'sans-serif'], // Optional: Create a custom font class
+      },
+    },
   },
   plugins: [],
 };
