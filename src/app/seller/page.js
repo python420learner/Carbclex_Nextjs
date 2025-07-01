@@ -39,7 +39,7 @@ export default function CreateProject() {
         carbonCreditsAvailable: '',
         projectDescription: '',
         verificationStatus: 'pending', // ENUM: 'verified', 'pending', 'failed'
-        verifierId: '',                // Foreign key to Verifier
+        // verifierId: '',                // Foreign key to Verifier
         projectdocumentURL: '',
         projectimagesURL: '',
         projectvideosURL: ''
@@ -81,7 +81,7 @@ export default function CreateProject() {
             carbonCreditsAvailable: Number(formData.carbonCreditsAvailable),
             projectDescription: formData.projectDescription,
             verificationStatus: formData.verificationStatus,
-            verifierId: { id: Number(formData.verifierId) },
+            // verifierId: { id: Number(formData.verifierId) },
             projectDocumentURL: formData.projectdocumentURL,
             projectImagesURL: formData.projectimagesURL,
             projectVideosURL: formData.projectvideosURL
@@ -232,7 +232,7 @@ export default function CreateProject() {
                     onChange={handleChange}
                 />
 
-                <label>Verification Status</label>
+                {/* <label>Verification Status</label>
                 <select
                     name="verificationStatus"
                     value={formData.verificationStatus}
@@ -242,7 +242,7 @@ export default function CreateProject() {
                     <option value="pending">Pending</option>
                     <option value="verified">Verified</option>
                     <option value="failed">Failed</option>
-                </select>
+                </select> */}
 
                 <label>Project Documents URL</label>
                 <input
@@ -274,7 +274,7 @@ export default function CreateProject() {
                     onChange={handleChange}
                 />
 
-                <label>Verifier ID</label>
+                {/* <label>Verifier ID</label>
                 <input
                     type="number"
                     name="verifierId"
@@ -282,7 +282,7 @@ export default function CreateProject() {
                     placeholder="Verifier ID"
                     className="w-full p-2 border mb-3"
                     onChange={handleChange}
-                />
+                /> */}
 
                 <button
                     type="submit"

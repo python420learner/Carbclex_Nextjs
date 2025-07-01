@@ -156,7 +156,7 @@ const Login = () => {
   //       const userPayload = { name, email, uid };
 
   //       // Send this to your Spring Boot backend
-  //       await fetch("/api/user/register", {
+  //       await fetch("/api/register", {
   //         method: "POST",
   //         headers: {
   //           "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const Login = () => {
   //         body: JSON.stringify(userPayload),
   //       });
 
-  //       const res = await fetch("/api/auth/login", {
+  //       const res = await fetch("/api/login", {
   //         method: "POST",
   //         headers: {
   //           "Authorization": `Bearer ${idToken}`

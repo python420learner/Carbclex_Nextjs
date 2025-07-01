@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
-    @GetMapping("/me")
+    @GetMapping("user/me")
     public ResponseEntity<?> getUser(@RequestHeader("Authorization") String idToken) {
         try {
 

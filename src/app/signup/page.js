@@ -52,24 +52,6 @@ const SignUp = () => {
         url: 'http://localhost:3000/login'
       })
 
-      // if (user.emailVerified) {
-      //   const idToken = await user.getIdToken();
-
-      //   // ✅ Send user data to Spring Boot backend
-      //   await fetch("/api/user/register", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${idToken}`,
-      //     },
-      //     body: JSON.stringify({
-      //       name: name,         // 👈 Assuming you collected `name` in the form
-      //       email: user.email,
-      //       uid: user.uid
-      //     })
-      //   });
-      // }
-
       alert("Verification email sent! Please check your inbox.");
     } catch (error) {
       console.error("Error registering user:", error);

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.carbclex.CarbClex.model.Project;
+import com.carbclex.CarbClex.model.Project.VerificationStatus;
 import com.carbclex.CarbClex.repository.ProjectRepository;
 
 @Service
@@ -21,6 +22,14 @@ public class ProjectServiceImplement implements ProjectService{
     @Override
     public List<Project> getAllProjects(){
         return projectRepository.findAll();
+    }
+
+     public List<Project> getVerifiedProjects() {
+        return projectRepository.findByVerificationStatus(VerificationStatus.verified);
+    }
+
+    public List<Project> getNonVerifiedProjects() {
+        return projectRepository.findByVerificationStatusNot(VerificationStatus.verified);
     }
 
 }

@@ -14,7 +14,7 @@ const ProductList = ({ demo = false }) => {
 
   useEffect((e) => {
     // Make GET request to fetch products when component mounts
-    fetch('/api/getAll')
+    fetch('/api/project/getVerifiedProjects')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -30,7 +30,7 @@ const ProductList = ({ demo = false }) => {
         console.error('Error fetching products:', error);
         setLoading(false);
       });
-  }, [projects]);
+  }, []);
 
   const categorizedProjects = projects.reduce((acc, project) => {
     if (!acc[project.projectType]) {
