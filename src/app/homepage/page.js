@@ -27,23 +27,23 @@ const HomePage = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-          // Check if user has scrolled vertically
-          if (window.scrollY > 0) {
-            setHasScrolled(true);
-          } else {
-            setHasScrolled(false);
-          }
+            // Check if user has scrolled vertically
+            if (window.scrollY > 0) {
+                setHasScrolled(true);
+            } else {
+                setHasScrolled(false);
+            }
         };
-      
+
         // Add the event listener inside the effect
         window.addEventListener('scroll', handleScroll);
-      
+
         // Cleanup the event listener when the component unmounts
         return () => {
-          window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleScroll);
         };
-      }, []);
-      
+    }, []);
+
 
 
     useEffect(() => {
@@ -69,7 +69,7 @@ const HomePage = () => {
                         <h3 className='hero_heading'>Erase Carbon Footprints and Combat Global Warming.</h3>
                         <h4 style={{ marginTop: '2rem', fontWeight: 'lighter', color: 'white' }}>Transforming Industries with Authentic Carbon Neutrality Solutions,<br /> Shaping a Trustworthy Path to Net Zero.</h4>
                     </form>
-                    <div className='icons' style={{ display: 'flex', flexDirection: 'column', gap: '9px',justifyContent:'flex-end' }}>
+                    <div className='icons' style={{ display: 'flex', flexDirection: 'column', gap: '9px', justifyContent: 'flex-end' }}>
                         {/* <Link href="/dashboard"><FontAwesomeIcon icon={faUser} color='white' size='2x' /></Link> */}
                         <FontAwesomeIcon icon={faXTwitter} color='white' size='2x' />
                         <FontAwesomeIcon icon={faInstagram} color='white' size='2x' />
@@ -98,16 +98,16 @@ const HomePage = () => {
                             <button className='b' style={{ backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)', color: 'white', width: '10rem', padding: '8px', marginTop: '1rem' }}>Learn More</button>
                         </div>
                         <div className='circle'>
-                            <Image style={{ width: '100%',height:'100%', borderRadius: '50%' }} src={carousel_data[activeTab][1]} alt="" />
+                            <Image style={{ width: '100%', height: '100%', borderRadius: '50%' }} src={carousel_data[activeTab][1]} alt="" />
                         </div>
                     </div>
                 </div>
             </div>
             <div className="services">
-                <h1 className='gradient-text' style={{ margin: '15rem 5rem',fontWeight:'600',marginBottom: '8rem',fontSize:'xxx-large', letterSpacing: '2px' }}>Calculate Carbon<br /> Impact:</h1>
+                <h1 className='gradient-text' style={{ margin: '15rem 5rem', fontWeight: '600', marginBottom: '8rem', fontSize: 'xxx-large', letterSpacing: '2px' }}>Calculate Carbon<br /> Impact:</h1>
                 <div className="container" style={{ margin: '6rem auto', display: 'flex', flexDirection: 'column' }}>
                     <div className="services-title">
-                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', color: '#18311D', fontSize:'xx-large',letterSpacing: '1px', borderBottom: '2px solid #13A0AA', width: 'fit-content', marginBottom: '3rem', marginLeft:'10rem'}}>Our Services</h2>
+                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', color: '#18311D', fontSize: 'xx-large', letterSpacing: '1px', borderBottom: '2px solid #13A0AA', width: 'fit-content', marginBottom: '3rem', marginLeft: '10rem' }}>Our Services</h2>
                     </div>
                     <div className="services-cards" style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', gap: '2rem' }} >
                         <div className="card">
@@ -140,7 +140,7 @@ const HomePage = () => {
             <div className='gradient-background'>
                 <div className='offset'>
                     <div className='offset_firstchild'>
-                        <h2 className='gradient-text' style={{ color: '#18311D', fontWeight: 'lighter',fontSize:'xx-large', marginBottom: '2rem' }}>Why offset with us?</h2>
+                        <h2 className='gradient-text' style={{ color: '#18311D', fontWeight: 'lighter', fontSize: 'xx-large', marginBottom: '2rem' }}>Why offset with us?</h2>
                         <p style={{ fontWeight: 'lighter' }}>With CarbClex, businesses can trust in our commitment to transparency, accuracy, and the genuine impact of our environmental projects.</p>
                     </div>
                     <div className='group1 first-offset'>
@@ -166,7 +166,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="approach" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '7rem', gap: '4rem', paddingBottom: '3rem' }}>
-                    <h2 className='gradient-text' style={{fontWeight:'lighter',fontSize:'xx-large'}}>Our Approach</h2>
+                    <h2 className='gradient-text' style={{ fontWeight: 'lighter', fontSize: 'xx-large' }}>Our Approach</h2>
                     <Image src={approachImg} alt="Description of SVG" style={{ width: '83%', height: '40%' }} />
                     <button className="b" style={{ width: '10rem', paddingBlock: '0.7rem', color: 'white', backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)' }}>Get Started</button>
                 </div>
@@ -174,7 +174,7 @@ const HomePage = () => {
             <div style={{ backgroundImage: 'linear-gradient(white,#ebe8d855)', marginBottom: '20rem' }}>
                 <div className='products' style={{ marginTop: '10rem' }}>
                     <div className='product_head'>
-                        <h2 className='gradient-text' style={{ fontWeight: 'lighter',fontSize:'xx-large' }}>Our Projects</h2>
+                        <h2 className='gradient-text' style={{ fontWeight: 'lighter', fontSize: 'xx-large' }}>Our Projects</h2>
                         <p>With CarbClex, businesses can trust in our commitment to transparency, accuracy, and the genuine impact of our environmental projects.</p>
                     </div>
                     <div style={{ height: '60%', paddingBlock: '5rem', textAlign: 'center' }}>
@@ -182,55 +182,55 @@ const HomePage = () => {
                         <div className='product_cards'>
                         </div>
                     </div>
-                    <div style={{width:'fit-content',marginInline:'auto'}}>
-                        <Link href='./marketplace'><button className="b" style={{ width: '10rem', paddingBlock: '0.7rem', color: 'white', backgroundImage: 'linear-gradient(to right,  #36D4A1, #13A0AA)',marginInline:'auto' }}>Visit MarketPlace</button></Link>
+                    <div style={{ width: 'fit-content', marginInline: 'auto' }}>
+                        <Link href='./marketplace'><button className="b" style={{ width: '10rem', paddingBlock: '0.7rem', color: 'white', backgroundImage: 'linear-gradient(to right,  #36D4A1, #13A0AA)', marginInline: 'auto' }}>Visit MarketPlace</button></Link>
                     </div>
                 </div>
                 <div>
                     <CTA />
                 </div>
                 <div className='section-4'>
-                    <h2 className='gradient-text' style={{fontWeight:'lighter',fontSize:'xx-large'}}>Our Objective</h2>
+                    <h2 className='gradient-text' style={{ fontWeight: 'lighter', fontSize: 'xx-large' }}>Our Objective</h2>
                     <p>We believe in building trust through transparency. Our processes are open, traceable, and designed to provide you with clear insights into your environmental impact. We believe in building trust through transparency. environmental impact.</p>
                 </div>
                 <div className='section-4'>
-                    <h2 className='gradient-text' style={{fontWeight:'lighter',fontSize:'xx-large'}}>Our Mission</h2>
+                    <h2 className='gradient-text' style={{ fontWeight: 'lighter', fontSize: 'xx-large' }}>Our Mission</h2>
                     <p>We believe in building trust through transparency. Our processes are open, traceable, and designed to provide you with clear insights into your environmental impact. We believe in building trust through transparency. environmental impact.</p>
                 </div>
                 <div>
                     <div style={{ paddingBlock: '5rem', marginBottom: '2rem' }}>
-                        <div style={{ display: 'flex',justifyContent:'center',alignItems:'center',position:'relative', marginBottom: '3rem', width: '100%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', marginBottom: '3rem', width: '100%' }}>
                             <div style={{ textAlign: 'center' }}>
                                 <h2 className='gradient-text' style={{ fontWeight: 'lighter', fontSize: 'xx-large' }}>Blog</h2>
                                 <p style={{ width: '50vw', textAlign: 'center', marginInline: 'auto' }}>With CarbClex, businesses can trust in our commitment to transparency, accuracy, and the genuine impact of our environmental projects.</p>
                             </div>
-                            <button className='b desktop-button' style={{ position:'absolute',width: '9rem', height: '50%', padding: ' 0.8rem', right: '1rem', backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)', color: 'white' }}>Visit our Blog</button>
+                            <button className='b desktop-button' style={{ position: 'absolute', width: '9rem', height: '50%', padding: ' 0.8rem', right: '1rem', backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)', color: 'white' }}>Visit our Blog</button>
                         </div>
                         <div className='product_cards'>
                             <div className='card-ele' style={{ borderRadius: '2rem' }} >
                                 <div className='for_image'></div>
-                                <div style={{ color: 'black', width: '100%', fontWeight: 'lighter', height: '30%',paddingTop:'1rem'}}>
-                                    <h4 style={{ fontWeight: 'lighter',marginBottom:'1rem' }}>Understanding Carbon Credits:</h4>
+                                <div style={{ color: 'black', width: '100%', fontWeight: 'lighter', height: '30%', paddingTop: '1rem' }}>
+                                    <h4 style={{ fontWeight: 'lighter', marginBottom: '1rem' }}>Understanding Carbon Credits:</h4>
                                     <p style={{ marginBottom: '0' }}> This guide explains how businesses and individuals can use carbon credits to offset emissions and support sustainable initiatives.</p>
                                 </div>
                             </div>
                             <div className='card-ele' style={{ borderRadius: '2rem' }} >
                                 <div className='for_image'></div>
-                                <div style={{ color: 'black', width: '100%', fontWeight: 'lighter', height: '30%',paddingTop:'1rem'}}>
-                                    <h4 style={{ fontWeight: 'lighter',marginBottom:'1rem' }}>How to Calculate Your Carbon Footprint and Why It Matters?</h4>
+                                <div style={{ color: 'black', width: '100%', fontWeight: 'lighter', height: '30%', paddingTop: '1rem' }}>
+                                    <h4 style={{ fontWeight: 'lighter', marginBottom: '1rem' }}>How to Calculate Your Carbon Footprint and Why It Matters?</h4>
                                     <p>This guide explains how businesses and individuals can use carbon credits to offset emissions and support sustainable initiatives.</p>
                                 </div>
                             </div>
                             <div className='card-ele' style={{ borderRadius: '2rem' }} >
                                 <div className='for_image'></div>
-                                <div style={{ color: 'black', width: '100%', fontWeight: 'lighter', height: '30%',paddingTop:'1rem'}}>
-                                    <h4 style={{ fontWeight: 'lighter',marginBottom:'1rem' }}>Blockchain and Carbon Credits: </h4>
+                                <div style={{ color: 'black', width: '100%', fontWeight: 'lighter', height: '30%', paddingTop: '1rem' }}>
+                                    <h4 style={{ fontWeight: 'lighter', marginBottom: '1rem' }}>Blockchain and Carbon Credits: </h4>
                                     <p style={{ marginBottom: '0' }}>This guide explains how businesses and individuals can use carbon credits to offset emissions and support sustainable initiatives.</p>
                                 </div>
                             </div>
                         </div>
-                        <div style={{width:'9rem',marginInline:'auto', marginTop:'2rem'}}>
-                            <button className='b mobile-button' style={{width: '9rem', height: '50%', padding: ' 0.8rem',backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)', color: 'white' }}>Visit our Blog</button>
+                        <div style={{ width: '9rem', marginInline: 'auto', marginTop: '2rem' }}>
+                            <button className='b mobile-button' style={{ width: '9rem', height: '50%', padding: ' 0.8rem', backgroundImage: 'linear-gradient(to right, #36D4A1, #13A0AA)', color: 'white' }}>Visit our Blog</button>
                         </div>
                     </div>
                 </div>

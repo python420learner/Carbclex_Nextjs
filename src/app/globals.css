@@ -1,4 +1,13 @@
+@import "tailwindcss/preflight";
+@tailwind utilities;
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('/fonts/Rubik-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
 
 *{
   padding: 0;
@@ -140,7 +149,6 @@ p{
 .visit{
   color:white;
   width: 20rem;
-  background-image: linear-gradient(#00e0FF,#00fAB1);
 } 
 
 .gradient-text {

@@ -65,13 +65,13 @@ const CalculatorPage = () => {
       <div className='cal_nav'>
         <div className="dropdown">
           <div className="dropdown-header">
-            <span className="dropdown-title"><FontAwesomeIcon icon={faLocationDot} color='#EEEACD' size='x' style={{ marginRight: '15px' }} />Location</span>
+            <span className="dropdown-title"><FontAwesomeIcon icon={faLocationDot} color='#EEEACD' size='sm' style={{ marginRight: '15px' }} />Location</span>
             <span></span>
           </div>
         </div>
         <div className="dropdown">
           <div className="dropdown-header" onClick={toggleDropdown}>
-            <span className="dropdown-title"><FontAwesomeIcon icon={faGasPump} color='#EEEACD' size='x' style={{ marginRight: '15px' }} />Direct Emissions</span>
+            <span className="dropdown-title"><FontAwesomeIcon icon={faGasPump} color='#EEEACD' size='sm' style={{ marginRight: '15px' }} />Direct Emissions</span>
             <span className={`dropdown-icon ${isOpen ? 'rotate' : ''}`}>▼</span>
           </div>
           <ul className={`dropdown-menu ${isOpen ? 'show' : 'hide'}`}>
@@ -93,7 +93,7 @@ const CalculatorPage = () => {
         </div>
         <div className="dropdown">
           <div className="dropdown-header">
-            <span className="dropdown-title"><FontAwesomeIcon icon={faUsersLine} color='#EEEACD' size='x' style={{ marginRight: '15px' }} />Other Indirect Emissions<FontAwesomeIcon icon={faLock} color='#EEEACD' size='x' style={{ marginLeft: '130px' }} /></span>
+            <span className="dropdown-title"><FontAwesomeIcon icon={faUsersLine} color='#EEEACD' size='sm' style={{ marginRight: '15px' }} />Other Indirect Emissions<FontAwesomeIcon icon={faLock} color='#EEEACD' size='sm' style={{ marginLeft: '130px' }} /></span>
             <span></span>
           </div>
         </div>

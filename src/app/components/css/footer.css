@@ -19,7 +19,7 @@
     font-weight: lighter;
     margin-bottom: 1rem;
     font-size: large;
-
+    cursor: pointer;
 }
 
 .footer ul{

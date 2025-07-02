@@ -18,7 +18,7 @@ public class Project {
     private String projectName;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('Renewable', 'Reforestation', 'Energy efficiency', 'Agriculture', 'Carbon capture')")
+    @Column(columnDefinition = "ENUM('Renewable', 'Reforestation', 'Energy_efficiency', 'Agriculture', 'Carbon_capture')")
     private ProjectType projectType;
 
     @ManyToOne

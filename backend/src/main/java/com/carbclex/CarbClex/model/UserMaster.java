@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "UserMaster")
 public class UserMaster {
@@ -20,8 +19,11 @@ public class UserMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_id", nullable = false, unique = true)
+    private String uid;
+
     @Column(name = "countryId", nullable = false)
-    private Integer countryId;
+    private Integer countryId=1;
 
     @Column(name = "phone", length = 15, unique = true)
     private String phone;
@@ -40,19 +42,19 @@ public class UserMaster {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Role role;
+    private Role role = Role.User;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "signupMethod", nullable = false)
-    private SignupMethod signupMethod;
+    private SignupMethod signupMethod = SignupMethod.email;
 
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive = true;
 
-    @Column(name = "createdAt", updatable = false, insertable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "createdAt", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
 
-    @Column(name = "updatedAt", insertable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name = "updatedAt", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updatedAt;
 
     // Getters and Setters
@@ -62,6 +64,14 @@ public class UserMaster {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public Integer getCountryId() {

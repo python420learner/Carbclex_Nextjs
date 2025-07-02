@@ -9,9 +9,13 @@
     padding-left:1rem;
   }
   
-  .dashboard .navigation ul li{
-    margin-bottom: 25px;
-    font-weight: lighter;
-    font-size: large;
-    cursor: pointer;
-  }
+.dashboard .navigation ul li{
+  margin-bottom: 25px;
+  font-weight: lighter;
+  font-size: large;
+  cursor: pointer;
+}
+
+.icon{
+  cursor: pointer;
+}

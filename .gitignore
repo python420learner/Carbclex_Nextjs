@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase token file
+backend/src/main/resources/carbclex-firebase-adminsdk-3a2vs-7fe9c3ac57.json
+backend/target/classes/carbclex-firebase-adminsdk-3a2vs-7fe9c3ac57.json
+/Applications/Space/carblex_next/Carbclex_Nextjs/backend/target/classes/carbclex-firebase-adminsdk-3a2vs-7fe9c3ac57.json
