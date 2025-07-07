@@ -44,12 +44,11 @@ public class ProjectController {
         return ResponseEntity.ok().build(); // No content in the body
     }
 
-    // @CrossOrigin(origins = "http://localhost:3000") // Allow requests from
-    // React's dev server
-    // @GetMapping("/getAll")
-    // public List<Project> getAllProjects(){
-    // return projectService.getAllProjects();
-    // }
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    @GetMapping("/getAll")
+    public List<Project> getAllProjects(){
+    return projectService.getAllProjects();
+    }
 
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @GetMapping("project/getVerifiedProjects")

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGenderless, faPerson, faPersonDress, faCheck, faC } from "@fortawesome/free-solid-svg-icons";
 import { app } from '../firebase';
 import Navbar from "../components/Navbar";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const [name, setName] = useState("");

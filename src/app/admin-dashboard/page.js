@@ -1,3 +1,4 @@
+// "use client"
 "use client"
 
 import { useEffect, useState } from "react";
@@ -6,169 +7,254 @@ import { useRouter } from "next/navigation";
 import { app, getCurrentUser } from '../firebase';
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
   const router = useRouter();
 
-  useEffect(() => {
-    fetch(`/api/auth/check-session`, {
-      credentials: 'include',
-    })
-      .then((res) => {
-        if (!res.ok) {
-          alert('Login Required!!')
-          router.push('/login');
-        }
-      })
-      .catch(() => {
-        router.push('/login');
-      });
-  }, []);
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        const auth = getAuth(app);
-        const user = await getCurrentUser();
-
-        if (!user) {
-          router.push("/login");
-          return;
-        }
-
-        const idToken = await user.getIdToken();
-
-        const res = await fetch("/api/user/me", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`,
-          },
-        });
-
-        if (!res.ok) throw new Error("Failed to fetch user");
-
-        const userData = await res.json();
-
-        if (userData.role === "admin") {
-          setIsAdmin(true);
-        } else {
-          router.push("/unauthorized"); // Or your custom error page
-        }
-      } catch (err) {
-        console.error("Error verifying admin role:", err);
-        // router.push("/login");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAdmin();
-  }, []);
-
-  const fetchUnverifiedProjects = async () => {
+  const checkAdminStatus = async () => {
     try {
-      const response = await fetch('/api/project/getNonVerifiedProjects'); // 🔁 Change to your live backend URL in prod
-      const data = await response.json();
-      setProjects(data);
-    } catch (error) {
-      console.error('Error fetching unverified projects:', error);
+      const user = await getCurrentUser();
+      if (!user) {
+        router.push("/login");
+        return false;
+      }
+
+      const idToken = await user.getIdToken();
+      setCurrentUser(user);
+
+      const res = await fetch("/api/user/me", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch user data");
+
+      const userData = await res.json();
+      return userData.role === "admin";
+    } catch (err) {
+      console.error("Error checking admin status:", err);
+      setError(err.message);
+      return false;
     }
   };
 
-  useEffect(() => {
-    fetchUnverifiedProjects();
-  }, []);
+  const fetchAllData = async () => {
+    setLoading(true);
+    try {
+      const isAdminUser = await checkAdminStatus();
+      if (!isAdminUser) {
+        router.push("/unauthorized");
+        return;
+      }
 
+      setIsAdmin(true);
+
+      // Get fresh token for subsequent requests
+      const user = await getCurrentUser();
+      const idToken = await user.getIdToken();
+
+      // Fetch users and projects in parallel
+      const [usersRes, projectsRes] = await Promise.all([
+        axios.get('/api/admin/users', {
+          headers: { 'Authorization': `Bearer ${idToken}` }
+        }),
+        axios.get('/api/getAll', {
+          headers: { 'Authorization': `Bearer ${idToken}` }
+        })
+      ]);
+
+      setUsers(usersRes.data);
+      setProjects(projectsRes.data);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateUserRole = async (userId) => {
+    try {
+      const idToken = await currentUser.getIdToken();
+      await axios.put(
+        '/api/admin/update-role',
+        {
+          userId,
+          newRole: 'admin' 
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${idToken}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      fetchAllData(); // Refresh all data
+    } catch (err) {
+      console.error('Update role error:', err);
+      setError(err.response?.data?.message || err.message);
+    }
+  };
 
   const verifyProject = async (projectId) => {
     try {
-      const user = await getCurrentUser();
-      const token = await user.getIdToken(); // Firebase ID token (if secured)
-
+      const idToken = await currentUser.getIdToken();
       const res = await fetch(`/api/verifyProject/${projectId}`, {
         method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`, // optional if auth required
-        },
+        headers: { 'Authorization': `Bearer ${idToken}` },
       });
 
       if (res.ok) {
         alert("Project verified!");
-        // 🔄 Refresh the project list
-        fetchUnverifiedProjects();
+        fetchAllData(); // Refresh all data
       } else {
-        alert("Verification failed.");
+        throw new Error("Verification failed");
       }
     } catch (err) {
       console.error("Error verifying project", err);
+      setError(err.message);
     }
   };
 
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+
   if (loading) return <p>Loading...</p>;
+  if (error) return <div>Error: {error}</div>;
+  if (!isAdmin) return <p>You are not authorized.</p>;
 
   return (
     <div>
-      {isAdmin ? (
-        <div>
-          <div>
-            <Navbar />
-          </div>
 
-          <div style={{ marginBlock: '5rem' }}>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
 
-            {projects && projects.map(project => (
-              <div
-                key={project.id}
-                className="border border-gray-200 my-3 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white"
-              >
-                <div className="p-6">
-                  <div className="flex justify-between items-start">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">{project.projectName}</h2>
-                    <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full uppercase font-semibold tracking-wide">
-                      {project.verificationStatus}
-                    </span>
-                  </div>
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
 
-                  <p className="text-gray-600 mb-4 text-lg">{project.projectDescription}</p>
+          {/* Projects Section */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-semibold text-gray-700 mb-6 pb-2 border-b border-gray-200">
+              Projects Awaiting Verification
+            </h2>
 
-                  <div className="flex items-center text-gray-700 mb-6">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span className="font-medium">{project.countryId.country}</span>
-                  </div>
-
-                  {project.verificationStatus != 'verified' && (
-                    <button
-                      className="w-2xl bg-gradient-to-r from-green-700 to-green-800 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
-                      onClick={() => verifyProject(project.id)}
-                    >
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      Verify Project
-                    </button>
-                  )}
-                </div>
+            {projects.length === 0 ? (
+              <div className="bg-white p-6 rounded-lg shadow text-center">
+                <p className="text-gray-500">No projects to verify</p>
               </div>
-            ))}
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projects.map(project => (
+                  <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div className="p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-xl font-bold text-gray-800">{project.projectName}</h3>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${project.verificationStatus === 'verified'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-yellow-100 text-yellow-800'
+                          }`}>
+                          {project.verificationStatus}
+                        </span>
+                      </div>
 
-          </div>
+                      <p className="text-gray-600 mb-6 line-clamp-3">{project.projectDescription}</p>
 
-          <div>
-            <Footer />
-          </div>
+                      <div className="flex items-center text-gray-700 mb-6">
+                        <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>{project.countryId?.country || 'No country specified'}</span>
+                      </div>
 
+                      {project.verificationStatus !== 'verified' && (
+                        <button
+                          onClick={() => verifyProject(project.id)}
+                          className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                        >
+                          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          Verify Project
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* Users Section */}
+          <section>
+            <h2 className="text-2xl font-semibold text-gray-700 mb-6 pb-2 border-b border-gray-200">
+              User Management
+            </h2>
+
+            {users.length === 0 ? (
+              <div className="bg-white p-6 rounded-lg shadow text-center">
+                <p className="text-gray-500">No users found</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {users.map(user => (
+                  <div key={user.uid} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div className="p-6">
+                      <div className="flex items-center mb-4">
+                        <div className="bg-blue-100 text-blue-800 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                          {user.email.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-gray-800">{user.email}</h3>
+                          <p className="text-sm text-gray-500">UID: {user.uid.substring(0, 8)}...</p>
+                        </div>
+                      </div>
+
+                      <div className="mb-6">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${user.role === 'admin'
+                          ? 'bg-purple-100 text-purple-800'
+                          : 'bg-blue-100 text-blue-800'
+                          }`}>
+                          {user.role}
+                        </span>
+                      </div>
+
+                      {user.role == 'User' && (
+                        <button
+                          onClick={() => updateUserRole(user.uid)}
+                          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                        >
+                          Promote to Admin
+                        </button>
+                      )}
+                      {/* {user.role == 'admin' && (
+                        <button
+                          onClick={() => updateUserRole(user.uid)}
+                          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                        >
+                          Demote to User
+                        </button>
+                      )} */}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
         </div>
 
-
-      ) : (
-        <p>You are not authorized.</p>
-      )}
+        <Footer />
+      </div>
     </div>
   );
 };

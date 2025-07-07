@@ -57,6 +57,9 @@ public class UserMaster {
     @Column(name = "updatedAt", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updatedAt;
 
+    @Column(name = "role_update_token")
+    private Integer roleUpdateToken = 0;
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -153,6 +156,9 @@ public class UserMaster {
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }
+
+    public Integer getRoleUpdateToken() { return roleUpdateToken; }
+    public void setRoleUpdateToken(Integer token) { this.roleUpdateToken = token; }
 
     // Enums for role and signupMethod
     public enum Role {
