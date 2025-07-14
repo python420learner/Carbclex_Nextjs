@@ -1,63 +1,44 @@
-// "use client"
-// import { use, useEffect, useState } from "react";
-// import axios from "axios";
-// import AdminMessage from "@/app/components/admin_message";
-
-// export default function ProjectDetails(props) {
-//   const { id } = use(props.params);
-//   const [project, setProject] = useState(null);
-//   const [media, setMedia] = useState([]);
-
-
-//   useEffect(() => {
-//     if (!id) return;
-
-//     // Fetch the project first
-//     axios.get(`/api/projects/${id}`)
-//       .then(res => {
-//         const fetchedProject = res.data;
-//         setProject(fetchedProject);
-
-//         // Now fetch media using project.projectId
-//         const projectId = fetchedProject.projectid;
-//         if (projectId) {
-//           axios.get(`/api/media/project/${projectId}`)
-//             .then(res => setMedia(res.data))
-//             .catch(err => console.error('Error fetching media:', err));
-//         } else {
-//           console.warn('Project ID not found in the fetched project.');
-//         }
-//       })
-//       .catch(err => console.error('Error fetching project:', err));
-//   }, [id]);
-
-//   // console.log("this is media files", media)
-//   if (!project) return <p className="p-8">Loading project details...</p>;
-//   if (media) {
-//     console.log(media)
-//   }
-
+"use client"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSearchParams } from 'next/navigation';
 import AdminMessage from "@/app/components/admin_message";
 
-export default async function ProjectDetails({ params }) {
-  const { id } = params;
+export default function ProjectDetailClient() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('projectId');
+  const [project, setProject] = useState(null);
+  const [media, setMedia] = useState([]);
 
-  // Fetch the project
-  const projectRes = await fetch(`/api/projects/${id}`, {
-    cache: "no-store"
-  });
-  const project = await projectRes.json();
 
-  // Fetch media
-  let media = [];
-  if (project?.projectid) {
-    const mediaRes = await fetch(`/api/media/project/${project.projectid}`, {
-      cache: "no-store"
-    });
-    media = await mediaRes.json();
+  useEffect(() => {
+    if (!id) return;
+
+    // Fetch the project first
+    axios.get(`/api/projects/${id}`)
+      .then(res => {
+        const fetchedProject = res.data;
+        setProject(fetchedProject);
+
+        // Now fetch media using project.projectId
+        const projectId = fetchedProject.projectid;
+        if (projectId) {
+          axios.get(`/api/media/project/${projectId}`)
+            .then(res => setMedia(res.data))
+            .catch(err => console.error('Error fetching media:', err));
+        } else {
+          console.warn('Project ID not found in the fetched project.');
+        }
+      })
+      .catch(err => console.error('Error fetching project:', err));
+  }, [id]);
+
+  // console.log("this is media files", media)
+  if (!project) return <p className="p-8">Loading project details...</p>;
+  if (media) {
+    console.log(media)
   }
 
-  if (!project) return <p className="p-8">Project not found</p>;
 
   return (
     <div className="max-w-4xl mx-auto my-14 p-6 bg-white rounded-lg shadow-md">
