@@ -1,5 +1,5 @@
 'use client';
-import React,{useRef,useEffect} from 'react'
+import {useRef,useEffect, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { useSearchParams } from 'next/navigation'
@@ -10,8 +10,8 @@ import './page.css'
 
 const Details = () => {
 
-    const [activeTab, setActiveTab] = React.useState("overview");
-    const [params, setSearchParams] = React.useState(null)
+    const [activeTab, setActiveTab] = useState("overview");
+    const [params, setSearchParams] = useState(null)
 
     useEffect(() => {
         // Parse the query string using URLSearchParams

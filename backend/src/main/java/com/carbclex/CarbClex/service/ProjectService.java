@@ -1,6 +1,7 @@
 package com.carbclex.CarbClex.service;
 import java.util.List;
 
+
 import com.carbclex.CarbClex.model.Project;
 
 public interface ProjectService {
@@ -9,5 +10,6 @@ public interface ProjectService {
     public List<Project> getVerifiedProjects();
 
     public List<Project> getNonVerifiedProjects();
+    public Project getProjectById(Integer id); 
 
 }

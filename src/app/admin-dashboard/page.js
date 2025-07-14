@@ -8,6 +8,7 @@ import { app, getCurrentUser } from '../firebase';
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import axios from "axios";
+import UserActivityLog from "../components/userActivityLog";
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,9 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
+  const [filter_verificationStatus, setFilter_verificationStatus] = useState("all");
+  const [filter_projectType, setFilter_projectType] = useState("all");
+
   const router = useRouter();
 
   const checkAdminStatus = async () => {
@@ -46,6 +50,20 @@ const AdminDashboard = () => {
       return false;
     }
   };
+
+  const handleClick = (projectId) => {
+    router.push(`/admin/projects/${projectId}`);
+  };
+
+  const filteredProjectsVerification = projects.filter(project => {
+    if (filter_verificationStatus == "all") return true;
+    return project.verificationStatus == filter_verificationStatus;
+  });
+
+  const filteredProjects = filteredProjectsVerification.filter(project => {
+    if (filter_projectType == "all") return true;
+    return project.projectType == filter_projectType;
+  });
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -89,7 +107,7 @@ const AdminDashboard = () => {
         '/api/admin/update-role',
         {
           userId,
-          newRole: 'admin' 
+          newRole: 'admin'
         },
         {
           headers: {
@@ -126,6 +144,18 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
+    fetch(`/api/auth/check-session`, {
+      credentials: 'include',
+    })
+      .then((res) => {
+        if (!res.ok) {
+          alert('Login Required!!')
+          router.push('/login');
+        }
+      })
+      .catch(() => {
+        router.push('/login');
+      });
     fetchAllData();
   }, []);
 
@@ -138,24 +168,55 @@ const AdminDashboard = () => {
 
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-
+        {/* <UserActivityLog/> */}
         <div className="container mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
 
           {/* Projects Section */}
           <section className="mb-12">
             <h2 className="text-2xl font-semibold text-gray-700 mb-6 pb-2 border-b border-gray-200">
-              Projects Awaiting Verification
+              Projects :
             </h2>
+            <div className="flex gap-7">
+              <p>Filter:</p>
+              <div>
+                <p>Verfication Status</p>
+                <select
+                  onChange={(e) => setFilter_verificationStatus(e.target.value)}
+                  className="p-2 border rounded mb-5"
+                >
+                  <option value="all">All</option>
+                  <option value="verified">Verified</option>
+                  <option value="pending">Pending</option>
+                  <option value="failed">Failed</option>
+                </select>
+              </div>
+              <div>
+                <p>Project Type</p>
+                <select
+                  onChange={(e) => setFilter_projectType(e.target.value)}
+                  className="p-2 border rounded mb-5"
+                >
+                  <option value="all">All</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Carbon_capture">Carbon Capture</option>
+                  <option value="Renewable">Renewable</option>
+                  <option value="Reforestation">Reforestation</option>
+                  <option value="Energy_efficiency">Energy Efficiency</option>
+                </select>
 
-            {projects.length === 0 ? (
+              </div>
+
+            </div>
+
+            {filteredProjects.length === 0 ? (
               <div className="bg-white p-6 rounded-lg shadow text-center">
-                <p className="text-gray-500">No projects to verify</p>
+                <p className="text-gray-500">No projects to show</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map(project => (
-                  <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                {filteredProjects.map(project => (
+                  <div key={project.id} onClick={()=>handleClick(project.id)} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <div className="p-6">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="text-xl font-bold text-gray-800">{project.projectName}</h3>

@@ -4,14 +4,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/carbclex")
 public class FirebaseSessionController {
+    
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
-
     @PostMapping("/auth/login")
     public ResponseEntity<?> loginWithFirebase(@RequestHeader("Authorization") String idToken,
             HttpServletRequest request) {
@@ -31,10 +32,9 @@ public class FirebaseSessionController {
 
             String email = decodedToken.getEmail();
             String uid = decodedToken.getUid();
-            // String provider = decodedToken.getFirebase().getSignInProvider(); // "google.com", "password", etc.
+            // String provider = decodedToken.getFirebase().getSignInProvider(); //
+            // "google.com", "password", etc.
             String provider = (String) decodedToken.getClaims().get("firebase").toString();
-
-
 
             // Check if session already exists for this user
             HttpSession existingSession = request.getSession(false);
@@ -48,7 +48,6 @@ public class FirebaseSessionController {
             session.setAttribute("email", email);
             session.setAttribute("provider", provider);
 
-
             return ResponseEntity.ok("Session created for " + email);
 
         } catch (Exception e) {
@@ -57,7 +56,6 @@ public class FirebaseSessionController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
-
     @GetMapping("/auth/dashboard")
     public ResponseEntity<?> dashboard(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -78,7 +76,7 @@ public class FirebaseSessionController {
             return ResponseEntity.status(401).body("Session inactive");
         }
     }
-    
+
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @PostMapping("/auth/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
@@ -88,4 +86,19 @@ public class FirebaseSessionController {
         }
         return ResponseEntity.ok("Logged out successfully");
     }
+    
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    @GetMapping("/auth/session-id")
+    public ResponseEntity<String> getSessionId(HttpSession session) {
+        String sessionId = session.getId();
+        return ResponseEntity.ok(sessionId);
+    }
+    
+    // @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    // @PostMapping("/activity/log")
+    // public ResponseEntity<?> logActivity(@RequestBody Map<String, Object> payload, HttpServletRequest request) {
+    //     String sessionId = request.getSession().getId();
+    //     redisService.logUserActivity(sessionId, payload);
+    //     return ResponseEntity.ok().build();
+    // }
 }

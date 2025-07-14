@@ -1,4 +1,5 @@
 package com.carbclex.CarbClex.model;
+
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -72,7 +73,8 @@ public class Project {
         verified, pending, failed
     }
 
-    public Project() {}
+    public Project() {
+    }
 
     public Integer getId() {
         return id;
@@ -200,6 +202,14 @@ public class Project {
 
     public void setVerifierId(Verifier verifierId) {
         this.verifierId = verifierId;
+    }
+
+    public String getImageUrls() {
+        return projectImagesURL;
+    }
+
+    public void setImageUrls(String imageUrls) {
+        this.projectImagesURL = imageUrls;
     }
 
     public LocalDateTime getCreatedAt() {

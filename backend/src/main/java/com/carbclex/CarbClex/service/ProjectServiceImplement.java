@@ -1,6 +1,7 @@
 package com.carbclex.CarbClex.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,11 @@ public class ProjectServiceImplement implements ProjectService{
     public List<Project> getNonVerifiedProjects() {
         return projectRepository.findByVerificationStatusNot(VerificationStatus.verified);
     }
+
+    public Project getProjectById(Integer id) {
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
+    }
+
 
 }

@@ -27,7 +27,5 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Transactional
     @Query("UPDATE Project p SET p.verificationStatus = :status WHERE p.id = :id")
     void updateVerificationStatusById(@Param("id") Integer id, @Param("status") VerificationStatus status);
-    // @Query("UPDATE Project p SET p.verificationStatus = com.carbclex.CarbClex.model.Project.VerificationStatus.verified WHERE p.id = :id")
-    // void verifyProjectById(@Param("id") Long id);
 
 }
