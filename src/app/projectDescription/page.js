@@ -1,9 +1,12 @@
-import React from 'react'
+'use client'
+import { Suspense } from "react";
+import ProjectDetailClient from "../../components/projectDetailClient";
 
-const page = () => {
+export default function page() {
+  console.log("i am working in the project Description")
   return (
-    <div>project description page for admin</div>
-  )
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <ProjectDetailClient/>
+    </Suspense>
+  );
 }
-
-export default page

@@ -211,7 +211,7 @@ const AdminDashboard = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProjects.map(project => (
-                  <Link href={`/admin/projects?projectId=${project.id}`} key={project.id}>
+                  <Link href={`/projectDescription?projectId=${project.id}`} key={project.id}>
                     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                       <div className="p-6">
                         <div className="flex justify-between items-start mb-4">
