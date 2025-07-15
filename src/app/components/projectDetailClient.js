@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AdminMessage from "@/app/components/admin_message";
+import AdminMessage from "./admin_message";
+import Image from "next/image";
 
 export default function ProjectDetailClient() {
   const [projectId, setProjectId] = useState(null);
@@ -124,7 +125,7 @@ export default function ProjectDetailClient() {
               {media.flatMap(item =>
                 item.imageUrls.map((url, index) => (
                   <a key={index} href={`http://localhost:8080/${url}`} target="_blank" rel="noopener noreferrer">
-                    <img
+                    <Image
                       key={index}
                       src={`http://localhost:8080/${url}`} // Adjust if your backend exposes static files differently
                       alt={`Project Media ${index}`}
