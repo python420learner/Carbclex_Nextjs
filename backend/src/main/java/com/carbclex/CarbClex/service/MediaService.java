@@ -3,6 +3,7 @@ package com.carbclex.CarbClex.service;
 import com.carbclex.CarbClex.model.Media;
 import com.carbclex.CarbClex.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,8 +15,10 @@ import java.util.List;
 @Service
 public class MediaService {
 
-    private static final String BASE_DIR = "uploads/";
-    private static final String SUB_DIR = "/projects/";
+    @Value("${media.upload.path}")
+    private String baseUploadPath;  // Comes from profile-specific properties
+
+    private static final String PROJECT_SUB_DIR = "/projects/";
 
     @Autowired
     private MediaRepository mediaRepository;
@@ -24,18 +27,24 @@ public class MediaService {
         List<String> imageUrls = new ArrayList<>();
         List<String> documentUrls = new ArrayList<>();
 
-        String uploadPath = BASE_DIR + userId + SUB_DIR + String.valueOf(projectId) + "/";
-        Files.createDirectories(Paths.get(uploadPath));
+        // Construct full upload path
+        String uploadPath = baseUploadPath + "/" + userId + PROJECT_SUB_DIR + String.valueOf(projectId) + "/";
+        Path fullPath = Paths.get(uploadPath);
+        Files.createDirectories(fullPath);
 
         for (MultipartFile file : files) {
             String fileName = file.getOriginalFilename();
-            Path filePath = Paths.get(uploadPath + fileName);
+            if (fileName == null || fileName.isEmpty()) continue;
+
+            Path filePath = fullPath.resolve(fileName);
             Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE);
 
+            String savedPath = filePath.toString();
+
             if (isImage(fileName)) {
-                imageUrls.add(filePath.toString());
+                imageUrls.add(savedPath);
             } else {
-                documentUrls.add(filePath.toString());
+                documentUrls.add(savedPath);
             }
         }
 

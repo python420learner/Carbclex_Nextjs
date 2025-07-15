@@ -1,6 +1,6 @@
 'use client'
 import { Suspense } from "react";
-import ProjectDetailClient from "../../components/projectDetailClient";
+import ProjectDetailClient from "../components/projectDetailClient";
 
 export default function page() {
   console.log("i am working in the project Description")

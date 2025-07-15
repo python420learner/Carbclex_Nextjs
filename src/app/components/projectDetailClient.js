@@ -124,10 +124,12 @@ export default function ProjectDetailClient() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
               {media.flatMap(item =>
                 item.imageUrls.map((url, index) => (
-                  <a key={index} href={`http://localhost:8080/${url}`} target="_blank" rel="noopener noreferrer">
+                  <a key={index} href={`https://carbclex.com/${url}`} target="_blank" rel="noopener noreferrer">
                     <Image
                       key={index}
-                      src={`http://localhost:8080/${url}`} // Adjust if your backend exposes static files differently
+                      width={100}
+                      height={100}
+                      src={`https://carbclex.com/${url}`} // Adjust if your backend exposes static files differently
                       alt={`Project Media ${index}`}
                       className="w-full h-auto rounded-lg shadow"
                     />
