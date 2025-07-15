@@ -16,7 +16,7 @@ import java.util.List;
 public class MediaService {
 
     @Value("${media.upload.path}")
-    private String baseUploadPath;  // Comes from profile-specific properties
+    private String baseUploadPath; // e.g., "/var/www/carbclex.com/uploads"
 
     private static final String PROJECT_SUB_DIR = "/projects/";
 
@@ -27,31 +27,33 @@ public class MediaService {
         List<String> imageUrls = new ArrayList<>();
         List<String> documentUrls = new ArrayList<>();
 
-        // Construct full upload path
+        // Full file system path to save files
         String uploadPath = baseUploadPath + "/" + userId + PROJECT_SUB_DIR + String.valueOf(projectId) + "/";
         Path fullPath = Paths.get(uploadPath);
         Files.createDirectories(fullPath);
 
         for (MultipartFile file : files) {
             String fileName = file.getOriginalFilename();
-            if (fileName == null || fileName.isEmpty()) continue;
+            if (fileName == null || fileName.isEmpty())
+                continue;
 
             Path filePath = fullPath.resolve(fileName);
             Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE);
 
-            String savedPath = filePath.toString();
+            // Store relative URL, NOT full system path
+            String relativeUrl = "uploads/" + userId + "/projects/" + projectId + "/" + fileName;
 
             if (isImage(fileName)) {
-                imageUrls.add(savedPath);
+                imageUrls.add(relativeUrl);
             } else {
-                documentUrls.add(savedPath);
+                documentUrls.add(relativeUrl);
             }
         }
 
         Media media = new Media();
         media.setUserId(userId);
         media.setProjectId(projectId);
-        media.setImageUrls(imageUrls);
+        media.setImageUrls(imageUrls); // contains relative URLs
         media.setDocumentUrls(documentUrls);
 
         return mediaRepository.save(media);

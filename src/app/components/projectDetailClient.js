@@ -126,10 +126,9 @@ export default function ProjectDetailClient() {
                 item.imageUrls.map((url, index) => (
                   <a key={index} href={`https://carbclex.com/${url}`} target="_blank" rel="noopener noreferrer">
                     <Image
-                      key={index}
                       width={100}
                       height={100}
-                      src={`https://carbclex.com/${url}`} // Adjust if your backend exposes static files differently
+                      src={`https://carbclex.com/${url}`}
                       alt={`Project Media ${index}`}
                       className="w-full h-auto rounded-lg shadow"
                     />
@@ -145,12 +144,8 @@ export default function ProjectDetailClient() {
                 {media.flatMap(item =>
                   item.documentUrls.map((doc, idx) => (
                     <li key={idx}>
-                      <a href={`http://localhost:8080/${doc}`} download>
-                       
-                        {/* <a href={`http://localhost:8080/${doc}`} target="_blank" rel="noopener noreferrer">
-                          View Document {idx + 1}
-                        </a> */}
-                       Download PDF
+                      <a href={`https://carbclex.com/${url}`} download target="_blank" rel="noopener noreferrer">
+                        Download File
                       </a>
                     </li>
                   ))
