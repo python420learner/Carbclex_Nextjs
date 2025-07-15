@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
@@ -7,7 +7,6 @@ import { app, getCurrentUser } from '../firebase';
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import axios from "axios";
-import UserActivityLog from "../components/userActivityLog";
 import Link from "next/link";
 
 const AdminDashboard = () => {
@@ -213,7 +212,7 @@ const AdminDashboard = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProjects.map(project => (
                   <Link href={`/admin/projects?projectId=${project.id}`} key={project.id}>
-                    <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                       <div className="p-6">
                         <div className="flex justify-between items-start mb-4">
                           <h3 className="text-xl font-bold text-gray-800">{project.projectName}</h3>

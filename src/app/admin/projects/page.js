@@ -1,3 +1,4 @@
+'use client'
 import { Suspense } from "react";
 import ProjectDetailClient from "@/app/components/projectDetailClient";
 

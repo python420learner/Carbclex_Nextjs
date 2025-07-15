@@ -1,29 +1,33 @@
-"use client"
+'use client'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSearchParams } from 'next/navigation';
 import AdminMessage from "@/app/components/admin_message";
 
 export default function ProjectDetailClient() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get('projectId');
+  const [projectId, setProjectId] = useState(null);
   const [project, setProject] = useState(null);
   const [media, setMedia] = useState([]);
 
+  useEffect(() => {
+    // ✅ Fallback approach to get query param from URL
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("projectId");
+    console.log("Fetched projectId from URL:", id);
+    setProjectId(id);
+  }, []);
 
   useEffect(() => {
-    if (!id) return;
+    if (!projectId) return;
 
-    // Fetch the project first
-    axios.get(`/api/projects/${id}`)
+    // 🔄 Make sure to use your actual production backend URL here
+    axios.get(`/api/projects/${projectId}`)
       .then(res => {
         const fetchedProject = res.data;
         setProject(fetchedProject);
 
-        // Now fetch media using project.projectId
-        const projectId = fetchedProject.projectid;
-        if (projectId) {
-          axios.get(`/api/media/project/${projectId}`)
+        const pid = fetchedProject.projectid;
+        if (pid) {
+          axios.get(`/api/media/project/${pid}`)
             .then(res => setMedia(res.data))
             .catch(err => console.error('Error fetching media:', err));
         } else {
@@ -31,13 +35,10 @@ export default function ProjectDetailClient() {
         }
       })
       .catch(err => console.error('Error fetching project:', err));
-  }, [id]);
+  }, [projectId]);
 
   // console.log("this is media files", media)
   if (!project) return <p className="p-8">Loading project details...</p>;
-  if (media) {
-    console.log(media)
-  }
 
 
   return (
