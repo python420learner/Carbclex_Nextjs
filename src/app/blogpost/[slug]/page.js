@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import MarkdownHTML from '../../components/MarkdownHTML';
 import Link from 'next/link';
 import Image from 'next/image';
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/footer';
+import Footer from '../../components/footer';
+import Navbar from '../../components/Navbar';
 
 
 export default function Page({ params }) {

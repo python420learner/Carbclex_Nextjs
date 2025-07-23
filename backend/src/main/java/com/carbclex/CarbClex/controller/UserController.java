@@ -1,16 +1,28 @@
 package com.carbclex.CarbClex.controller;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.nio.file.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.carbclex.CarbClex.model.UserMaster;
 import com.carbclex.CarbClex.repository.UserMasterRepository;
@@ -24,6 +36,14 @@ public class UserController {
     @Autowired
     private UserMasterRepository userRepository;
 
+    @Value("${media.upload.path}")
+    private String baseUploadPath;
+
+    // @Value("${upload.dir}")
+    // private String uploadDir;
+
+    // private final ObjectMapper objectMapper = new ObjectMapper();
+
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @PostMapping("/user/register")
     public ResponseEntity<?> registerUser(
@@ -32,7 +52,7 @@ public class UserController {
 
         try {
 
-             if (idToken.startsWith("Bearer ")) {
+            if (idToken.startsWith("Bearer ")) {
                 idToken = idToken.substring(7);
             }
 
@@ -54,11 +74,148 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    @PostMapping("/user/upload-documents/{userId}")
+    public ResponseEntity<?> uploadUserDocuments(
+            @PathVariable String userId,
+            @RequestHeader(value = "Authorization", required = false) String idToken,
+            @RequestParam Map<String, MultipartFile> fileMap // ⬅️ This line is key
+    ) {
+        try {
+            // Optional Firebase validation
+            if (idToken != null && idToken.startsWith("Bearer ")) {
+                idToken = idToken.substring(7);
+                FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+                String uid = decodedToken.getUid();
+                if (!uid.equals(userId)) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Unauthorized");
+                }
+            }
+
+            Optional<UserMaster> optionalUser = userRepository.findByUid(userId);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+
+            UserMaster user = optionalUser.get();
+
+            String basePath = baseUploadPath + "/" + userId + "/";
+            File dir = new File(basePath);
+            if (!dir.exists())
+                dir.mkdirs();
+
+            Map<String, String> documentUrls = user.getDocuments() != null ? user.getDocuments() : new HashMap<>();
+
+            for (Map.Entry<String, MultipartFile> entry : fileMap.entrySet()) {
+                String key = entry.getKey(); // e.g. "aadhaar", "panCard"
+                MultipartFile file = entry.getValue();
+
+                if (!file.isEmpty()) {
+                    String ext = Objects.requireNonNull(file.getOriginalFilename())
+                            .substring(file.getOriginalFilename().lastIndexOf("."));
+                    String newFileName = key + ext;
+
+                    Path filePath = Paths.get(basePath + newFileName);
+                    Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE,
+                            StandardOpenOption.TRUNCATE_EXISTING);
+
+                    documentUrls.put(key, baseUploadPath + "/" + userId + "/" + newFileName);
+                }
+            }
+
+            user.setDocuments(documentUrls);
+            userRepository.save(user);
+
+            return ResponseEntity.ok("Documents uploaded successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to upload documents: " + e.getMessage());
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    @GetMapping("/user/get-documents/{userId}")
+    public ResponseEntity<Map<String, String>> getUserDocuments(@PathVariable String userId) {
+        Optional<UserMaster> optionalUser = userRepository.findByUid(userId);
+
+        if (optionalUser.isPresent()) {
+            UserMaster user = optionalUser.get();
+            Map<String, String> documents = user.getDocuments(); // This is your JSON field
+
+            if (documents != null) {
+                return ResponseEntity.ok(documents);
+            } else {
+                return ResponseEntity.ok(new HashMap<>()); // Return empty if no documents
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/user/update")
+    public ResponseEntity<?> updateUser(
+            @RequestPart("user") UserMaster updatedUser,
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            @RequestHeader("Authorization") String idToken) {
+        try {
+            if (idToken.startsWith("Bearer ")) {
+                idToken = idToken.substring(7);
+            }
+
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            String uid = decodedToken.getUid();
+
+            Optional<UserMaster> optionalUser = userRepository.findByUid(uid);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+            }
+
+            UserMaster existingUser = optionalUser.get();
+
+            // ✅ Update non-null fields from `updatedUser`
+            if (updatedUser.getName() != null)
+                existingUser.setName(updatedUser.getName());
+            if (updatedUser.getPhone() != null)
+                existingUser.setPhone(updatedUser.getPhone());
+            if (updatedUser.getAddress() != null)
+                existingUser.setAddress(updatedUser.getAddress());
+            if (updatedUser.getState() != null)
+                existingUser.setState(updatedUser.getState());
+            if (updatedUser.getPincode() != null)
+                existingUser.setPincode(updatedUser.getPincode());
+
+            // ✅ Handle profile image upload
+            if (file != null && !file.isEmpty()) {
+                String uploadDir = "uploads/" + uid + "/";
+                File dir = new File(uploadDir);
+                if (!dir.exists())
+                    dir.mkdirs();
+
+                String fileName = "displayImage.png";
+                Path filePath = Paths.get(uploadDir + fileName);
+
+                // Overwrite existing file
+                Files.write(filePath, file.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+                String imageUrl = baseUploadPath + uid + "/" + fileName;
+                existingUser.setDisplayImage(imageUrl);
+            }
+
+            userRepository.save(existingUser);
+            return ResponseEntity.ok("User updated successfully.");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update user: " + e.getMessage());
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @GetMapping("user/me")
     public ResponseEntity<?> getUser(@RequestHeader("Authorization") String idToken) {
         try {
 
-             if (idToken.startsWith("Bearer ")) {
+            if (idToken.startsWith("Bearer ")) {
                 idToken = idToken.substring(7);
             }
 

@@ -1,8 +1,9 @@
 "use client"
 import React from 'react'
 import Head from 'next/head'
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/footer';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/footer';
+
 import Link from 'next/link';
 
 const CarbclexCredit = () => {
@@ -110,9 +111,9 @@ const CarbclexCredit = () => {
                         <header className="mb-12">
                             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">What Are Carbon Credits and How Do They Work? A Complete Guide to Their Role, Value, and Market Impact</h1>
                             <div className="flex items-center">
-                                <div className="h-px bg-gradient-to-r from-primary-400 to-primary-600 flex-1"></div>
+                                <div className="h-px bg-linear-to-r from-primary-400 to-primary-600 flex-1"></div>
                                 <span className="px-4 text-primary-600 font-medium">Sustainability</span>
-                                <div className="h-px bg-gradient-to-r from-primary-600 to-primary-400 flex-1"></div>
+                                <div className="h-px bg-linear-to-r from-primary-600 to-primary-400 flex-1"></div>
                             </div>
                         </header>
 
@@ -121,7 +122,7 @@ const CarbclexCredit = () => {
                             <p className="text-lg text-gray-800 mb-0">As climate change becomes a global priority, carbon credits have emerged as a powerful tool to reduce greenhouse gas emissions. This article provides a clear and professional breakdown of what carbon credits are, how they function, and why they are critical for sustainability efforts.</p>
                         </section>
 
-                        <div className="h-px bg-gradient-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
+                        <div className="h-px bg-linear-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
 
                         <section className="mb-12">
                             <h2 className="text-3xl font-bold text-gray-900 mb-6">What Are Carbon Credits?</h2>
@@ -134,13 +135,13 @@ const CarbclexCredit = () => {
                                 <p className="text-gray-800 mb-4">While the terms are often used interchangeably, they have distinct meanings:</p>
                                 <ul className="space-y-2">
                                     <li className="flex items-start">
-                                        <svg className="h-5 w-5 text-primary-500 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="h-5 w-5 text-primary-500 mt-0.5 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                         </svg>
                                         <span className="text-gray-800">A <strong>carbon offset</strong> is the action—like planting trees or installing solar panels—that reduces emissions.</span>
                                     </li>
                                     <li className="flex items-start">
-                                        <svg className="h-5 w-5 text-primary-500 mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="h-5 w-5 text-primary-500 mt-0.5 mr-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                         </svg>
                                         <span className="text-gray-800">A <strong>carbon credit</strong> is the verified result of that action, typically representing one metric ton of CO2e reduction, which can be bought or sold.</span>
@@ -150,7 +151,7 @@ const CarbclexCredit = () => {
                             </div>
                         </section>
 
-                        <div className="h-px bg-gradient-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
+                        <div className="h-px bg-linear-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
 
                         <section className="mb-12">
                             <h3 className="text-2xl font-semibold text-gray-900 mb-6">The Kyoto Protocol: Laying the Foundation</h3>
@@ -199,7 +200,7 @@ const CarbclexCredit = () => {
                             <p className="text-lg text-gray-800">This market plays a critical role in supporting verified environmental projects such as renewable energy, reforestation, and energy efficiency. By putting a price on carbon, it encourages innovation and investment in green solutions.</p>
                         </section>
 
-                        <div className="h-px bg-gradient-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
+                        <div className="h-px bg-linear-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
 
                         <section className="mb-12">
                             <h2 className="text-3xl font-bold text-gray-900 mb-8">Early Problems in Carbon Markets—and How Blockchain Technology is Making Carbon Credits More Transparent and Trustworthy</h2>
@@ -238,7 +239,7 @@ const CarbclexCredit = () => {
                             </div>
                         </section>
 
-                        <div className="h-px bg-gradient-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
+                        <div className="h-px bg-linear-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
 
                         <section className="mb-12">
                             <h2 className="text-3xl font-bold text-gray-900 mb-8">How Carbon Credits Are Calculated</h2>
@@ -283,7 +284,7 @@ const CarbclexCredit = () => {
                             </div>
                         </section>
 
-                        <div className="h-px bg-gradient-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
+                        <div className="h-px bg-linear-to-r from-gray-100 via-primary-300 to-gray-100 my-12"></div>
 
                         <section className="mb-12 bg-white rounded-xl shadow-sm p-6 sm:p-8 border border-gray-100">
                             <h3 className="text-2xl font-semibold text-gray-900 mb-4">Conclusion</h3>

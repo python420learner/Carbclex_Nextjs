@@ -11,5 +11,8 @@ public interface ProjectService {
 
     public List<Project> getNonVerifiedProjects();
     public Project getProjectById(Integer id); 
+    public List<Project> getUserProjects(String userId);
+    public void deleteProjectById(Integer id);
+
 
 }

@@ -18,6 +18,9 @@ public class Project {
     @Column(nullable = false, length = 255)
     private String projectName;
 
+    @Column(name = "user_id", nullable = false) // Simple storage of the ID
+    private String userId;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('Renewable', 'Reforestation', 'Energy_efficiency', 'Agriculture', 'Carbon_capture')")
     private ProjectType projectType;
@@ -48,7 +51,7 @@ public class Project {
     private String projectDescription;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('verified', 'pending', 'failed')")
+    @Column(columnDefinition = "ENUM('draft','uploaded_media','submitted','reviewing','expert_validation','verified','failed')")
     private VerificationStatus verificationStatus;
 
     @ManyToOne
@@ -70,7 +73,7 @@ public class Project {
     }
 
     public enum VerificationStatus {
-        verified, pending, failed
+        draft, uploaded_media, submitted, reviewing, expert_validation, verified, failed
     }
 
     public Project() {
@@ -82,6 +85,14 @@ public class Project {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Integer getProjectid() {

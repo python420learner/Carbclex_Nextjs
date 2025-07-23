@@ -2,12 +2,66 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AdminMessage from "./admin_message";
-import Image from "next/image";
 
 export default function ProjectDetailClient() {
+
+  const statusMap = {
+    draft: "Draft",
+    submitted: "Submitted for Review",
+    reviewing: "Under Preliminary Reviewing",
+    expert_validation: "Expert Validation / Compliance Review",
+    verified: "Verified"
+  };
+
+  const statusKeys = Object.keys(statusMap);
   const [projectId, setProjectId] = useState(null);
   const [project, setProject] = useState(null);
   const [media, setMedia] = useState([]);
+  const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
+
+
+  const getNextStatus = (current) => {
+    const currentIndex = statusKeys.indexOf(current);
+    if (currentIndex < statusKeys.length - 1) {
+      return statusKeys[currentIndex + 1];
+    }
+    return null; // already at final status
+  };
+
+  const handleStatusUpdate = async () => {
+    const nextStatus = getNextStatus(status);
+    if (!nextStatus) return alert("Already at final status!");
+
+    try {
+      setLoading(true);
+      await axios.post(`/api/updateVerificationStatus/${projectId}`, {
+        status: nextStatus
+      });
+      setStatus(nextStatus);
+    } catch (error) {
+      console.error("Status update failed:", error);
+      alert("Failed to update status.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStatusFailed = async () => {
+    try {
+      setLoading(true);
+      await axios.post(`/api/updateVerificationStatus/${projectId}`, {
+        status: 'failed'
+      });
+      setStatus('failed');
+    } catch (error) {
+      console.error("Status update failed:", error);
+      alert("Failed to update status.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
     // ✅ Fallback approach to get query param from URL
@@ -27,6 +81,8 @@ export default function ProjectDetailClient() {
         setProject(fetchedProject);
 
         const pid = fetchedProject.projectid;
+        const project_status = fetchedProject.verificationStatus;
+        setStatus(project_status)
         if (pid) {
           axios.get(`/api/media/project/${pid}`)
             .then(res => setMedia(res.data))
@@ -50,9 +106,9 @@ export default function ProjectDetailClient() {
         <div className="flex items-center mt-2">
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${project.verificationStatus === 'verified'
             ? 'bg-green-100 text-green-800'
-            : 'bg-yellow-100 text-yellow-800'
+            : status === 'failed' ? 'bg-red-600 text-white' : 'bg-yellow-100 text-yellow-800'
             }`}>
-            {project.verificationStatus.toUpperCase()}
+            {status.toUpperCase()}
           </span>
           <span className="ml-4 text-gray-600">{project.projectType}</span>
         </div>
@@ -108,7 +164,8 @@ export default function ProjectDetailClient() {
             </div>) :
             (
               <div>
-                Verfication Status : {project.verificationStatus.toUpperCase()}
+
+                Verfication Status : {status === 'failed' ? 'Verification Failed' : statusMap[status]}
               </div>
             )
           }
@@ -125,7 +182,7 @@ export default function ProjectDetailClient() {
               {media.flatMap(item =>
                 item.imageUrls.map((url, index) => (
                   <a key={index} href={`https://carbclex.com/${url}`} target="_blank" rel="noopener noreferrer">
-                    <Image
+                    <img
                       width={100}
                       height={100}
                       src={`https://carbclex.com/${url}`}
@@ -144,7 +201,7 @@ export default function ProjectDetailClient() {
                 {media.flatMap(item =>
                   item.documentUrls.map((doc, idx) => (
                     <li key={idx}>
-                      <a href={`https://carbclex.com/${url}`} download target="_blank" rel="noopener noreferrer">
+                      <a href={`https://carbclex.com/${doc}`} download target="_blank" rel="noopener noreferrer">
                         Download File
                       </a>
                     </li>
@@ -154,6 +211,66 @@ export default function ProjectDetailClient() {
             </div>
           </div>
         )}
+      </div>
+      <div className="my-6">
+
+        <div className="w-full max-w-3xl mx-auto px-4 py-8">
+          {/* Timeline */}
+          <div className="flex items-center justify-between relative">
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -translate-y-1/2"></div>
+            {statusKeys.map((key, index) => {
+              const isCompleted = statusKeys.indexOf(status) >= index;
+              const isActive = status === key;
+
+              return (
+                <div
+                  key={key}
+                  className="relative z-10 flex flex-col items-center"
+                >
+                  {/* Dot with pulse animation when active */}
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300 
+                ${isCompleted ? 'bg-blue-600' : 'bg-gray-300'}
+                ${isActive ? 'ring-4 ring-blue-300 animate-pulse' : ''}
+              `}>
+                    {isCompleted && (
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+
+                  {/* Label */}
+                  <div className={`mt-2 text-xs font-medium text-center transition-all duration-300
+                ${isCompleted ? 'text-blue-600' : 'text-gray-500'}
+                ${isActive ? 'font-bold text-sm -mt-1' : ''}
+              `}>
+                    {statusMap[key]}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="my-4">
+          {/* <p className="mb-2 text-sm">Current Status: <strong>{statusMap[status]}</strong></p> */}
+          <button
+            onClick={handleStatusUpdate}
+            disabled={loading || status === 'verified' || status === 'failed'}
+            className={`px-4 py-2 mx-2 rounded-lg text-white transition ${status === 'verified'
+              ? 'bg-green-500 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+          >
+            {loading ? 'Updating...' : status === 'verified' ? 'Verified' : 'Set to ' + statusMap[statusKeys[statusKeys.indexOf(status) + 1]]}
+          </button>
+          <button
+            onClick={handleStatusFailed}
+            disabled={loading || status === 'verified' || status === 'failed'}
+            className={`px-4 py-2 rounded-lg text-white transition bg-red-600 hover:bg-red-800`}
+          >
+            FAILED
+          </button>
+        </div>
       </div>
 
       {/* Footer */}

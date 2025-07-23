@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth,onAuthStateChanged } from "firebase/auth";
+import { getAuth,onAuthStateChanged, RecaptchaVerifier } from "firebase/auth";
 // import { getFirestore } from 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 

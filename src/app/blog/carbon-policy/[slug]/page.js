@@ -1,10 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import MarkdownHTML from '@/app/components/MarkdownHTML';
+import MarkdownHTML from '../../../components/MarkdownHTML';
 import Link from 'next/link';
 import Image from 'next/image';
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/footer';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/footer';
 
 const Page = ({ params }) => {
 

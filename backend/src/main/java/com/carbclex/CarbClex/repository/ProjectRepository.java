@@ -1,6 +1,7 @@
 package com.carbclex.CarbClex.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,9 +20,16 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Query("SELECT MAX(p.projectid) FROM Project p")
     Integer findMaxProjectId();
 
+    Optional<Project> findByProjectid(Integer projectid);
+
     List<Project> findByVerificationStatus(VerificationStatus status);
 
     List<Project> findByVerificationStatusNot(VerificationStatus status);
+
+    List<Project> findByUserId(String userId);
+
+    void deleteById(Integer id);
+
 
     @Modifying
     @Transactional

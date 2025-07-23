@@ -154,6 +154,7 @@ const AdminDashboard = () => {
     fetchAllData();
   }, []);
 
+  
   if (loading) return <p>Loading...</p>;
   if (error) return <div>Error: {error}</div>;
   if (!isAdmin) return <p>You are not authorized.</p>;
@@ -180,10 +181,13 @@ const AdminDashboard = () => {
                   onChange={(e) => setFilter_verificationStatus(e.target.value)}
                   className="p-2 border rounded mb-5"
                 >
-                  <option value="all">All</option>
-                  <option value="verified">Verified</option>
-                  <option value="pending">Pending</option>
-                  <option value="failed">Failed</option>
+                   <option value="all">All</option>
+                    <option value="draft">Draft</option>
+                    <option value="submitted">Submitted for review</option>
+                    <option value="reviewing">Under Preliminary Reviewing</option>
+                    <option value="expert_validation">Expert Validation</option>
+                    <option value="verified">Verified</option>
+                    <option value="failed">Failed</option>
                 </select>
               </div>
               <div>
@@ -218,7 +222,7 @@ const AdminDashboard = () => {
                           <h3 className="text-xl font-bold text-gray-800">{project.projectName}</h3>
                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${project.verificationStatus === 'verified'
                             ? 'bg-green-100 text-green-800'
-                            : 'bg-yellow-100 text-yellow-800'
+                            :  project.verificationStatus === 'failed' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
                             }`}>
                             {project.verificationStatus}
                           </span>
@@ -234,17 +238,17 @@ const AdminDashboard = () => {
                           <span>{project.countryId?.country || 'No country specified'}</span>
                         </div>
 
-                        {project.verificationStatus !== 'verified' && (
+                        {/* {project.verificationStatus !== 'verified' && (
                           <button
                             onClick={() => verifyProject(project.id)}
-                            className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
+                            className="w-full bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center"
                           >
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             Verify Project
                           </button>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </Link>
@@ -290,7 +294,7 @@ const AdminDashboard = () => {
                       {user.role == 'User' && (
                         <button
                           onClick={() => updateUserRole(user.uid)}
-                          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                          className="w-full bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                         >
                           Promote to Admin
                         </button>
@@ -298,7 +302,7 @@ const AdminDashboard = () => {
                       {/* {user.role == 'admin' && (
                         <button
                           onClick={() => updateUserRole(user.uid)}
-                          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                          className="w-full bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                         >
                           Demote to User
                         </button>

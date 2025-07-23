@@ -1,8 +1,12 @@
 package com.carbclex.CarbClex.model;
 
 import java.sql.Timestamp;
+import java.util.Map;
+
+import com.carbclex.CarbClex.converters.JpaJsonConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +27,7 @@ public class UserMaster {
     private String uid;
 
     @Column(name = "countryId", nullable = false)
-    private Integer countryId=1;
+    private Integer countryId = 1;
 
     @Column(name = "phone", length = 15, unique = true)
     private String phone;
@@ -59,6 +63,27 @@ public class UserMaster {
 
     @Column(name = "role_update_token")
     private Integer roleUpdateToken = 0;
+
+    @Column(name = "address", length = 255)
+    private String address;
+
+    @Column(name = "state", length = 100)
+    private String state;
+
+    @Column(name = "organization", length = 100)
+    private String organization;
+
+    @Column(name = "pincode", length = 10)
+    private String pincode;
+
+    @Column(name = "display_image", length = 512)
+    private String displayImage;
+
+    @Convert(converter = JpaJsonConverter.class)
+    @Column(columnDefinition = "json")
+    private Map<String, String> documents;
+
+
 
     // Getters and Setters
     public Integer getId() {
@@ -101,6 +126,14 @@ public class UserMaster {
         this.email = email;
     }
 
+    public Map<String, String> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Map<String, String> documents) {
+        this.documents = documents;
+    }
+
     public String getEmailStripped() {
         return emailStripped;
     }
@@ -124,6 +157,15 @@ public class UserMaster {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
 
     public Role getRole() {
         return role;
@@ -157,8 +199,13 @@ public class UserMaster {
         return updatedAt;
     }
 
-    public Integer getRoleUpdateToken() { return roleUpdateToken; }
-    public void setRoleUpdateToken(Integer token) { this.roleUpdateToken = token; }
+    public Integer getRoleUpdateToken() {
+        return roleUpdateToken;
+    }
+
+    public void setRoleUpdateToken(Integer token) {
+        this.roleUpdateToken = token;
+    }
 
     // Enums for role and signupMethod
     public enum Role {
@@ -168,4 +215,37 @@ public class UserMaster {
     public enum SignupMethod {
         email, phone, social
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+    
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getDisplayImage() {
+        return displayImage;
+    }
+
+    public void setDisplayImage(String displayImage) {
+        this.displayImage = displayImage;
+    }
+
 }

@@ -1,4 +1,7 @@
 // tailwind.config.js
+
+// import type { Config } from "tailwindcss";
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
