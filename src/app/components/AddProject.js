@@ -28,7 +28,7 @@ export default function AddProject({ id, onCancel }) {
     console.log(id)
 
     useEffect(() => {
-        fetch(`http://localhost:8080/carbclex/auth/check-session`, {
+        fetch(`/api/auth/check-session`, {
             credentials: 'include',
         })
             .then((res) => {
@@ -62,7 +62,7 @@ export default function AddProject({ id, onCancel }) {
             console.log("✅ Fetched projectId from URL:", id);
 
             // ✅ Fetch project from backend
-            fetch(`http://localhost:8080/carbclex/projects/${id}`)
+            fetch(`/api/projects/${id}`)
                 .then(res => {
                     if (!res.ok) throw new Error("Failed to fetch project");
                     return res.json();
@@ -118,7 +118,7 @@ export default function AddProject({ id, onCancel }) {
     });
 
     const getNextProjectId = async () => {
-        const res = await fetch('http://localhost:8080/carbclex/next-id');
+        const res = await fetch('/api/next-id');
         if (!res.ok) throw new Error('Failed to get next project ID');
         return await res.json();
     };
@@ -163,7 +163,7 @@ export default function AddProject({ id, onCancel }) {
             };
 
             try {
-                const response = await fetch('http://localhost:8080/carbclex/add', {
+                const response = await fetch('/api/add', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -193,7 +193,7 @@ export default function AddProject({ id, onCancel }) {
 
         const handleProjectSubmit = async () => {
             try {
-                await axios.post(`http://localhost:8080/carbclex/updateVerificationStatus/${project.id}`, {
+                await axios.post(`/api/updateVerificationStatus/${project.id}`, {
                     status: 'uploaded_media'
                 });
                 setStatus('uploaded_media');
@@ -221,7 +221,7 @@ export default function AddProject({ id, onCancel }) {
 
             // Upload media files
             const mediaUploadRes = await fetch(
-                `http://localhost:8080/carbclex/media/upload?userId=${userId}&projectId=${projectId}`,
+                `/api/media/upload?userId=${userId}&projectId=${projectId}`,
                 {
                     method: 'POST',
                     body: mediaFormData,

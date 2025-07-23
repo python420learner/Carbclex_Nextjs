@@ -139,7 +139,7 @@ export function PersonalInformation() {
   useEffect(() => {
     if (user) {
       console.log(user)
-      const [addressLine1, addressLine2, addressLine3] = user.address.split(' || ');
+      const [addressLine1, addressLine2, addressLine3] = user.address?.split(' || ') || ["", "", ""];
       setProfileData({
         fullName: user.name ?? '',
         email: user.email ?? '',
