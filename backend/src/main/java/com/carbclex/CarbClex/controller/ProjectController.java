@@ -18,13 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.carbclex.CarbClex.dto.VerificationRequest;
+import com.carbclex.CarbClex.model.NotificationEventMaster;
 import com.carbclex.CarbClex.model.Project;
 import com.carbclex.CarbClex.model.Project.VerificationStatus;
+import com.carbclex.CarbClex.model.UserNotification;
+import com.carbclex.CarbClex.repository.NotificationEventMasterRepository;
 import com.carbclex.CarbClex.repository.ProjectRepository;
+import com.carbclex.CarbClex.repository.UserNotificationRepository;
 import com.carbclex.CarbClex.service.ProjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.file.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -38,6 +43,12 @@ public class ProjectController {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private NotificationEventMasterRepository notificationEventRepository;
+
+    @Autowired
+    private UserNotificationRepository userNotificationRepository;
+
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @GetMapping("/next-id")
     public ResponseEntity<Integer> getNextProjectId() {
@@ -49,7 +60,7 @@ public class ProjectController {
     @PostMapping("/add")
     public ResponseEntity<Project> add(@RequestBody Project project) {
         System.out.println("Project Received");
-         Project savedProject = projectService.saveProject(project);
+        Project savedProject = projectService.saveProject(project);
         return ResponseEntity.ok(savedProject);
     }
 
@@ -75,7 +86,8 @@ public class ProjectController {
     @PutMapping("/verifyProject/{id}")
     public ResponseEntity<?> verifyProject(@PathVariable Integer id) {
         try {
-            projectRepository.updateVerificationStatusById(id, VerificationStatus.verified);
+            projectRepository.updateVerificationStatusById(id,
+                    VerificationStatus.verified);
             return ResponseEntity.ok("Project verified successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Verification failed");
@@ -86,7 +98,49 @@ public class ProjectController {
     public ResponseEntity<?> updateVerificationStatus(@PathVariable Integer id,
             @RequestBody VerificationRequest request) {
         try {
+            // 1. Update project verification status
             projectRepository.updateVerificationStatusById(id, request.getStatus());
+
+            // 2. Fetch project and user
+            Optional<Project> projectOpt = projectRepository.findById(id);
+            if (projectOpt.isPresent()) {
+                Project project = projectOpt.get();
+                String userId = project.getUserId();
+
+                // 4. Handle "FAILED"
+                if (request.getStatus() == VerificationStatus.failed) {
+                    NotificationEventMaster event = notificationEventRepository.findByCode("PROJECT_REJECTED");
+
+                    UserNotification notification = new UserNotification();
+                    notification.setUserId(userId);
+                    notification.setEvent(event);
+                    notification.setIsRead(false);
+                    notification.setCreatedAt(LocalDateTime.now());
+                    notification.setRelatedEntityType("project");
+                    notification.setRelatedEntityId(project.getId());
+                    notification.setCustomMessage("Your project '" + project.getProjectName() + "' was failed.");
+
+                    userNotificationRepository.save(notification);
+                }
+
+                // 5. Handle "VERIFIED"
+                if (request.getStatus() == VerificationStatus.verified) {
+                    NotificationEventMaster event = notificationEventRepository.findByCode("PROJECT_APPROVED");
+
+                    UserNotification notification = new UserNotification();
+                    notification.setUserId(userId);
+                    notification.setEvent(event);
+                    // notification.setIsRead(false);
+                    notification.setCreatedAt(LocalDateTime.now());
+                    notification.setRelatedEntityType("project");
+                    notification.setRelatedEntityId(project.getId());
+                    notification.setCustomMessage(
+                            "Your project '" + project.getProjectName() + "' has been verified and approved.");
+
+                    userNotificationRepository.save(notification);
+                }
+            }
+
             return ResponseEntity.ok("Project status updated to " + request.getStatus());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed");
@@ -104,14 +158,14 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    // @CrossOrigin(origins = "http://localhost:3000")
-    // @GetMapping("/getByProjectId/{projectid}")
-    // public ResponseEntity<?> getProjectByProjectid(@PathVariable Integer projectid) {
-    //     Optional<Project> project = projectRepository.findByProjectid(projectid);
-    //     return project.map(ResponseEntity::ok)
-    //             .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Project not found"));
-    // }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/getByProjectId/{projectid}")
+    public ResponseEntity<Project> getProjectByProjectid(@PathVariable Integer
+    projectid) {
+    Project project = projectRepository.findByProjectid(projectid);
+    return ResponseEntity.ok(project);
+    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/projects/user/{userId}")

@@ -1,5 +1,6 @@
 package com.carbclex.CarbClex.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +21,15 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     @Query("SELECT MAX(p.projectid) FROM Project p")
     Integer findMaxProjectId();
 
-    Optional<Project> findByProjectid(Integer projectid);
+    Project findByProjectid(Integer projectid);
 
     List<Project> findByVerificationStatus(VerificationStatus status);
 
     List<Project> findByVerificationStatusNot(VerificationStatus status);
 
     List<Project> findByUserId(String userId);
+    List<Project> findByVerificationStatusAndCreatedAtBefore(Project.VerificationStatus status, LocalDateTime dateTime);
+
 
     void deleteById(Integer id);
 

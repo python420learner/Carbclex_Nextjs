@@ -163,6 +163,18 @@ public class CartController {
         }
     }
 
+    @GetMapping("/cart/{id}")
+    public ResponseEntity<?> getCartItemById(@PathVariable Long id) {
+        Optional<CartItem> item = cartItemRepository.findById(id);
+        System.out.println("Fetching cart item with ID: " + id);
+        System.out.println("Item found: " + item.isPresent());
+        if (item.isPresent()) {
+            return ResponseEntity.ok(item.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart item not found");
+        }
+    }
+
     @Scheduled(fixedRate = 60000) // every 1 minute OR trigger this manually
     @Transactional
     public void cleanUpDuplicates() {

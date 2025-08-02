@@ -16,12 +16,15 @@ public class Media {
     @ElementCollection
     @CollectionTable(name = "media_documents", joinColumns = @JoinColumn(name = "media_id"))
     @Column(name = "document_url")
-    private List<String> documentUrls;
+    // private List<String> documentUrls;
+    private List<Documents> documents;
 
     @ElementCollection
     @CollectionTable(name = "media_images", joinColumns = @JoinColumn(name = "media_id"))
     @Column(name = "image_url")
-    private List<String> imageUrls;
+    // private List<String> imageUrls;
+    private List<Image> images;
+
 
     private Integer projectId;
 
@@ -43,20 +46,36 @@ public class Media {
         this.userId = userId;
     }
 
-    public List<String> getDocumentUrls() {
-        return documentUrls;
+    // public List<String> getDocumentUrls() {
+    //     return documentUrls;
+    // }
+
+    // public void setDocumentUrls(List<String> documentUrls) {
+    //     this.documentUrls = documentUrls;
+    // }
+
+    // public List<String> getImageUrls() {
+    //     return imageUrls;
+    // }
+
+    // public void setImageUrls(List<String> imageUrls) {
+    //     this.imageUrls = imageUrls;
+    // }
+
+     public List<Documents> getDocuments() {
+        return documents;
     }
 
-    public void setDocumentUrls(List<String> documentUrls) {
-        this.documentUrls = documentUrls;
+    public void setDocuments(List<Documents> documents) {
+        this.documents = documents;
     }
 
-    public List<String> getImageUrls() {
-        return imageUrls;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public Integer getProjectId() {

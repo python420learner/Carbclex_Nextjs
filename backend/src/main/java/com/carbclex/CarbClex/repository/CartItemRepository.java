@@ -1,6 +1,7 @@
 
 package com.carbclex.CarbClex.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     void deleteByUserId(String userId);
 
     Optional<CartItem> findByUserIdAndProductId(String userId, String productId);
+    List<CartItem> findByCreatedAtBefore(LocalDateTime dateTime);
+
 
     @Modifying
     @Transactional

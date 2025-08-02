@@ -1,17 +1,23 @@
 package com.carbclex.CarbClex.controller;
 
+import com.carbclex.CarbClex.model.UserNotificationSettings;
+import com.carbclex.CarbClex.service.UserNotificationSettingsService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/carbclex")
 public class FirebaseSessionController {
-    
+
+    @Autowired
+    private UserNotificationSettingsService notificationSettingsService;
+
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @PostMapping("/auth/login")
     public ResponseEntity<?> loginWithFirebase(@RequestHeader("Authorization") String idToken,
@@ -71,7 +77,9 @@ public class FirebaseSessionController {
     public ResponseEntity<?> checkSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("email") != null) {
-            return ResponseEntity.ok("Session active");
+            String userId = (String) session.getAttribute("uid");
+            UserNotificationSettings settings = notificationSettingsService.getOrCreateSettingsForUser(userId);
+            return ResponseEntity.ok(settings);
         } else {
             return ResponseEntity.status(401).body("Session inactive");
         }
@@ -86,19 +94,21 @@ public class FirebaseSessionController {
         }
         return ResponseEntity.ok("Logged out successfully");
     }
-    
+
     @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
     @GetMapping("/auth/session-id")
     public ResponseEntity<String> getSessionId(HttpSession session) {
         String sessionId = session.getId();
         return ResponseEntity.ok(sessionId);
     }
-    
-    // @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+
+    // @CrossOrigin(origins = "http://localhost:3000") // Allow requests from
+    // React's dev server
     // @PostMapping("/activity/log")
-    // public ResponseEntity<?> logActivity(@RequestBody Map<String, Object> payload, HttpServletRequest request) {
-    //     String sessionId = request.getSession().getId();
-    //     redisService.logUserActivity(sessionId, payload);
-    //     return ResponseEntity.ok().build();
+    // public ResponseEntity<?> logActivity(@RequestBody Map<String, Object>
+    // payload, HttpServletRequest request) {
+    // String sessionId = request.getSession().getId();
+    // redisService.logUserActivity(sessionId, payload);
+    // return ResponseEntity.ok().build();
     // }
 }

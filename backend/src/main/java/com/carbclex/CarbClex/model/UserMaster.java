@@ -49,6 +49,10 @@ public class UserMaster {
     private Role role = Role.User;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "kyc_status", nullable = false)
+    private KYC kycStatus = KYC.pending;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "signupMethod", nullable = false)
     private SignupMethod signupMethod = SignupMethod.email;
 
@@ -175,6 +179,14 @@ public class UserMaster {
         this.role = role;
     }
 
+    public KYC getKycStatus() {
+        return kycStatus;
+    }
+
+    public void setKycStatus(KYC kycStatus) {
+        this.kycStatus = kycStatus;
+    }
+
     public SignupMethod getSignupMethod() {
         return signupMethod;
     }
@@ -210,6 +222,10 @@ public class UserMaster {
     // Enums for role and signupMethod
     public enum Role {
         Buyer, admin, Supplier, User
+    }
+
+    public enum KYC {
+        pending, failed, verified, incomplete
     }
 
     public enum SignupMethod {

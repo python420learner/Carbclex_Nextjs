@@ -75,7 +75,7 @@ export function PersonalInformation() {
     newPassword: '',
     confirmPassword: ''
   });
-
+  
   const [hasChanges, setHasChanges] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);

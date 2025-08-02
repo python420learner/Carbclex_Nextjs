@@ -96,6 +96,14 @@ export default function ProjectDetailClient() {
 
   // console.log("this is media files", media)
   if (!project) return <p className="p-8">Loading project details...</p>;
+  if(media){
+    media.flatMap((items)=>{
+      items.images.map((item)=>{
+        console.log(items)
+
+      })
+    })
+  }
 
 
   return (
@@ -179,14 +187,14 @@ export default function ProjectDetailClient() {
 
             {/* Image URLs */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-              {media.flatMap(item =>
-                item.imageUrls.map((url, index) => (
-                  <a key={index} href={`https://carbclex.com/${url}`} target="_blank" rel="noopener noreferrer">
+              {media.flatMap(items =>
+                items.images.map((item,index) => (
+                  <a key={index} href={`https://carbclex.com/${item.url}`} target="_blank" rel="noopener noreferrer">
                     <img
                       width={100}
                       height={100}
-                      src={`https://carbclex.com/${url}`}
-                      alt={`Project Media ${index}`}
+                      src={`https://carbclex.com/${item.url}`}
+                      alt={`Project Media ${item.title}`}
                       className="w-full h-auto rounded-lg shadow"
                     />
                   </a>
@@ -198,10 +206,10 @@ export default function ProjectDetailClient() {
             <div>
               <h3 className="text-md font-medium text-gray-700 mb-2">Documents</h3>
               <ul className="list-disc ml-5 text-blue-600">
-                {media.flatMap(item =>
-                  item.documentUrls.map((doc, idx) => (
+                {media.flatMap(items =>
+                  items.documents.map((item,idx) => (
                     <li key={idx}>
-                      <a href={`https://carbclex.com/${doc}`} download target="_blank" rel="noopener noreferrer">
+                      <a href={`https://carbclex.com/${item.url}`} download target="_blank" rel="noopener noreferrer">
                         Download File
                       </a>
                     </li>

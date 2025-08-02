@@ -22,9 +22,9 @@ export function UserProfile() {
 
       <Tabs defaultValue="account" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="account" onClick={()=> setActiveTab('account')} className={`${activeTab==='account'?'bg-gray-800 text-white':''}  mt-6`}>Account Information</TabsTrigger>
-          <TabsTrigger value="documents" onClick={()=> setActiveTab('documents')} className={`${activeTab==='documents'?'bg-gray-800 text-white':''}  mt-6`}>Document Verification</TabsTrigger>
-          <TabsTrigger value="preferences" onClick={()=> setActiveTab('preferences')} className={`${activeTab==='preferences'?'bg-gray-800 text-white':''}  mt-6`}>Preferences</TabsTrigger>
+          <TabsTrigger value="account" onClick={()=> setActiveTab('account')} >Account Information</TabsTrigger>
+          <TabsTrigger value="documents" onClick={()=> setActiveTab('documents')} >Document Verification</TabsTrigger>
+          <TabsTrigger value="preferences" onClick={()=> setActiveTab('preferences')} >Preferences</TabsTrigger>
         </TabsList>
         
         <TabsContent value="account" className='mt-10'>
@@ -42,3 +42,21 @@ export function UserProfile() {
     </div>
   );
 }
+
+// INSERT INTO user_notifications (
+//     created_at,
+//     custom_message,
+//     is_read,
+//     related_entity_id,
+//     related_entity_type,
+//     user_id,
+//     event_id
+// ) VALUES (
+//     NOW(6),
+//     'Your project "EcoCarbonX" has been approved successfully.',
+//     0,
+//     18,
+//     'project',
+//     'G4ZqcuqevYUI1EU40tDjDkbQF4u2',
+//     9
+// );

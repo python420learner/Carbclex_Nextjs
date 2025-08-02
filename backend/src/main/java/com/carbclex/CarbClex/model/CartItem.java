@@ -1,5 +1,9 @@
 package com.carbclex.CarbClex.model;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +25,11 @@ public class CartItem {
     private int quantity;
 
     private double price;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
 
     // Constructors
     public CartItem() {
@@ -74,6 +83,10 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
     }
 
     public double getPrice() {

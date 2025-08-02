@@ -95,14 +95,14 @@ const AdminDashboard = () => {
     }
   };
 
-  const updateUserRole = async (userId) => {
+  const updateUserRole = async (userId,newRole) => {
     try {
       const idToken = await currentUser.getIdToken();
       await axios.put(
         '/api/admin/update-role',
         {
           userId,
-          newRole: 'admin'
+          newRole: newRole
         },
         {
           headers: {
@@ -153,6 +153,22 @@ const AdminDashboard = () => {
       });
     fetchAllData();
   }, []);
+
+  const handleUpdateKycStatus = async (id, newStatus) => {
+    console.log(id)
+    try {
+      const response = await axios.put(`/api/user/updateKycStatus/${id}`, {
+        status: newStatus,
+      });
+
+      alert(`KYC status updated successfully: ${newStatus}`);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error updating KYC status:', error);
+      alert('Failed to update KYC status');
+    }
+  };
+  console.log(users)
 
   
   if (loading) return <p>Loading...</p>;
@@ -293,20 +309,27 @@ const AdminDashboard = () => {
 
                       {user.role == 'User' && (
                         <button
-                          onClick={() => updateUserRole(user.uid)}
+                          onClick={() => updateUserRole(user.uid,'admin')}
                           className="w-full bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                         >
                           Promote to Admin
                         </button>
                       )}
-                      {/* {user.role == 'admin' && (
+                      {user.role == 'admin' && (
                         <button
-                          onClick={() => updateUserRole(user.uid)}
+                          onClick={() => updateUserRole(user.uid,'User')}
                           className="w-full bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                         >
                           Demote to User
                         </button>
-                      )} */}
+                      )}
+                      {user.kycStatus != 'verified' && <button
+                          onClick={() => handleUpdateKycStatus(user.id,'verified')}
+                          className="w-full bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                        >
+                          KYC Verified
+                      </button>}
+
                     </div>
                   </div>
                 ))}

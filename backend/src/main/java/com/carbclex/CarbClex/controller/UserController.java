@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.nio.file.*;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,8 +25,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.carbclex.CarbClex.dto.KycStatusUpdateRequest;
+import com.carbclex.CarbClex.model.NotificationEventMaster;
 import com.carbclex.CarbClex.model.UserMaster;
+import com.carbclex.CarbClex.model.UserNotification;
+import com.carbclex.CarbClex.model.UserMaster.KYC;
+import com.carbclex.CarbClex.repository.NotificationEventMasterRepository;
 import com.carbclex.CarbClex.repository.UserMasterRepository;
+import com.carbclex.CarbClex.repository.UserNotificationRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 
@@ -38,6 +45,12 @@ public class UserController {
 
     @Value("${media.upload.path}")
     private String baseUploadPath;
+
+    @Autowired
+    private NotificationEventMasterRepository notificationEventRepository;
+
+    @Autowired
+    private UserNotificationRepository userNotificationRepository;
 
     // @Value("${upload.dir}")
     // private String uploadDir;
@@ -230,4 +243,66 @@ public class UserController {
             return ResponseEntity.status(401).body("Invalid token.");
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from React's dev server
+    @PutMapping("/user/updateKycStatus/{userId}")
+    public ResponseEntity<?> updateKycStatus(@PathVariable Integer userId,
+            @RequestBody KycStatusUpdateRequest request) {
+        try {
+            KYC newStatus = KYC.valueOf(request.getStatus().toLowerCase());
+
+            // Update user in DB
+            Optional<UserMaster> optionalUser = userRepository.findById(userId);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            System.out.println("this is the id from frontend" + userId);
+            UserMaster user = optionalUser.get();
+            user.setKycStatus(newStatus);
+            userRepository.save(user);
+
+            // Create notification based on KYC status
+            String message = null;
+            String eventName = null;
+
+            if (newStatus == KYC.failed) {
+                message = "Your KYC documents were rejected. Please re-submit.";
+                eventName = "KYC_REJECTED"; // Replace with actual event ID for "KYC Failed"
+            } else if (newStatus == KYC.verified) {
+                message = "Your KYC has been verified successfully.";
+                eventName = "KYC_APPROVED"; // Replace with actual event ID for "KYC Verified"
+            }
+
+            if (message != null) {
+
+                NotificationEventMaster event = notificationEventRepository.findByCode(eventName);
+                UserNotification notification = new UserNotification();
+                notification.setUserId(user.getUid());
+                notification.setIsRead(false);
+                notification.setCreatedAt(LocalDateTime.now());
+                notification.setCustomMessage(message);
+                notification.setEvent(event);
+                notification.setRelatedEntityType("user");
+                notification.setRelatedEntityId(userId);
+                userNotificationRepository.save(notification);
+            }
+
+            return ResponseEntity.ok("KYC status updated to " + newStatus);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid KYC status");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed");
+        }
+    }
+
+    @GetMapping("/user/getById/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Integer id) {
+        Optional<UserMaster> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        return ResponseEntity.ok(optionalUser.get());
+    }
+
 }

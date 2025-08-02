@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect, useRef } from "react";
 import { auth } from "../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from "firebase/auth";
