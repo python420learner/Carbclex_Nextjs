@@ -2,18 +2,7 @@
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faBell, faUser, faBagShopping } from '@fortawesome/free-solid-svg-icons'
-import { faDashboard,
-  faUser,
-  faSliders,
-  faBagShopping,
-  faDollarSign,
-  faCreditCard,
-  faBell,
-  faListCheck,
-  faInfo,
-  faBars,
-  faRightFromBracket,
-  faTimes } from '@fortawesome/free-solid-svg-icons'
+import {faDashboard,faUser,faSliders,faBagShopping,faDollarSign,faCreditCard,faBell,faListCheck,faInfo,faBars,faRightFromBracket,faTimes} from '@fortawesome/free-solid-svg-icons'
 import revenueData from "../revenueData.json"
 import sourceData from "../sourceData.json"
 import monthlyData from "../monthly.json"
@@ -41,6 +30,15 @@ import { UserProfile } from '../components/UserProfile'
 import AddProject from '../components/AddProject'
 import { NotificationsAndUpdates } from '../components/NotificationAndUpdates'
 import { ManageProject } from '../components/ManageProject'
+import { CartAndWishlist } from '../components/CartAndWishlist'
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '../components/ui/breadcrumb';
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, LineElement, PointElement, Title, Tooltip, Legend);
 
 
@@ -174,6 +172,25 @@ const Dashboard = () => {
         router.push("/login")
     };
 
+    const getBreadcrumbTitle = () => {
+        switch (display) {
+            case 'notification_centre':
+                return 'Notifications & Updates';
+            case 'portfolio':
+                return 'Your Portfolio';
+            case 'project_management':
+                return 'Project Management';
+            case 'transactions':
+                return 'Transaction Summary';
+            case 'cart_wishlist':
+                return 'Cart & Wishlist';
+            case 'profile':
+                return 'Profile & Settings';
+            default:
+                return '';
+        }
+    };
+
 
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -223,9 +240,9 @@ const Dashboard = () => {
                             Market Activity
                         </li>
 
-                        <li className="py-2 cursor-pointer hover:bg-gray-800 px-2 rounded">
+                        <li className="py-2 cursor-pointer hover:bg-gray-800 px-2 rounded" onClick={() => setDisplay('cart_wishlist')}>
                             <FontAwesomeIcon icon={faBagShopping} style={{ marginRight: '8px' }} size="1x" />
-                            Cart
+                            Cart and Wishlist
                         </li>
 
                         <li className="py-2 cursor-pointer hover:bg-gray-800 px-2 rounded">
@@ -241,18 +258,15 @@ const Dashboard = () => {
                             <FontAwesomeIcon icon={faBell} style={{ marginRight: '8px' }} size="1x" />
                             Notification & Updates
                         </li>
-
-                        {projects.length>0 && (
-                            <li className="relative py-2 cursor-pointer  px-2 rounded">
-                                <div
-                                    onClick={() => setDisplay('project_management')}
-                                    className="flex items-center hover:bg-gray-800 "
-                                >
-                                    <FontAwesomeIcon icon={faListCheck} className="mr-2" size="1x" />
-                                    Project Management
-                                </div>
-                            </li>
-                        )}
+                        <li className="relative py-2 cursor-pointer  px-2 rounded">
+                            <div
+                                onClick={() => setDisplay('project_management')}
+                                className="flex items-center hover:bg-gray-800 "
+                            >
+                                <FontAwesomeIcon icon={faListCheck} className="mr-2" size="1x" />
+                                Project Management
+                            </div>
+                        </li>
                         <li className="py-2 cursor-pointer hover:bg-gray-800 px-2 rounded">
                             <FontAwesomeIcon icon={faInfo} style={{ marginRight: '8px' }} size="1x" />
                             Support and Resources
@@ -268,6 +282,21 @@ const Dashboard = () => {
                         <FontAwesomeIcon className='icon' icon={faBell} style={{ marginRight: '2rem' }} color='black' size='2x' />
                         <Link href="/signup"><FontAwesomeIcon icon={faUser} style={{ marginRight: '2rem' }} color='black' size='2x' /></Link>
                         <FontAwesomeIcon className='icon' onClick={handleLogout} icon={faRightFromBracket} style={{ marginRight: '2rem' }} color='black' size='2x' />
+                    </div>
+                    <div className='my-4'>
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block">
+                                    <BreadcrumbLink href="#">
+                                        Dashboard
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator className="hidden md:block" />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage>{getBreadcrumbTitle()}</BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
                     </div>
                     <div>
                         {display === 'profile' && (
@@ -294,6 +323,11 @@ const Dashboard = () => {
                                     marketInsights={marketInsights}
                                     handlePendingSubmit={handlePendingSubmit}
                                 />
+                            </div>
+                        )}
+                        {display === 'cart_wishlist' && (
+                            <div>
+                                <CartAndWishlist />
                             </div>
                         )}
 

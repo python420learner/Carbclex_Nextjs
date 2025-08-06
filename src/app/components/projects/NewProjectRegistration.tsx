@@ -17,6 +17,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from '../../firebase';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import FileList from './FileList';
 
 const projectTypes = {
   'Renewable': "Renewable",
@@ -86,6 +87,7 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
     satelliteImagery: [],
     verificationDocs: [],
     methodology_document: [],
+    additional_files: [],
   });
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -708,6 +710,22 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
               <p className="text-sm text-(--muted-foreground) mb-4">
                 Select the Sustainable Development Goals your project contributes to:
               </p>
+              {formData.sdgAlignment.length > 0 && (
+                <div>
+                  <h4 className="mr-2 mb-2 text-blue-700">UN SDGs:</h4>
+                  <div className="mb-4 flex gap-2">
+                    {formData.sdgAlignment.map((sdgId) => {
+                      const sdg = sdgOptions.find(s => s.id === sdgId);
+                      return (
+                        <div key={sdgId} className="border text-blue-700 bg-blue-100 border-blue-100 rounded-full w-12 h-12 flex items-center justify-center">
+                          {sdgId}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                </div>
+              )}
               <div className="grid gap-3 md:grid-cols-2">
                 {sdgOptions.map((sdg) => (
                   <div key={sdg.id} className="flex items-center space-x-2">
@@ -769,7 +787,7 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
                       disabled={actionRequired && !isUploadEditable('designDocs')}
                       className="hidden"
                     />
-                    <label htmlFor="pdd" className={actionRequired && isUploadEditable("designDocs") ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}>
+                    <label htmlFor="pdd">
                       <div className="text-center">
                         <FileText className="mx-auto h-6 w-6 text-(--muted-foreground) mb-2" />
                         {files.designDocs.length > 0 ? <p className='text-green-500'>Uploaded PDD</p> : <p className="text-sm font-medium">Upload PDD</p>}
@@ -795,7 +813,7 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
                       className="hidden"
                       disabled={actionRequired && !isUploadEditable('mvrReports')}
                     />
-                    <label htmlFor="mrv" className={actionRequired && isUploadEditable("mvrReports") ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}>
+                    <label htmlFor="mrv" >
                       <div className="text-center">
                         <FileText className="mx-auto h-6 w-6 text-(--muted-foreground) mb-2" />
                         {files.mrvReports.length > 0 ? <p className='text-green-500'>Uploaded MVR Reports</p> : <p className="text-sm font-medium">Upload MRV Reports</p>}
@@ -821,7 +839,7 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
                       className="hidden"
                       disabled={actionRequired && !isUploadEditable('satelliteImagery')}
                     />
-                    <label htmlFor="satellite" className={actionRequired && isUploadEditable("satelliteImagery") ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}>
+                    <label htmlFor="satellite">
                       <div className="text-center">
                         <MapPin className="mx-auto h-6 w-6 text-(--muted-foreground) mb-2" />
                         {files.satelliteImagery.length > 0 ? <p className='text-green-500'>Uploaded Satellite Imagery</p> : <p className="text-sm font-medium">Upload Satellite Imagery</p>}
@@ -847,7 +865,7 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
                       className="hidden"
                       disabled={actionRequired && !isUploadEditable('verificationDocs')}
                     />
-                    <label htmlFor="verification" className={actionRequired && isUploadEditable("verificationDocs") ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}>
+                    <label htmlFor="verification">
                       <div className="text-center">
                         <CheckCircle className="mx-auto h-6 w-6 text-(--muted-foreground) mb-2" />
                         {files.verificationDocs.length > 0 ? <p className='text-green-500'>Uploaded Verification Docs</p> : <p className="text-sm font-medium">Upload Verification Docs</p>}
@@ -857,6 +875,34 @@ export function NewProjectRegistration({ projectId, onProjectSubmit, requiredAct
                   </div>
                 </CardContent>
               </Card>
+
+              <Card className=' border-(--muted-foreground)/25'>
+                <CardHeader>
+                  <CardTitle className="text-base">Additional Files</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="border-2 border-dashed border-(--muted-foreground)/25 rounded-lg p-4">
+                    <input
+                      type="file"
+                      id="additional_media"
+                      accept=".pdf,.png.jpeg,.jpg,.mp4"
+                      multiple
+                      onChange={(e) => handleFileChange('additional_files', e)}
+                      className="hidden"
+                    />
+                    <label htmlFor="additional_media">
+                      <div className="text-center">
+                        <CheckCircle className="mx-auto h-6 w-6 text-(--muted-foreground) mb-2" />
+                        {files.verificationDocs.length > 0 ? <p className='text-green-500'>Uploaded Additional Files</p> : <p className="text-sm font-medium">Upload Project Images/Additional Documents</p>}
+                        <p className="text-xs text-(--muted-foreground)">Additional Media and Documents Upload</p>
+                      </div>
+                    </label>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            <div>
+              <FileList files={files} setFiles={setFiles} />
             </div>
           </div>
         );

@@ -20,13 +20,12 @@ import { NewProjectRegistration } from './NewProjectRegistration';
 
 export function MyProjects({ onEditProject, createNewProject }) {
   const [projects, setProjects] = useState([]);
-  // const [filteredProjects, setFilteredProjects] = useState();
-  const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filter_verificationStatus, setFilter_verificationStatus] = useState("all");
   const [filter_projectType, setFilter_projectType] = useState("all");
   const auth = getAuth(app);
@@ -95,8 +94,9 @@ export function MyProjects({ onEditProject, createNewProject }) {
     if (searchTerm.trim() !== '') {
       const lowerSearch = searchTerm.toLowerCase();
       const matchesName = project.projectName?.toLowerCase().includes(lowerSearch);
-      const matchesLocation = project.locationDetails?.toLowerCase().includes(lowerSearch); // or region, or address field
-      if (!matchesName && !matchesLocation) return false;
+      // const matchesLocation = project.locationDetails?.toLowerCase().includes(lowerSearch); // or region, or address field
+      // if (!matchesName && !matchesLocation) return false;
+      if (!matchesName) return false;
     }
 
     // Filter by verification status
