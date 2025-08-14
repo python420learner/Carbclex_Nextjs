@@ -65,11 +65,12 @@ export const mergeGuestCartToUserCart = async (guestCart, idToken) => {
                 Authorization: `Bearer ${idToken}`,
             },
             body: JSON.stringify(normalizedCart),
-        });
+        })
 
         // Optionally clear localStorage cart after merging
-
         localStorage.removeItem(GUEST_CART_KEY);
+
+
     } catch (err) {
         console.error("Cart merge failed", err);
     }

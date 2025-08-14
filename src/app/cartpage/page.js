@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getCurrentUser } from '../firebase';
 import { getGuestCart } from '../components/cartUtility';
 import Navbar from '../components/Navbar';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 
 
 const CartPage = () => {

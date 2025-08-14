@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { app, getCurrentUser } from '../firebase';
 import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
 import axios from "axios";
 import Link from "next/link";
 

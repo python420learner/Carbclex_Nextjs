@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import "./page.css"
 import Navbar from '../components/Navbar';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import { app } from '../firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/navigation';

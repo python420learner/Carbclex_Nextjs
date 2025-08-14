@@ -5,7 +5,7 @@ import { MyProjects } from './projects/MyProjects';
 import { ProjectVerificationStatus } from './projects/ProjectVerificationStatus';
 import { NewProjectRegistration } from './projects/NewProjectRegistration';
 
-export function ManageProject({ pendingProjectId }) {
+export function ManageProject({ pendingProjectId, tabNeedsActive }) {
   const [activeTab, setActiveTab] = useState('my-projects');
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -48,6 +48,9 @@ export function ManageProject({ pendingProjectId }) {
     if (pendingProjectId) {
       setSelectedProjectId(pendingProjectId);
       setActiveTab("new-registration");
+    }
+    if(tabNeedsActive){
+      setActiveTab(tabNeedsActive)
     }
   }, [pendingProjectId]);
   

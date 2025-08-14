@@ -4,7 +4,7 @@ import MarkdownHTML from '../../../components/MarkdownHTML';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '../../../components/Navbar';
-import Footer from '../../../components/footer';
+import Footer from '../../../components/Footer';
 
 const Page = ({ params }) => {
 

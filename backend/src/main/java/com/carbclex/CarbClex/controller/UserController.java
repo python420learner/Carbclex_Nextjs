@@ -64,7 +64,7 @@ public class UserController {
             @RequestHeader("Authorization") String idToken) {
 
         try {
-
+            System.out.println("this is the id tokeinnnnnnn"+ idToken);
             if (idToken.startsWith("Bearer ")) {
                 idToken = idToken.substring(7);
             }

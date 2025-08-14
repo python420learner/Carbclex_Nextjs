@@ -2,7 +2,7 @@
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faBell, faUser, faBagShopping } from '@fortawesome/free-solid-svg-icons'
-import {faDashboard,faUser,faSliders,faBagShopping,faDollarSign,faCreditCard,faBell,faListCheck,faInfo,faBars,faRightFromBracket,faTimes} from '@fortawesome/free-solid-svg-icons'
+import { faDashboard, faUser, faSliders, faBagShopping, faDollarSign, faCreditCard, faBell, faListCheck, faInfo, faBars, faRightFromBracket, faTimes } from '@fortawesome/free-solid-svg-icons'
 import revenueData from "../revenueData.json"
 import sourceData from "../sourceData.json"
 import monthlyData from "../monthly.json"
@@ -21,7 +21,7 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import Footer from '../components/footer';
+import Footer from '../components/Footer'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
@@ -55,6 +55,7 @@ const Dashboard = () => {
     const [marketInsights, setMarketInsights] = useState([]);
     const [pendingProjectId, setPendingProjectId] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [requestedSubTab, setRequestedSubTab] = useState(null)
 
     // Function to close sidebar on mobile after clicking a link
     const handleLinkClick = (view) => {
@@ -95,12 +96,12 @@ const Dashboard = () => {
                         // 4. Fetch notifications for this user
                         fetchUserNotifications(user.uid);
                     } else {
-                        router.push('/login');
+                        router.push('/auth');
                     }
                 });
             } catch (error) {
                 console.error('Session check failed:', error);
-                router.push('/login');
+                router.push('/auth');
             } finally {
                 setLoading(false);
             }
@@ -150,6 +151,21 @@ const Dashboard = () => {
         }
     }, [notifications]);
 
+    useEffect(() => {
+        const tab = localStorage.getItem("dashboardActiveTab");
+        const subTab = localStorage.getItem("subTab")
+
+        if (tab) {
+            setDisplay(tab); // your tab state logic
+            localStorage.removeItem("dashboardActiveTab"); // cleanup so it doesn't override future visits
+        }
+
+        if (subTab) {
+            setRequestedSubTab(subTab); // your tab state logic
+            localStorage.removeItem("subTab"); // cleanup so it doesn't override future visits
+        }
+    }, []);
+
 
     const handleLogout = async () => {
         await fetch(`/api/auth/logout`, {
@@ -169,7 +185,7 @@ const Dashboard = () => {
         // localStorage.setItem('cart_merged', 'false'); // ✅ Set flag
 
         alert("Logout Successful")
-        router.push("/login")
+        router.push("/auth")
     };
 
     const getBreadcrumbTitle = () => {
@@ -273,7 +289,7 @@ const Dashboard = () => {
                         </li>
                     </ul>
                 </div>
-                <div style={{ marginLeft: 'auto', width: '85vw' }}>
+                <div style={{ marginLeft: 'auto', width: '85vw' }} className='mt-15'>
                     <div className={`nav_bar ${hasScrolled_market ? 'nav_background' : ''}`} id='navbar' >
                         <Navbar />
                     </div>
@@ -306,7 +322,7 @@ const Dashboard = () => {
                         )}
                         {display === 'project_management' && (
                             <div>
-                                <ManageProject pendingProjectId={pendingProjectId} />
+                                <ManageProject pendingProjectId={pendingProjectId} tabNeedsActive={requestedSubTab}/>
                             </div>
                         )}
                         {display === 'add_project' && (

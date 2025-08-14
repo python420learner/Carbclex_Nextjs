@@ -93,6 +93,7 @@ public class CartController {
     public ResponseEntity<?> getCart(@RequestHeader("Authorization") String idToken) {
         try {
             String uid = extractUidFromToken(idToken);
+            System.out.println("this is the uid for the user from the fronted "+uid);
             return ResponseEntity.ok(cartItemRepository.findByUserId(uid));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token or session.");

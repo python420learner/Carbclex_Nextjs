@@ -7,7 +7,7 @@ import approachImg from '../../../public/Assets/Our-Approach.svg';
 // import approachImg from '../.././Our-Approach.svg';
 import Link from 'next/link';
 import Image from 'next/image';
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import CTA from '../components/cta';
 import off1 from "../../../public/Assets/signup.jpg";
 // import off1 from "/Assets/signup.jpg";
@@ -62,7 +62,7 @@ const HomePage = () => {
             {/* <RouteTracker /> */}
             <div className='home-page' >
                 <div className={`nav_bar ${hasScrolled ? 'nav_background' : ''}`} id='navbar' >
-                    <Navbar />
+                    <Navbar activePage="home"/>
                 </div>
                 <div className='hero'>
                     <form className="font t-white" style={{ marginLeft: '2rem' }}>

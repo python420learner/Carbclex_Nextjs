@@ -168,13 +168,13 @@ const Login = () => {
         }
 
         // Send this token to your Spring Boot backend
-       const loginResponse = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${idToken}`
-        },
-        credentials: "include"
-      });
+        const loginResponse = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${idToken}`
+          },
+          credentials: "include"
+        });
         if (loginResponse.ok) {
           // Login and session successful
           router.push("/dashboard");

@@ -5,6 +5,7 @@ import "./globals.css";
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import ActivityTracker from "./components/activityTracker";
+import SessionChecker from "./components/SessionChecker"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.variable} antialiased`}
       >
+        <SessionChecker/>
         <ActivityTracker/>
+
         {children}
       </body>
     </html>

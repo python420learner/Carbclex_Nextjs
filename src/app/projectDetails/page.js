@@ -2,7 +2,7 @@
 import {useRef,useEffect, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import Cart from '../components/cart'
 import './page.css'
 

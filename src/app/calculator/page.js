@@ -1,6 +1,6 @@
 'use client'
 
-import Footer from '../components/footer';
+import Footer from '../components/Footer';
 import logo from '../../../public/Assets/Logo_header.png'
 import Calculator_card from '../components/calculator_card';
 import coal from '../../../public/Assets/coal.png'
@@ -13,42 +13,44 @@ import cng from '../../../public/Assets/cng.png'
 import { useState, useEffect } from 'react';
 import './page.css'
 import Navbar from '../components/Navbar';
+import ComingSoon from '../components/ComingSoon'
 
 const CalculatorPage = () => {
 
   const [activeTab, setActiveTab] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [hasScrolled_market, setHasScrolled_market] = useState(false);
-  
-  useEffect(() => {
-      const handleScroll = () => {
-        // Check if user has scrolled vertically
-        if (window.scrollY > 0) {
-          setHasScrolled_market(true);
-        } else {
-          setHasScrolled_market(false);
-        }
-      };
-    
-      // Add the event listener inside the effect
-      window.addEventListener('scroll', handleScroll);
-    
-      // Cleanup the event listener when the component unmounts
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
+  const [hasDeveloped, setHasDeveloped] = useState(false)
 
-  const handleNext = () =>{
-    if(activeTab<4){
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if user has scrolled vertically
+      if (window.scrollY > 0) {
+        setHasScrolled_market(true);
+      } else {
+        setHasScrolled_market(false);
+      }
+    };
+
+    // Add the event listener inside the effect
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleNext = () => {
+    if (activeTab < 4) {
       let at = activeTab
       at++
       setActiveTab(at)
 
     }
   }
-  const handlePrev = () =>{
-    if(activeTab>0){
+  const handlePrev = () => {
+    if (activeTab > 0) {
       let at = activeTab
       at--
       setActiveTab(at)
@@ -59,6 +61,15 @@ const CalculatorPage = () => {
   const toggleDropdown = () => {
     setIsOpen(prev => !prev);
   };
+
+  if(!hasDeveloped){
+    return(
+      <div>
+        <Navbar activePage="calculator"/>
+        <ComingSoon/>
+      </div>
+    )
+  }
 
   return (
     <div className='calculator'>
@@ -84,7 +95,7 @@ const CalculatorPage = () => {
         </div>
         <div className="dropdown">
           <div className="dropdown-header" >
-            <span className="dropdown-title"><Image src={electric} alt='svg' width={20} height={20} style={{marginRight:'15px'}}/>Indirect Emissions</span>
+            <span className="dropdown-title"><Image src={electric} alt='svg' width={20} height={20} style={{ marginRight: '15px' }} />Indirect Emissions</span>
             <span className={`dropdown-icon ${isOpen ? 'rotate' : ''}`}>▼</span>
           </div>
           <ul className={`dropdown-menu ${isOpen ? 'show' : 'hide'}`}>
@@ -99,9 +110,9 @@ const CalculatorPage = () => {
         </div>
       </div>
       <div className='calculator_right' style={{}}>
-      <div className={`nav_bar ${hasScrolled_market ? 'nav_background' : ''}`} id='navbar' >
-                        <Navbar />
-          </div>
+        <div className={`nav_bar ${hasScrolled_market ? 'nav_background' : ''}`} id='navbar' >
+          <Navbar activePage="calculator" />
+        </div>
         <div className={`stationary ${activeTab == 0 ? "dis_block" : 'dis_none'}`} >
           <div className='fuel emission'>
             <h1 style={{ color: '#033614' }}>Fuel emission</h1>
@@ -212,10 +223,10 @@ const CalculatorPage = () => {
             </div>
           </div>
         </div>
-        <div className='btns' style={{width:'fit-content',marginInline:'auto',marginBottom:'10rem'}}>
-          <button className='prev_button' onClick={()=>handlePrev()} style={{}}>
-          <FontAwesomeIcon icon={faArrowLeft} color='white' size='x' /></button>
-          <button className='next_btn' onClick={()=>handleNext()}>NEXT</button>
+        <div className='btns' style={{ width: 'fit-content', marginInline: 'auto', marginBottom: '10rem' }}>
+          <button className='prev_button' onClick={() => handlePrev()} style={{}}>
+            <FontAwesomeIcon icon={faArrowLeft} color='white' size='x' /></button>
+          <button className='next_btn' onClick={() => handleNext()}>NEXT</button>
         </div>
 
         <Footer />

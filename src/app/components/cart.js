@@ -7,11 +7,11 @@ import {useRouter} from "next/navigation";
 
 const Cart = ({ project }) => {
   const [cart, setCart] = useState([]);
-  const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(100)
-  const [user, setUser] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [isInCart, setIsInCart] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+  const [user, setUser] = useState(null);
   const currentProjectId = project.projectid;
   const router = useRouter();
 
